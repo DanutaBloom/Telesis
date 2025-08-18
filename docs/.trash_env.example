@@ -1,0 +1,12 @@
+# Environment Variables
+
+# Supabase
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+
+# OpenAI
+VITE_OPENAI_API_KEY=
+
+# Optional: Stripe (Post-MVP)
+# VITE_STRIPE_PUBLISHABLE_KEY=
+# STRIPE_SECRET_KEY=

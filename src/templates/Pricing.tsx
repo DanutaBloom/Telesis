@@ -17,7 +17,7 @@ export const Pricing = () => {
     >
       <PricingInformation
         buttonList={{
-          [PLAN_ID.FREE]: (
+          [PLAN_ID.STARTER]: (
             <Link
               className={buttonVariants({
                 size: 'sm',
@@ -28,7 +28,7 @@ export const Pricing = () => {
               {t('button_text')}
             </Link>
           ),
-          [PLAN_ID.PREMIUM]: (
+          [PLAN_ID.PRO]: (
             <Link
               className={buttonVariants({
                 size: 'sm',

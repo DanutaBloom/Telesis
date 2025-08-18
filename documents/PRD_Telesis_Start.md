@@ -227,8 +227,8 @@ We avoid mixing other design styles such as Material Design or Windows Metro; th
 
 #### Clone boilerplate
 
-- git clone <https://github.com/ixartz/SaaS-Boilerplate> telesis-app
-- cd telesis-app
+- git clone <https://github.com/ixartz/SaaS-Boilerplate> telesis
+- cd telesis
 - pnpm install
 
 #### Copy environment example and configure
@@ -574,7 +574,7 @@ completed_paths jsonb
 ## 18. Go/No‑Go Checklist
 
 Before development begins, ensure that:
-[ ] GitHub repository telesis-app is initialized with main/develop branches and CI/CD pipeline.
+[ ] GitHub repository telesis is initialized with main/develop branches and CI/CD pipeline.
 [ ] Vercel account is set up with the repo connected.
 [ ] Clerk account is created and configured for auth keys.
 [ ] Postgres database is provisioned (e.g. Neon/Planetscale); environment variables are configured.

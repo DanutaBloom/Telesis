@@ -1,7 +1,7 @@
 {
   "Index": {
-    "meta_title": "SaaS Template - Le template SaaS parfait pour construire et mettre à l'échelle votre entreprise en toute simplicité.",
-    "meta_description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS."
+    "meta_title": "Telesis - Plateforme de Micro-Apprentissage IA | Demandez. Réfléchissez. Appliquez.",
+    "meta_description": "Transformez le contenu de formation en expériences de micro-apprentissage personnalisées. Téléchargez des PDFs, vidéos et présentations - l'IA crée des résumés, briefings audio et cartes de révision."
   },
   "Navbar": {
     "sign_in": "Se connecter",
@@ -13,11 +13,11 @@
     "company": "Entreprise"
   },
   "Hero": {
-    "follow_twitter": "Suivez @Ixartz sur Twitter",
-    "title": "Le parfait <important>SaaS template</important> pour construire et mettre à l'échelle votre entreprise en toute simplicité.",
-    "description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS.",
-    "primary_button": "Démarrer",
-    "secondary_button": "Mettez une étoile sur GitHub"
+    "follow_twitter": "Suivez les actualités Telesis",
+    "title": "Transformez la formation en <important>micro-apprentissage</important> avec l'IA en quelques secondes.",
+    "description": "Téléchargez des PDFs, vidéos et présentations. Notre IA crée des résumés personnalisés, briefings audio, cartes visuelles et cartes de révision qui respectent votre temps et style d'apprentissage.",
+    "primary_button": "Commencer l'Apprentissage",
+    "secondary_button": "Voir Comment Ça Marche"
   },
   "Sponsors": {
     "title": "Sponsorisé par"
@@ -35,22 +35,22 @@
     "feature_description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS."
   },
   "Pricing": {
-    "section_subtitle": "Fonctionnalités",
-    "section_title": "Débloquer le plein potentiel du SaaS Template",
-    "section_description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS.",
-    "button_text": "Démarrer"
+    "section_subtitle": "Tarification",
+    "section_title": "Choisissez le Plan Parfait pour Vos Objectifs d'Apprentissage",
+    "section_description": "Commencez avec notre plan Débutant abordable à 10€/mois. Évoluez selon la croissance de votre équipe avec des fonctionnalités avancées et des transformations IA illimitées.",
+    "button_text": "Commencer l'Essai Gratuit"
   },
   "PricingPlan": {
-    "free_plan_name": "Gratuit",
-    "premium_plan_name": "Premium",
+    "starter_plan_name": "Débutant",
+    "pro_plan_name": "Pro",
     "enterprise_plan_name": "Enterprise",
-    "free_plan_description": "Pour les particuliers",
-    "premium_plan_description": "Pour les petites équipes",
-    "enterprise_plan_description": "Pour les leaders de l'industrie",
-    "feature_team_member": "{number} membres",
-    "feature_website": "{number} sites internet",
+    "starter_plan_description": "Parfait pour les individus et petites équipes",
+    "pro_plan_description": "Pour les équipes en croissance et organisations",
+    "enterprise_plan_description": "Pour les grandes organisations et entreprises",
+    "feature_team_member": "{number} membres d'équipe",
+    "feature_website": "{number} transformations IA/jour",
     "feature_storage": "{number} Go de stockage",
-    "feature_transfer": "{number} TB de transfert",
+    "feature_transfer": "{number} téléchargements de contenu/mois",
     "feature_email_support": "Support par e-mail",
     "plan_interval_month": "mois",
     "plan_interval_year": "année",

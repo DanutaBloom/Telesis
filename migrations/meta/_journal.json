@@ -8,6 +8,13 @@
       "when": 1726784321202,
       "tag": "0000_init-db",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1755539816508,
+      "tag": "0001_nappy_korg",
+      "breakpoints": true
     }
   ]
 }

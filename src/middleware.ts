@@ -19,21 +19,34 @@ const isProtectedRoute = createRouteMatcher([
   '/:locale/dashboard(.*)',
   '/onboarding(.*)',
   '/:locale/onboarding(.*)',
+]);
+
+const isApiRoute = createRouteMatcher([
   '/api(.*)',
   '/:locale/api(.*)',
 ]);
+
+const isPublicApiRoute = (pathname: string) => {
+  return pathname.includes('/api/health') || pathname.includes('/api/test');
+};
 
 export default function middleware(
   request: NextRequest,
   event: NextFetchEvent,
 ) {
+  // Allow public API routes to bypass authentication
+  if (isPublicApiRoute(request.nextUrl.pathname)) {
+    return intlMiddleware(request);
+  }
+
   if (
     request.nextUrl.pathname.includes('/sign-in')
     || request.nextUrl.pathname.includes('/sign-up')
     || isProtectedRoute(request)
+    || isApiRoute(request)
   ) {
     return clerkMiddleware(async (auth, req) => {
-      if (isProtectedRoute(req)) {
+      if (isProtectedRoute(req) || isApiRoute(req)) {
         const locale
           = req.nextUrl.pathname.match(/(\/.*)\/dashboard/)?.at(1) ?? '';
 
@@ -69,5 +82,5 @@ export default function middleware(
 }
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next|monitoring).*)', '/', '/(api|trpc)(.*)'], // Also exclude tunnelRoute used in Sentry from the matcher
+  matcher: ['/((?!.+\\.[\\w]+$|_next|monitoring|api).*)', '/'], // Exclude API routes from middleware
 };

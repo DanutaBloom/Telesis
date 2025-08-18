@@ -52,8 +52,8 @@ All expert models (Gemini-2.5-pro, O3, Gemini-2.5-flash) unanimously support Opt
 
 ```bash
 # 1. Clone SaaS-Boilerplate
-git clone https://github.com/ixartz/SaaS-Boilerplate telesis-app
-cd telesis-app
+git clone https://github.com/ixartz/SaaS-Boilerplate telesis
+cd telesis
 
 # 2. Initialize new git history
 rm -rf .git
@@ -83,21 +83,24 @@ Refs: TEL-18"
 
 ### Phase 2: Configuration (Week 1)
 
-```typescript
-// 1. Update package.json
+```json
 {
   "name": "telesis",
   "description": "AI-Powered Micro-Learning Platform",
   "version": "0.1.0"
 }
+```
 
-// 2. Configure environment variables
-NEXT_PUBLIC_APP_NAME="Telesis"
-CLERK_SECRET_KEY="..."
-DATABASE_URL="postgresql://..."
-STRIPE_SECRET_KEY="..."
-OPENAI_API_KEY="..."
+```env
+# 2. Configure environment variables
+NEXT_PUBLIC_APP_NAME=Telesis
+CLERK_SECRET_KEY=...
+DATABASE_URL=postgresql://...
+STRIPE_SECRET_KEY=...
+OPENAI_API_KEY=...
+```
 
+```typescript
 // 3. Update branding in tailwind.config.ts
 // 4. Configure Vercel deployment
 ```

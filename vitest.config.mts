@@ -5,6 +5,9 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
+  css: {
+    postcss: './postcss.config.js',
+  },
   test: {
     globals: true, // This is needed by @testing-library to be cleaned up after each test
     include: ['src/**/*.test.{js,jsx,ts,tsx}'],

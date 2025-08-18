@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom/vitest';
+import '@/styles/global.css';
 
 import failOnConsole from 'vitest-fail-on-console';
 

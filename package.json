@@ -1,6 +1,7 @@
 {
-  "name": "saas-boilerplate",
-  "version": "1.7.6",
+  "name": "telesis",
+  "version": "0.1.0",
+  "description": "AI-Powered Micro-Learning Platform",
   "scripts": {
     "dev:spotlight": "spotlight-sidecar",
     "dev:next": "next dev",

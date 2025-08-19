@@ -40,6 +40,13 @@ const config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        // Modern Sage brand colors for additional utilities
+        sage: {
+          quietude: 'hsl(var(--sage-quietude))',
+          growth: 'hsl(var(--sage-growth))',
+          mist: 'hsl(var(--sage-mist))',
+          stone: 'hsl(var(--sage-stone))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

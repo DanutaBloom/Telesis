@@ -1,56 +1,115 @@
 import { NextResponse } from 'next/server';
 
 import { db } from '@/libs/DB';
+import { SECURITY_HEADERS, checkRateLimit } from '@/libs/AuthUtils';
 
-export async function GET() {
-  const healthCheck = {
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    database: {
-      connected: false,
-      type: 'unknown',
-      error: null as string | null,
-    },
-    environment: {
-      nodeEnv: process.env.NODE_ENV,
-      hasDatabaseUrl: !!process.env.DATABASE_URL,
-      hasClerkKeys: !!(process.env.CLERK_SECRET_KEY && process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY),
-      hasStripeKeys: !!(process.env.STRIPE_SECRET_KEY && process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY),
-    },
-    services: {
-      database: 'unknown',
-      authentication: 'unknown',
-      payments: 'unknown',
-    },
-  };
-
-  // Test database connectivity
+/**
+ * SECURED Health Check API
+ * SECURITY: Removes sensitive information disclosure while maintaining operational visibility
+ */
+export async function GET(request: Request) {
   try {
-    await db.execute('SELECT 1 as test');
-    healthCheck.database.connected = true;
-    healthCheck.database.type = process.env.DATABASE_URL ? 'postgresql' : 'pglite';
-    healthCheck.services.database = 'operational';
+    // Rate limiting for health endpoint
+    const clientIp = request.headers.get('x-forwarded-for') || 
+                     request.headers.get('x-real-ip') || 
+                     'unknown';
+    
+    const rateLimitResult = checkRateLimit(`health:${clientIp}`, 30, 60000); // 30 requests per minute
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { 
+          status: 'rate_limited',
+          timestamp: new Date().toISOString(),
+        },
+        { 
+          status: 429,
+          headers: {
+            ...SECURITY_HEADERS,
+            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
+          }
+        }
+      );
+    }
+
+    const healthCheck = {
+      status: 'healthy',
+      timestamp: new Date().toISOString(),
+      version: '1.0.0', // Safe to expose
+      services: {
+        database: 'unknown',
+        authentication: 'unknown', 
+        payments: 'unknown',
+      },
+    };
+
+    // Test database connectivity - NO sensitive info in errors
+    try {
+      await db.execute('SELECT 1 as test');
+      healthCheck.services.database = 'operational';
+    } catch (error) {
+      // SECURITY: Log full error server-side but don't expose to client
+      console.error('Database health check failed:', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+        timestamp: new Date().toISOString(),
+        clientIp,
+      });
+      
+      healthCheck.services.database = 'degraded';
+      healthCheck.status = 'degraded';
+    }
+
+    // Check service configurations - NO environment variable exposure
+    try {
+      // SECURITY: Only check if keys exist, don't expose any values or specifics
+      const hasClerkKeys = !!(process.env.CLERK_SECRET_KEY && process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+      const hasStripeKeys = !!(process.env.STRIPE_SECRET_KEY && process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+      
+      healthCheck.services.authentication = hasClerkKeys ? 'configured' : 'not-configured';
+      healthCheck.services.payments = hasStripeKeys ? 'configured' : 'not-configured';
+    } catch (error) {
+      // SECURITY: Log configuration check errors but don't expose them
+      console.error('Service configuration check failed:', error);
+      healthCheck.services.authentication = 'unknown';
+      healthCheck.services.payments = 'unknown';
+    }
+
+    const httpStatus = healthCheck.status === 'healthy' ? 200 : 503;
+    
+    // SECURITY: Log health check access for monitoring
+    console.log('Health check accessed:', {
+      status: healthCheck.status,
+      clientIp,
+      userAgent: request.headers.get('user-agent'),
+      timestamp: new Date().toISOString(),
+    });
+    
+    return NextResponse.json(healthCheck, { 
+      status: httpStatus,
+      headers: {
+        ...SECURITY_HEADERS,
+        'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+      }
+    });
+
   } catch (error) {
-    console.error('Database health check failed:', error);
-    healthCheck.database.connected = false;
-    healthCheck.database.error = error instanceof Error ? error.message : 'Unknown error';
-    healthCheck.services.database = 'degraded';
-    healthCheck.status = 'degraded';
-  }
+    // SECURITY: Log the full error server-side
+    console.error('Health check endpoint error:', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      timestamp: new Date().toISOString(),
+    });
 
-  // Check service configurations
-  if (healthCheck.environment.hasClerkKeys) {
-    healthCheck.services.authentication = 'configured';
-  } else {
-    healthCheck.services.authentication = 'not-configured';
+    // Return minimal error information to client
+    return NextResponse.json(
+      {
+        status: 'error',
+        timestamp: new Date().toISOString(),
+      },
+      { 
+        status: 500,
+        headers: SECURITY_HEADERS
+      }
+    );
   }
-
-  if (healthCheck.environment.hasStripeKeys) {
-    healthCheck.services.payments = 'configured';
-  } else {
-    healthCheck.services.payments = 'not-configured';
-  }
-
-  const httpStatus = healthCheck.status === 'healthy' ? 200 : 503;
-  return NextResponse.json(healthCheck, { status: httpStatus });
 }

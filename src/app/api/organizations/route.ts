@@ -1,53 +1,244 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import { eq } from 'drizzle-orm';
 
 import { db } from '@/libs/DB';
 import { organizationSchema } from '@/models/Schema';
+import { 
+  withAuth, 
+  validateRequestBody, 
+  createSecureErrorResponse,
+  checkRateLimit,
+  SECURITY_HEADERS,
+  type AuthContext
+} from '@/libs/AuthUtils';
+import { 
+  CreateOrganizationSchema, 
+  GetOrganizationsQuerySchema 
+} from '@/libs/ValidationSchemas';
 
-export async function GET() {
+/**
+ * SECURED Organizations API - GET endpoint
+ * SECURITY: Authentication required, only returns user's own organization
+ */
+export const GET = withAuth(async (auth: AuthContext, request: NextRequest) => {
   try {
-    const organizations = await db.select().from(organizationSchema).limit(10);
+    // Rate limiting check
+    const rateLimitResult = checkRateLimit(`${auth.userId}:organizations:get`, 20, 60000);
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Rate limit exceeded. Please try again later.',
+          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            ...SECURITY_HEADERS,
+            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
+          }
+        }
+      );
+    }
 
-    return NextResponse.json({
-      success: true,
-      data: organizations,
-      count: organizations.length,
+    // Parse and validate query parameters
+    const url = new URL(request.url);
+    const queryParams = {
+      limit: parseInt(url.searchParams.get('limit') || '10'),
+      offset: parseInt(url.searchParams.get('offset') || '0'),
+      hasStripeCustomer: url.searchParams.get('hasStripeCustomer') === 'true' || undefined,
+    };
+
+    const validation = GetOrganizationsQuerySchema.safeParse(queryParams);
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Invalid query parameters',
+          details: validation.error.errors.map(err => 
+            `${err.path.join('.')}: ${err.message}`
+          ).join(', ')
+        },
+        { status: 400, headers: SECURITY_HEADERS }
+      );
+    }
+
+    // SECURITY: Users can ONLY access their own organization
+    // This prevents cross-tenant data exposure
+    const organization = await db
+      .select({
+        id: organizationSchema.id,
+        stripeCustomerId: organizationSchema.stripeCustomerId,
+        stripeSubscriptionId: organizationSchema.stripeSubscriptionId,
+        stripeSubscriptionPriceId: organizationSchema.stripeSubscriptionPriceId,
+        stripeSubscriptionStatus: organizationSchema.stripeSubscriptionStatus,
+        stripeSubscriptionCurrentPeriodEnd: organizationSchema.stripeSubscriptionCurrentPeriodEnd,
+        createdAt: organizationSchema.createdAt,
+        updatedAt: organizationSchema.updatedAt,
+      })
+      .from(organizationSchema)
+      .where(eq(organizationSchema.id, auth.orgId))
+      .limit(1);
+
+    if (organization.length === 0) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Organization not found or access denied',
+          code: 'ORGANIZATION_NOT_FOUND'
+        },
+        { status: 404, headers: SECURITY_HEADERS }
+      );
+    }
+
+    // Security logging
+    console.log('Organization access:', {
+      userId: auth.userId,
+      orgId: auth.orgId,
+      sessionId: auth.sessionId,
+      timestamp: new Date().toISOString(),
     });
-  } catch (error) {
-    console.error('Failed to fetch organizations:', error);
 
     return NextResponse.json(
       {
-        success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        success: true,
+        data: organization,
+        count: organization.length,
+        meta: {
+          organizationId: auth.orgId,
+          userId: auth.userId,
+          requestId: auth.sessionId,
+        },
       },
-      { status: 500 },
+      { headers: SECURITY_HEADERS }
+    );
+
+  } catch (error) {
+    return createSecureErrorResponse(
+      error,
+      'Failed to fetch organization',
+      500,
+      { userId: auth.userId, orgId: auth.orgId }
     );
   }
-}
+});
 
-export async function POST(request: NextRequest) {
+/**
+ * SECURED Organizations API - POST endpoint
+ * SECURITY: Authentication required, admin-only operation with strict validation
+ */
+export const POST = withAuth(async (auth: AuthContext, request: NextRequest) => {
   try {
-    const body = await request.json();
+    // Rate limiting check - stricter for organization creation
+    const rateLimitResult = checkRateLimit(`${auth.userId}:organizations:post`, 2, 300000); // 2 requests per 5 minutes
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Rate limit exceeded. Organization creation is limited.',
+          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            ...SECURITY_HEADERS,
+            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
+          }
+        }
+      );
+    }
 
+    // Validate request body
+    const bodyValidation = await validateRequestBody(request, CreateOrganizationSchema);
+    if (!bodyValidation.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Invalid request data',
+          details: bodyValidation.error
+        },
+        { status: 400, headers: SECURITY_HEADERS }
+      );
+    }
+
+    const orgData = bodyValidation.data;
+
+    // SECURITY: Prevent organization ID conflicts and ensure uniqueness
+    const existingOrg = await db
+      .select({ id: organizationSchema.id })
+      .from(organizationSchema)
+      .where(eq(organizationSchema.id, orgData.id))
+      .limit(1);
+
+    if (existingOrg.length > 0) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Organization with this ID already exists',
+          code: 'ORGANIZATION_ID_CONFLICT'
+        },
+        { status: 409, headers: SECURITY_HEADERS }
+      );
+    }
+
+    // SECURITY: Additional validation for Stripe customer ID if provided
+    if (orgData.stripeCustomerId) {
+      const stripeConflict = await db
+        .select({ id: organizationSchema.id })
+        .from(organizationSchema)
+        .where(eq(organizationSchema.stripeCustomerId, orgData.stripeCustomerId))
+        .limit(1);
+
+      if (stripeConflict.length > 0) {
+        return NextResponse.json(
+          { 
+            success: false, 
+            error: 'Stripe customer ID already in use',
+            code: 'STRIPE_CUSTOMER_CONFLICT'
+          },
+          { status: 409, headers: SECURITY_HEADERS }
+        );
+      }
+    }
+
+    // Create organization with validated data
     const newOrg = await db.insert(organizationSchema).values({
-      id: body.id || `org-${Date.now()}`,
-      stripeCustomerId: body.stripeCustomerId || null,
+      id: orgData.id,
+      stripeCustomerId: orgData.stripeCustomerId,
     }).returning();
 
-    return NextResponse.json({
-      success: true,
-      data: newOrg[0],
+    // Security logging
+    console.log('Organization created:', {
+      organizationId: newOrg[0]?.id,
+      creatorUserId: auth.userId,
+      creatorOrgId: auth.orgId,
+      sessionId: auth.sessionId,
+      hasStripeId: !!orgData.stripeCustomerId,
+      timestamp: new Date().toISOString(),
     });
-  } catch (error) {
-    console.error('Failed to create organization:', error);
 
     return NextResponse.json(
       {
-        success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        success: true,
+        data: newOrg[0],
+        meta: {
+          createdBy: auth.userId,
+          requestId: auth.sessionId,
+        },
       },
-      { status: 500 },
+      { 
+        status: 201,
+        headers: SECURITY_HEADERS 
+      }
+    );
+
+  } catch (error) {
+    return createSecureErrorResponse(
+      error,
+      'Failed to create organization',
+      500,
+      { userId: auth.userId, orgId: auth.orgId }
     );
   }
-}
+});

@@ -1,58 +1,272 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import { eq, and } from 'drizzle-orm';
 
 import { db } from '@/libs/DB';
 import { materialsSchema } from '@/models/Schema';
+import { 
+  withAuth, 
+  validateRequestBody, 
+  createSecureErrorResponse,
+  checkRateLimit,
+  SECURITY_HEADERS,
+  type AuthContext
+} from '@/libs/AuthUtils';
+import { 
+  CreateMaterialSchema, 
+  GetMaterialsQuerySchema,
+  type CreateMaterialRequest 
+} from '@/libs/ValidationSchemas';
 
-export async function GET() {
+/**
+ * SECURED Materials API - GET endpoint
+ * SECURITY: Authentication required, organization-scoped data access
+ */
+export const GET = withAuth(async (auth: AuthContext, request: NextRequest) => {
   try {
-    const materials = await db.select().from(materialsSchema).limit(10);
+    // Rate limiting check
+    const rateLimitResult = checkRateLimit(`${auth.userId}:materials:get`, 50, 60000);
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Rate limit exceeded. Please try again later.',
+          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            ...SECURITY_HEADERS,
+            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
+          }
+        }
+      );
+    }
 
-    return NextResponse.json({
-      success: true,
-      data: materials,
+    // Parse and validate query parameters
+    const url = new URL(request.url);
+    const queryParams = {
+      organizationId: url.searchParams.get('organizationId') || auth.orgId,
+      trainerId: url.searchParams.get('trainerId'),
+      status: url.searchParams.get('status'),
+      fileType: url.searchParams.get('fileType'),
+      limit: parseInt(url.searchParams.get('limit') || '10'),
+      offset: parseInt(url.searchParams.get('offset') || '0'),
+    };
+
+    const validation = GetMaterialsQuerySchema.safeParse(queryParams);
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Invalid query parameters',
+          details: validation.error.errors.map(err => 
+            `${err.path.join('.')}: ${err.message}`
+          ).join(', ')
+        },
+        { status: 400, headers: SECURITY_HEADERS }
+      );
+    }
+
+    const query = validation.data;
+
+    // SECURITY: Enforce organization boundary - users can only access their org's materials
+    if (query.organizationId && query.organizationId !== auth.orgId) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Access denied: Cannot access materials from other organizations',
+          code: 'FORBIDDEN_CROSS_TENANT_ACCESS'
+        },
+        { status: 403, headers: SECURITY_HEADERS }
+      );
+    }
+
+    // Build secure query with organization filter
+    let dbQuery = db
+      .select({
+        id: materialsSchema.id,
+        organizationId: materialsSchema.organizationId,
+        trainerId: materialsSchema.trainerId,
+        title: materialsSchema.title,
+        description: materialsSchema.description,
+        fileType: materialsSchema.fileType,
+        fileSize: materialsSchema.fileSize,
+        status: materialsSchema.status,
+        createdAt: materialsSchema.createdAt,
+        updatedAt: materialsSchema.updatedAt,
+      })
+      .from(materialsSchema)
+      .where(eq(materialsSchema.organizationId, auth.orgId));
+
+    // Apply additional filters
+    const filters = [];
+    if (query.trainerId) {
+      filters.push(eq(materialsSchema.trainerId, query.trainerId));
+    }
+    if (query.status) {
+      filters.push(eq(materialsSchema.status, query.status));
+    }
+    if (query.fileType) {
+      filters.push(eq(materialsSchema.fileType, query.fileType));
+    }
+
+    if (filters.length > 0) {
+      dbQuery = dbQuery.where(and(...filters));
+    }
+
+    // Apply pagination
+    const materials = await dbQuery
+      .limit(query.limit)
+      .offset(query.offset);
+
+    // Security logging
+    console.log('Materials access:', {
+      userId: auth.userId,
+      orgId: auth.orgId,
+      sessionId: auth.sessionId,
       count: materials.length,
+      filters: query,
+      timestamp: new Date().toISOString(),
     });
-  } catch (error) {
-    console.error('Failed to fetch materials:', error);
 
     return NextResponse.json(
       {
-        success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        success: true,
+        data: materials,
+        count: materials.length,
+        pagination: {
+          limit: query.limit,
+          offset: query.offset,
+          hasMore: materials.length === query.limit,
+        },
+        meta: {
+          organizationId: auth.orgId,
+          requestId: auth.sessionId,
+        },
       },
-      { status: 500 },
+      { headers: SECURITY_HEADERS }
+    );
+
+  } catch (error) {
+    return createSecureErrorResponse(
+      error,
+      'Failed to fetch materials',
+      500,
+      { userId: auth.userId, orgId: auth.orgId }
     );
   }
-}
+});
 
-export async function POST(request: NextRequest) {
+/**
+ * SECURED Materials API - POST endpoint  
+ * SECURITY: Authentication required, input validation, organization enforcement
+ */
+export const POST = withAuth(async (auth: AuthContext, request: NextRequest) => {
   try {
-    const body = await request.json();
+    // Rate limiting check
+    const rateLimitResult = checkRateLimit(`${auth.userId}:materials:post`, 10, 60000);
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Rate limit exceeded. Please try again later.',
+          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            ...SECURITY_HEADERS,
+            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
+          }
+        }
+      );
+    }
 
+    // Validate request body
+    const bodyValidation = await validateRequestBody(request, CreateMaterialSchema);
+    if (!bodyValidation.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Invalid request data',
+          details: bodyValidation.error
+        },
+        { status: 400, headers: SECURITY_HEADERS }
+      );
+    }
+
+    const materialData = bodyValidation.data;
+
+    // SECURITY: Enforce organization boundary - users can only create materials for their org
+    if (materialData.organizationId !== auth.orgId) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Access denied: Cannot create materials for other organizations',
+          code: 'FORBIDDEN_CROSS_TENANT_CREATE'
+        },
+        { status: 403, headers: SECURITY_HEADERS }
+      );
+    }
+
+    // SECURITY: Validate trainer ID matches authenticated user (if provided)
+    if (materialData.trainerId !== auth.userId) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Access denied: Cannot create materials for other trainers',
+          code: 'FORBIDDEN_IMPERSONATION'
+        },
+        { status: 403, headers: SECURITY_HEADERS }
+      );
+    }
+
+    // Create material with validated data
     const newMaterial = await db.insert(materialsSchema).values({
-      organizationId: body.organizationId || 'test-org-1',
-      trainerId: body.trainerId || 'test-trainer-1',
-      title: body.title || 'Test Material',
-      description: body.description || 'A test learning material',
-      fileType: body.fileType || 'pdf',
-      originalUri: body.originalUri || '/test/path/material.pdf',
+      organizationId: auth.orgId, // Always use authenticated org
+      trainerId: auth.userId,      // Always use authenticated user
+      title: materialData.title,
+      description: materialData.description,
+      fileType: materialData.fileType,
+      originalUri: materialData.originalUri,
+      fileSize: materialData.fileSize,
       status: 'uploaded',
     }).returning();
 
-    return NextResponse.json({
-      success: true,
-      data: newMaterial[0],
+    // Security logging
+    console.log('Material created:', {
+      materialId: newMaterial[0]?.id,
+      userId: auth.userId,
+      orgId: auth.orgId,
+      sessionId: auth.sessionId,
+      title: materialData.title,
+      fileType: materialData.fileType,
+      timestamp: new Date().toISOString(),
     });
-  } catch (error) {
-    console.error('Failed to create material:', error);
 
     return NextResponse.json(
       {
-        success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        success: true,
+        data: newMaterial[0],
+        meta: {
+          organizationId: auth.orgId,
+          trainerId: auth.userId,
+          requestId: auth.sessionId,
+        },
       },
-      { status: 500 },
+      { 
+        status: 201,
+        headers: SECURITY_HEADERS 
+      }
+    );
+
+  } catch (error) {
+    return createSecureErrorResponse(
+      error,
+      'Failed to create material',
+      500,
+      { userId: auth.userId, orgId: auth.orgId }
     );
   }
-}
+});

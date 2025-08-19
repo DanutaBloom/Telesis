@@ -27,6 +27,88 @@ export default withSentryConfig(
       experimental: {
         serverComponentsExternalPackages: ['@electric-sql/pglite'],
       },
+      // SECURITY: Comprehensive security headers for OWASP compliance
+      async headers() {
+        return [
+          {
+            // Apply security headers to all routes
+            source: '/(.*)',
+            headers: [
+              {
+                key: 'X-Frame-Options',
+                value: 'DENY', // Prevents clickjacking attacks
+              },
+              {
+                key: 'X-Content-Type-Options',
+                value: 'nosniff', // Prevents MIME type sniffing
+              },
+              {
+                key: 'X-XSS-Protection',
+                value: '1; mode=block', // Legacy XSS protection
+              },
+              {
+                key: 'Referrer-Policy',
+                value: 'strict-origin-when-cross-origin', // Controls referrer information
+              },
+              {
+                key: 'Permissions-Policy',
+                value: [
+                  'accelerometer=()',
+                  'camera=()',
+                  'geolocation=()',
+                  'gyroscope=()',
+                  'magnetometer=()',
+                  'microphone=()',
+                  'payment=()',
+                  'usb=()'
+                ].join(', '), // Disables potentially dangerous browser APIs
+              },
+              {
+                key: 'Strict-Transport-Security',
+                value: 'max-age=31536000; includeSubDomains; preload', // Forces HTTPS
+              },
+              {
+                key: 'Content-Security-Policy',
+                value: [
+                  "default-src 'self'",
+                  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://*.clerk.accounts.dev https://*.clerk.dev https://challenges.cloudflare.com",
+                  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+                  "font-src 'self' https://fonts.gstatic.com",
+                  "img-src 'self' data: https: blob:",
+                  "media-src 'self' https: blob:",
+                  "connect-src 'self' https://api.stripe.com https://*.clerk.accounts.dev https://*.clerk.dev https://challenges.cloudflare.com wss://*.clerk.dev https://vitals.vercel-insights.com",
+                  "frame-src 'self' https://js.stripe.com https://*.stripe.com https://challenges.cloudflare.com",
+                  "worker-src 'self' blob:",
+                  "child-src 'self'",
+                  "object-src 'none'",
+                  "base-uri 'self'",
+                  "form-action 'self'",
+                  "frame-ancestors 'none'",
+                  "upgrade-insecure-requests"
+                ].join('; '), // Comprehensive CSP for XSS prevention
+              },
+            ],
+          },
+          {
+            // Specific headers for API routes
+            source: '/api/(.*)',
+            headers: [
+              {
+                key: 'Cache-Control',
+                value: 'no-store, no-cache, must-revalidate, max-age=0',
+              },
+              {
+                key: 'Pragma',
+                value: 'no-cache',
+              },
+              {
+                key: 'X-Robots-Tag',
+                value: 'noindex, nofollow, nosnippet, noarchive',
+              },
+            ],
+          },
+        ];
+      },
     }),
   ),
   {

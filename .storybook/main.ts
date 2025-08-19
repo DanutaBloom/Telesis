@@ -16,6 +16,18 @@ const config: StorybookConfig = {
   core: {
     disableTelemetry: true,
   },
+  webpackFinal: async (config) => {
+    // Workaround for webpack hook compatibility issues
+    if (config.resolve) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+        os: false,
+      };
+    }
+    return config;
+  },
 };
 
 export default config;

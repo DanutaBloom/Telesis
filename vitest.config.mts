@@ -11,6 +11,7 @@ export default defineConfig({
   test: {
     globals: true, // This is needed by @testing-library to be cleaned up after each test
     include: ['src/**/*.test.{js,jsx,ts,tsx}'],
+    exclude: ['**/cssTestUtils.test.tsx'],
     coverage: {
       include: ['src/**/*'],
       exclude: ['src/**/*.stories.{js,jsx,ts,tsx}', '**/*.d.ts'],

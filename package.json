@@ -2,6 +2,10 @@
   "name": "telesis",
   "version": "0.1.0",
   "description": "AI-Powered Micro-Learning Platform",
+  "engines": {
+    "node": ">=20.18.0 <21.0.0",
+    "npm": ">=10.8.0"
+  },
   "scripts": {
     "dev:spotlight": "spotlight-sidecar",
     "dev:next": "next dev",

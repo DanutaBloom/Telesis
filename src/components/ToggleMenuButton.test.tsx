@@ -5,8 +5,8 @@ import { ToggleMenuButton } from './ToggleMenuButton';
 describe('ToggleMenuButton', () => {
   describe('Styling and Classes', () => {
     it('should have correct Tailwind classes applied', () => {
-      render(<ToggleMenuButton />);
-      const button = screen.getByRole('button');
+      render(<ToggleMenuButton data-testid="toggle-menu-button" />);
+      const button = screen.getByTestId('toggle-menu-button');
 
       // Test button classes using our CSS testing utilities
       expectElementToHaveClasses(button, [
@@ -16,8 +16,9 @@ describe('ToggleMenuButton', () => {
     });
 
     it('should have proper SVG icon with correct classes', () => {
-      render(<ToggleMenuButton />);
-      const svg = screen.getByRole('button').querySelector('svg');
+      render(<ToggleMenuButton data-testid="toggle-menu-button" />);
+      const button = screen.getByTestId('toggle-menu-button');
+      const svg = button.querySelector('svg');
 
       expect(svg).toBeInTheDocument();
 
@@ -39,16 +40,16 @@ describe('ToggleMenuButton', () => {
 
   describe('Accessibility', () => {
     it('should be accessible as a button', () => {
-      render(<ToggleMenuButton />);
-      const button = screen.getByRole('button');
+      render(<ToggleMenuButton data-testid="toggle-menu-button" />);
+      const button = screen.getByTestId('toggle-menu-button');
 
       expect(button).toBeInTheDocument();
       expect(button.tagName.toLowerCase()).toBe('button');
     });
 
     it('should be focusable', () => {
-      render(<ToggleMenuButton />);
-      const button = screen.getByRole('button');
+      render(<ToggleMenuButton data-testid="toggle-menu-button" />);
+      const button = screen.getByTestId('toggle-menu-button');
 
       button.focus();
 
@@ -61,8 +62,8 @@ describe('ToggleMenuButton', () => {
       const handler = vi.fn();
       const user = userEvent.setup();
 
-      render(<ToggleMenuButton onClick={handler} />);
-      const button = screen.getByRole('button');
+      render(<ToggleMenuButton onClick={handler} data-testid="toggle-menu-button" />);
+      const button = screen.getByTestId('toggle-menu-button');
 
       await user.click(button);
 
@@ -73,8 +74,8 @@ describe('ToggleMenuButton', () => {
       const handler = vi.fn();
       const user = userEvent.setup();
 
-      render(<ToggleMenuButton onClick={handler} />);
-      const button = screen.getByRole('button');
+      render(<ToggleMenuButton onClick={handler} data-testid="toggle-menu-button" />);
+      const button = screen.getByTestId('toggle-menu-button');
 
       button.focus();
       await user.keyboard('{Enter}');
@@ -86,8 +87,8 @@ describe('ToggleMenuButton', () => {
       const handler = vi.fn();
       const user = userEvent.setup();
 
-      render(<ToggleMenuButton onClick={handler} />);
-      const button = screen.getByRole('button');
+      render(<ToggleMenuButton onClick={handler} data-testid="toggle-menu-button" />);
+      const button = screen.getByTestId('toggle-menu-button');
 
       button.focus();
       await user.keyboard(' ');

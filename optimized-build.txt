@@ -1,0 +1,30 @@
+
+> telesis@0.1.0 build-stats
+> cross-env ANALYZE=true npm run build
+
+
+> telesis@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.32
+  - Environments: .env.local, .env.production, .env
+  - Experiments (use with caution):
+    · instrumentationHook
+
+   Creating an optimized production build ...
+[@sentry/nextjs] The Sentry SDK has enabled source map generation for your Next.js app. If you don't want to serve Source Maps to your users, either set the `sourcemaps.deleteSourcemapsAfterUpload` option to true, or manually delete the source maps after the build. In future Sentry SDK versions `sourcemaps.deleteSourcemapsAfterUpload` will default to `true`. If you do not want to generate and upload sourcemaps, set the `sourcemaps.disable` option in `withSentryConfig()`.
+Webpack Bundle Analyzer saved report to /Users/philipgedrojc/Projects/telesis/.next/analyze/nodejs.html
+Webpack Bundle Analyzer saved report to /Users/philipgedrojc/Projects/telesis/.next/analyze/edge.html
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (166kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (318kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+unhandledRejection ReferenceError: require is not defined
+    at Object.name [as getName] (file:///Users/philipgedrojc/Projects/telesis/next.config.mjs:114:30)
+    at addModuleToChunksInfoMap (/Users/philipgedrojc/Projects/telesis/node_modules/.pnpm/next@14.2.32_@babel+core@7.28.3_@opentelemetry+api@1.9.0_@playwright+test@1.54.2_react-_76548f297d9e9ad9a17608a915d0dd37/node_modules/next/dist/compiled/webpack/bundle5.js:28:1133071)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/.pnpm/next@14.2.32_@babel+core@7.28.3_@opentelemetry+api@1.9.0_@playwright+test@1.54.2_react-_76548f297d9e9ad9a17608a915d0dd37/node_modules/next/dist/compiled/webpack/bundle5.js:28:1135446
+    at Hook.eval [as call] (eval at create (/Users/philipgedrojc/Projects/telesis/node_modules/.pnpm/next@14.2.32_@babel+core@7.28.3_@opentelemetry+api@1.9.0_@playwright+test@1.54.2_react-_76548f297d9e9ad9a17608a915d0dd37/node_modules/next/dist/compiled/webpack/bundle5.js:13:28636), <anonymous>:37:16)
+    at Compilation.seal (/Users/philipgedrojc/Projects/telesis/node_modules/.pnpm/next@14.2.32_@babel+core@7.28.3_@opentelemetry+api@1.9.0_@playwright+test@1.54.2_react-_76548f297d9e9ad9a17608a915d0dd37/node_modules/next/dist/compiled/webpack/bundle5.js:28:103413)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/.pnpm/next@14.2.32_@babel+core@7.28.3_@opentelemetry+api@1.9.0_@playwright+test@1.54.2_react-_76548f297d9e9ad9a17608a915d0dd37/node_modules/next/dist/compiled/webpack/bundle5.js:28:149081
+    at /Users/philipgedrojc/Projects/telesis/node_modules/.pnpm/next@14.2.32_@babel+core@7.28.3_@opentelemetry+api@1.9.0_@playwright+test@1.54.2_react-_76548f297d9e9ad9a17608a915d0dd37/node_modules/next/dist/compiled/webpack/bundle5.js:28:99350
+    at _next4 (eval at create (/Users/philipgedrojc/Projects/telesis/node_modules/.pnpm/next@14.2.32_@babel+core@7.28.3_@opentelemetry+api@1.9.0_@playwright+test@1.54.2_react-_76548f297d9e9ad9a17608a915d0dd37/node_modules/next/dist/compiled/webpack/bundle5.js:13:28858), <anonymous>:16:1)
+    at eval (eval at create (/Users/philipgedrojc/Projects/telesis/node_modules/.pnpm/next@14.2.32_@babel+core@7.28.3_@opentelemetry+api@1.9.0_@playwright+test@1.54.2_react-_76548f297d9e9ad9a17608a915d0dd37/node_modules/next/dist/compiled/webpack/bundle5.js:13:28858), <anonymous>:34:1)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/.pnpm/next@14.2.32_@babel+core@7.28.3_@opentelemetry+api@1.9.0_@playwright+test@1.54.2_react-_76548f297d9e9ad9a17608a915d0dd37/node_modules/next/dist/build/webpack/plugins/telemetry-plugin.js:150:17

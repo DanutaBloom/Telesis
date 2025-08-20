@@ -6,6 +6,7 @@ import {
 } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 
+import { isOrganizationSelectionRequired } from './libs/ClerkUtils';
 import { AllLocales, AppConfig } from './utils/AppConfig';
 
 const intlMiddleware = createMiddleware({
@@ -60,16 +61,23 @@ export default function middleware(
 
       const authObj = await auth();
 
+      // Only redirect to organization selection if organizations are enabled
       if (
         authObj.userId
         && !authObj.orgId
         && req.nextUrl.pathname.includes('/dashboard')
         && !req.nextUrl.pathname.endsWith('/organization-selection')
+        && isOrganizationSelectionRequired()
       ) {
-        const orgSelection = new URL(
-          '/onboarding/organization-selection',
-          req.url,
-        );
+        // Extract locale from the current path
+        const pathSegments = req.nextUrl.pathname.split('/');
+        const locale = pathSegments[1] && pathSegments[1].length === 2 ? pathSegments[1] : '';
+        
+        const orgSelectionPath = locale 
+          ? `/${locale}/onboarding/organization-selection`
+          : '/onboarding/organization-selection';
+          
+        const orgSelection = new URL(orgSelectionPath, req.url);
 
         return NextResponse.redirect(orgSelection);
       }
@@ -82,5 +90,9 @@ export default function middleware(
 }
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next|monitoring|api).*)', '/'], // Exclude API routes from middleware
+  matcher: [
+    '/((?!.+\\.[\\w]+$|_next|monitoring).*)',
+    '/',
+    '/(api|trpc)(.*)', // Include API routes for authentication
+  ],
 };

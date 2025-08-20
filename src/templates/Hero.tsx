@@ -14,7 +14,7 @@ export const Hero = () => {
       <CenteredHero
         banner={(
           <a
-            className={badgeVariants()}
+            className={badgeVariants({ variant: 'sage-primary' })}
             href="https://twitter.com/ixartz"
             target="_blank"
             rel="noopener noreferrer"
@@ -35,14 +35,14 @@ export const Hero = () => {
         buttons={(
           <>
             <a
-              className={buttonVariants({ size: 'lg' })}
+              className={buttonVariants({ variant: 'sage-gradient', size: 'lg' })}
               href="https://github.com/ixartz/SaaS-Boilerplate"
             >
               {t('primary_button')}
             </a>
 
             <a
-              className={buttonVariants({ variant: 'outline', size: 'lg' })}
+              className={buttonVariants({ variant: 'sage-subtle', size: 'lg' })}
               href="https://github.com/ixartz/SaaS-Boilerplate"
             >
               <GitHubLogoIcon className="mr-2 size-5" />

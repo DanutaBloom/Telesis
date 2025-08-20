@@ -5,13 +5,14 @@ import { eq } from 'drizzle-orm';
 import { db } from '@/libs/DB';
 import { organizationSchema } from '@/models/Schema';
 import { 
-  withAuth, 
+  withPartialAuth, 
   validateRequestBody, 
   createSecureErrorResponse,
   checkRateLimit,
   SECURITY_HEADERS,
-  type AuthContext
+  type PartialAuthContext
 } from '@/libs/AuthUtils';
+import { isOrganizationsEnabled } from '@/libs/ClerkUtils';
 import { 
   CreateOrganizationSchema, 
   GetOrganizationsQuerySchema 
@@ -21,7 +22,7 @@ import {
  * SECURED Organizations API - GET endpoint
  * SECURITY: Authentication required, only returns user's own organization
  */
-export const GET = withAuth(async (auth: AuthContext, request: NextRequest) => {
+export const GET = withPartialAuth(async (auth: PartialAuthContext, request: NextRequest) => {
   try {
     // Rate limiting check
     const rateLimitResult = checkRateLimit(`${auth.userId}:organizations:get`, 20, 60000);
@@ -39,6 +40,31 @@ export const GET = withAuth(async (auth: AuthContext, request: NextRequest) => {
             'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
           }
         }
+      );
+    }
+
+    // Check if organizations are enabled
+    if (!isOrganizationsEnabled()) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Organizations feature is not enabled',
+          code: 'ORGANIZATIONS_DISABLED'
+        },
+        { status: 403, headers: SECURITY_HEADERS }
+      );
+    }
+
+    // Check if user has organization
+    if (!auth.orgId) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Organization selection required',
+          code: 'ORGANIZATION_SELECTION_REQUIRED',
+          redirectTo: '/onboarding/organization-selection'
+        },
+        { status: 403, headers: SECURITY_HEADERS }
       );
     }
 
@@ -128,7 +154,7 @@ export const GET = withAuth(async (auth: AuthContext, request: NextRequest) => {
  * SECURED Organizations API - POST endpoint
  * SECURITY: Authentication required, admin-only operation with strict validation
  */
-export const POST = withAuth(async (auth: AuthContext, request: NextRequest) => {
+export const POST = withPartialAuth(async (auth: PartialAuthContext, request: NextRequest) => {
   try {
     // Rate limiting check - stricter for organization creation
     const rateLimitResult = checkRateLimit(`${auth.userId}:organizations:post`, 2, 300000); // 2 requests per 5 minutes
@@ -146,6 +172,18 @@ export const POST = withAuth(async (auth: AuthContext, request: NextRequest) => 
             'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
           }
         }
+      );
+    }
+
+    // Check if organizations are enabled
+    if (!isOrganizationsEnabled()) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Organizations feature is not enabled',
+          code: 'ORGANIZATIONS_DISABLED'
+        },
+        { status: 403, headers: SECURITY_HEADERS }
       );
     }
 

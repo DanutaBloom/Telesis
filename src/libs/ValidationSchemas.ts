@@ -18,10 +18,19 @@ const sanitizeOptionalString = z
   .optional()
   .transform(val => val ? sanitizeString(val) : undefined);
 
-const sanitizeRequiredString = z
-  .string()
-  .min(1, 'Required field cannot be empty')
-  .transform(sanitizeString);
+// Internal use only - not exported
+// const sanitizeRequiredString = z
+//   .string()
+//   .min(1, 'Required field cannot be empty')
+//   .transform(sanitizeString);
+
+const createSanitizedString = (minLength: number = 1, maxLength?: number) => {
+  let schema = z.string().min(minLength, 'Required field cannot be empty');
+  if (maxLength) {
+    schema = schema.max(maxLength, `Must be less than ${maxLength} characters`);
+  }
+  return schema.transform(sanitizeString);
+};
 
 /**
  * Materials API Validation Schemas
@@ -39,9 +48,7 @@ export const CreateMaterialSchema = z.object({
     .regex(CLERK_ID_REGEX, 'Invalid trainer ID format')
     .max(100, 'Trainer ID too long'),
   
-  title: sanitizeRequiredString
-    .min(1, 'Title is required')
-    .max(200, 'Title must be less than 200 characters'),
+  title: createSanitizedString(1, 200),
   
   description: sanitizeOptionalString
     .refine(val => !val || val.length <= 1000, 'Description must be less than 1000 characters'),
@@ -185,9 +192,7 @@ export const CreateMicroModuleSchema = z.object({
       errorMap: () => ({ message: 'Invalid module type' })
     }),
   
-  title: sanitizeRequiredString
-    .min(1, 'Title is required')
-    .max(200, 'Title must be less than 200 characters'),
+  title: createSanitizedString(1, 200),
   
   content: z
     .record(z.any()) // JSONB content - basic validation
@@ -237,7 +242,7 @@ export const UpdateUserPreferencesSchema = z.object({
     .optional(),
   
   topicsInterested: z
-    .array(sanitizeRequiredString.max(50, 'Topic name too long'))
+    .array(createSanitizedString(1, 50))
     .max(20, 'Cannot select more than 20 topics')
     .optional(),
   

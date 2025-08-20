@@ -110,9 +110,21 @@
     @apply bg-gradient-to-br from-sage-quietude/20 via-sage-mist/10 to-sage-growth/5;
   }
   
+  .sage-gradient-card {
+    @apply bg-gradient-to-br from-sage-mist/50 to-sage-quietude/30;
+  }
+  
   /* Modern Sage Text Utilities */
   .sage-text-gradient {
     @apply bg-gradient-to-r from-sage-quietude via-primary to-sage-growth bg-clip-text text-transparent;
+  }
+  
+  .sage-text-primary {
+    @apply text-sage-quietude;
+  }
+  
+  .sage-text-accent {
+    @apply text-sage-growth;
   }
   
   /* Modern Sage Borders and Accents */
@@ -120,7 +132,51 @@
     @apply border-sage-quietude/30;
   }
   
+  .sage-border-accent {
+    @apply border-sage-growth/30;
+  }
+  
   .sage-ring {
     @apply ring-sage-quietude focus-visible:ring-sage-quietude;
+  }
+  
+  .sage-ring-accent {
+    @apply ring-sage-growth focus-visible:ring-sage-growth;
+  }
+  
+  /* Modern Sage Background Utilities */
+  .sage-bg-primary {
+    @apply bg-sage-quietude;
+  }
+  
+  .sage-bg-accent {
+    @apply bg-sage-growth;
+  }
+  
+  .sage-bg-mist {
+    @apply bg-sage-mist;
+  }
+  
+  /* Modern Sage Interactive States */
+  .sage-hover-primary {
+    @apply hover:bg-sage-quietude/10 hover:text-sage-quietude transition-colors;
+  }
+  
+  .sage-hover-accent {
+    @apply hover:bg-sage-growth/10 hover:text-sage-growth transition-colors;
+  }
+  
+  /* Modern Sage Card Styles */
+  .sage-card {
+    @apply bg-card border sage-border rounded-lg shadow-sm;
+  }
+  
+  .sage-card-subtle {
+    @apply sage-gradient-card border-0 rounded-lg shadow-sm;
+  }
+  
+  /* Modern Sage Button Reset */
+  .sage-button-reset {
+    @apply bg-transparent border-0 p-0 m-0 text-inherit cursor-pointer;
   }
 }

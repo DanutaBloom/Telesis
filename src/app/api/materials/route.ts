@@ -5,24 +5,24 @@ import { eq, and } from 'drizzle-orm';
 import { db } from '@/libs/DB';
 import { materialsSchema } from '@/models/Schema';
 import { 
-  withAuth, 
+  withPartialAuth, 
   validateRequestBody, 
   createSecureErrorResponse,
   checkRateLimit,
   SECURITY_HEADERS,
-  type AuthContext
+  type PartialAuthContext
 } from '@/libs/AuthUtils';
+import { isOrganizationsEnabled } from '@/libs/ClerkUtils';
 import { 
   CreateMaterialSchema, 
-  GetMaterialsQuerySchema,
-  type CreateMaterialRequest 
+  GetMaterialsQuerySchema
 } from '@/libs/ValidationSchemas';
 
 /**
  * SECURED Materials API - GET endpoint
  * SECURITY: Authentication required, organization-scoped data access
  */
-export const GET = withAuth(async (auth: AuthContext, request: NextRequest) => {
+export const GET = withPartialAuth(async (auth: PartialAuthContext, request: NextRequest) => {
   try {
     // Rate limiting check
     const rateLimitResult = checkRateLimit(`${auth.userId}:materials:get`, 50, 60000);
@@ -43,10 +43,27 @@ export const GET = withAuth(async (auth: AuthContext, request: NextRequest) => {
       );
     }
 
+    // Check if organizations are enabled and handle auth accordingly
+    const organizationsEnabled = isOrganizationsEnabled();
+    
+    if (organizationsEnabled && !auth.orgId) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Organization selection required',
+          code: 'ORGANIZATION_SELECTION_REQUIRED',
+          redirectTo: '/onboarding/organization-selection'
+        },
+        { status: 403, headers: SECURITY_HEADERS }
+      );
+    }
+
     // Parse and validate query parameters
     const url = new URL(request.url);
     const queryParams = {
-      organizationId: url.searchParams.get('organizationId') || auth.orgId,
+      organizationId: organizationsEnabled 
+        ? (url.searchParams.get('organizationId') || auth.orgId)
+        : url.searchParams.get('organizationId') || null,
       trainerId: url.searchParams.get('trainerId'),
       status: url.searchParams.get('status'),
       fileType: url.searchParams.get('fileType'),
@@ -70,20 +87,43 @@ export const GET = withAuth(async (auth: AuthContext, request: NextRequest) => {
 
     const query = validation.data;
 
-    // SECURITY: Enforce organization boundary - users can only access their org's materials
-    if (query.organizationId && query.organizationId !== auth.orgId) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          error: 'Access denied: Cannot access materials from other organizations',
-          code: 'FORBIDDEN_CROSS_TENANT_ACCESS'
-        },
-        { status: 403, headers: SECURITY_HEADERS }
-      );
+    // SECURITY: Enforce organization boundary when organizations are enabled
+    if (organizationsEnabled) {
+      if (query.organizationId && query.organizationId !== auth.orgId) {
+        return NextResponse.json(
+          { 
+            success: false, 
+            error: 'Access denied: Cannot access materials from other organizations',
+            code: 'FORBIDDEN_CROSS_TENANT_ACCESS'
+          },
+          { status: 403, headers: SECURITY_HEADERS }
+        );
+      }
     }
 
-    // Build secure query with organization filter
-    let dbQuery = db
+    // Build secure query with appropriate filtering
+    const filters = [];
+    
+    // Add organization filter if organizations are enabled
+    if (organizationsEnabled && auth.orgId) {
+      filters.push(eq(materialsSchema.organizationId, auth.orgId));
+    } else if (!organizationsEnabled) {
+      // When organizations are disabled, filter by user
+      filters.push(eq(materialsSchema.trainerId, auth.userId));
+    }
+    
+    if (query.trainerId) {
+      filters.push(eq(materialsSchema.trainerId, query.trainerId));
+    }
+    if (query.status) {
+      filters.push(eq(materialsSchema.status, query.status));
+    }
+    if (query.fileType) {
+      filters.push(eq(materialsSchema.fileType, query.fileType));
+    }
+
+    // Build query with all filters and apply pagination
+    const materials = await db
       .select({
         id: materialsSchema.id,
         organizationId: materialsSchema.organizationId,
@@ -97,26 +137,7 @@ export const GET = withAuth(async (auth: AuthContext, request: NextRequest) => {
         updatedAt: materialsSchema.updatedAt,
       })
       .from(materialsSchema)
-      .where(eq(materialsSchema.organizationId, auth.orgId));
-
-    // Apply additional filters
-    const filters = [];
-    if (query.trainerId) {
-      filters.push(eq(materialsSchema.trainerId, query.trainerId));
-    }
-    if (query.status) {
-      filters.push(eq(materialsSchema.status, query.status));
-    }
-    if (query.fileType) {
-      filters.push(eq(materialsSchema.fileType, query.fileType));
-    }
-
-    if (filters.length > 0) {
-      dbQuery = dbQuery.where(and(...filters));
-    }
-
-    // Apply pagination
-    const materials = await dbQuery
+      .where(and(...filters))
       .limit(query.limit)
       .offset(query.offset);
 
@@ -141,7 +162,7 @@ export const GET = withAuth(async (auth: AuthContext, request: NextRequest) => {
           hasMore: materials.length === query.limit,
         },
         meta: {
-          organizationId: auth.orgId,
+          organizationId: auth.orgId || null,
           requestId: auth.sessionId,
         },
       },
@@ -162,7 +183,7 @@ export const GET = withAuth(async (auth: AuthContext, request: NextRequest) => {
  * SECURED Materials API - POST endpoint  
  * SECURITY: Authentication required, input validation, organization enforcement
  */
-export const POST = withAuth(async (auth: AuthContext, request: NextRequest) => {
+export const POST = withPartialAuth(async (auth: PartialAuthContext, request: NextRequest) => {
   try {
     // Rate limiting check
     const rateLimitResult = checkRateLimit(`${auth.userId}:materials:post`, 10, 60000);
@@ -183,6 +204,21 @@ export const POST = withAuth(async (auth: AuthContext, request: NextRequest) => 
       );
     }
 
+    // Check if organizations are enabled and handle auth accordingly
+    const organizationsEnabled = isOrganizationsEnabled();
+    
+    if (organizationsEnabled && !auth.orgId) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Organization selection required',
+          code: 'ORGANIZATION_SELECTION_REQUIRED',
+          redirectTo: '/onboarding/organization-selection'
+        },
+        { status: 403, headers: SECURITY_HEADERS }
+      );
+    }
+
     // Validate request body
     const bodyValidation = await validateRequestBody(request, CreateMaterialSchema);
     if (!bodyValidation.success) {
@@ -198,16 +234,18 @@ export const POST = withAuth(async (auth: AuthContext, request: NextRequest) => 
 
     const materialData = bodyValidation.data;
 
-    // SECURITY: Enforce organization boundary - users can only create materials for their org
-    if (materialData.organizationId !== auth.orgId) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          error: 'Access denied: Cannot create materials for other organizations',
-          code: 'FORBIDDEN_CROSS_TENANT_CREATE'
-        },
-        { status: 403, headers: SECURITY_HEADERS }
-      );
+    // SECURITY: Enforce organization boundary when organizations are enabled
+    if (organizationsEnabled) {
+      if (materialData.organizationId !== auth.orgId) {
+        return NextResponse.json(
+          { 
+            success: false, 
+            error: 'Access denied: Cannot create materials for other organizations',
+            code: 'FORBIDDEN_CROSS_TENANT_CREATE'
+          },
+          { status: 403, headers: SECURITY_HEADERS }
+        );
+      }
     }
 
     // SECURITY: Validate trainer ID matches authenticated user (if provided)
@@ -223,16 +261,20 @@ export const POST = withAuth(async (auth: AuthContext, request: NextRequest) => 
     }
 
     // Create material with validated data
-    const newMaterial = await db.insert(materialsSchema).values({
-      organizationId: auth.orgId, // Always use authenticated org
-      trainerId: auth.userId,      // Always use authenticated user
-      title: materialData.title,
-      description: materialData.description,
-      fileType: materialData.fileType,
-      originalUri: materialData.originalUri,
-      fileSize: materialData.fileSize,
-      status: 'uploaded',
-    }).returning();
+    const insertData = {
+      organizationId: organizationsEnabled 
+        ? (materialData.organizationId as string)
+        : (auth.orgId || 'default'), // Fallback for disabled organizations
+      trainerId: materialData.trainerId as string,
+      title: materialData.title as string,
+      description: materialData.description as string | null,
+      fileType: materialData.fileType as string | null,
+      originalUri: materialData.originalUri as string,
+      fileSize: materialData.fileSize as number | null,
+      status: 'uploaded' as const,
+    };
+    
+    const newMaterial = await db.insert(materialsSchema).values(insertData).returning();
 
     // Security logging
     console.log('Material created:', {

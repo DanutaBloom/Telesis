@@ -16,20 +16,135 @@ const bundleAnalyzer = withBundleAnalyzer({
 });
 
 /** @type {import('next').NextConfig} */
-export default withSentryConfig(
-  bundleAnalyzer(
-    withNextIntlConfig({
-      eslint: {
-        dirs: ['.'],
-      },
-      poweredByHeader: false,
-      reactStrictMode: true,
-      experimental: {
-        serverComponentsExternalPackages: ['@electric-sql/pglite'],
-      },
-      // SECURITY: Comprehensive security headers for OWASP compliance
-      async headers() {
-        return [
+const nextConfig = {
+  eslint: {
+    dirs: ['.'],
+  },
+  poweredByHeader: false,
+  reactStrictMode: true,
+  experimental: {
+    serverComponentsExternalPackages: ['@electric-sql/pglite'],
+    optimizePackageImports: [
+      '@radix-ui/react-accordion',
+      '@radix-ui/react-dropdown-menu',
+      '@radix-ui/react-icons',
+      '@radix-ui/react-label',
+      '@radix-ui/react-separator',
+      '@radix-ui/react-slot',
+      '@radix-ui/react-tooltip',
+      'lucide-react',
+      '@tanstack/react-table',
+      '@clerk/nextjs',
+      '@clerk/themes',
+      '@sentry/nextjs',
+    ],
+  },
+  // Optimize production builds
+  swcMinify: true,
+  compress: true,
+  productionBrowserSourceMaps: false,
+  // Configure module resolution for better tree shaking
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{member}}',
+    },
+    '@radix-ui/react-icons': {
+      transform: '@radix-ui/react-icons/dist/{{member}}',
+    },
+  },
+  // Webpack configuration for advanced optimization
+  webpack: (config, { dev, isServer }) => {
+    // Production optimizations
+    if (!dev && !isServer) {
+      // Split chunks for better caching
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            default: false,
+            vendors: false,
+            // Framework chunk
+            framework: {
+              name: 'framework',
+              chunks: 'all',
+              test: /[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-sync-external-store)[\\/]/,
+              priority: 40,
+              enforce: true,
+            },
+            // Clerk authentication chunk
+            clerk: {
+              name: 'clerk',
+              test: /[\\/]node_modules[\\/]@clerk[\\/]/,
+              chunks: 'all',
+              priority: 35,
+              reuseExistingChunk: true,
+            },
+            // UI components chunk
+            ui: {
+              name: 'ui',
+              test: /[\\/]node_modules[\\/](@radix-ui|class-variance-authority|clsx|tailwind-merge)[\\/]/,
+              chunks: 'all',
+              priority: 30,
+              reuseExistingChunk: true,
+            },
+            // Sentry monitoring chunk
+            monitoring: {
+              name: 'monitoring',
+              test: /[\\/]node_modules[\\/]@sentry[\\/]/,
+              chunks: 'all',
+              priority: 25,
+              reuseExistingChunk: true,
+            },
+            // Stripe payments chunk
+            stripe: {
+              name: 'stripe',
+              test: /[\\/]node_modules[\\/]stripe[\\/]/,
+              chunks: 'all',
+              priority: 20,
+              reuseExistingChunk: true,
+            },
+            // Common libraries chunk
+            lib: {
+              test: /[\\/]node_modules[\\/]/,
+              name: 'vendors',
+              chunks: 'all',
+              priority: 15,
+              minChunks: 1,
+              minSize: 160000,
+              reuseExistingChunk: true,
+            },
+            // Common components
+            commons: {
+              name: 'commons',
+              minChunks: 2,
+              priority: 10,
+              reuseExistingChunk: true,
+            },
+          },
+          maxAsyncRequests: 30,
+          maxInitialRequests: 25,
+          minSize: 20000,
+        },
+        runtimeChunk: {
+          name: 'runtime',
+        },
+        minimize: true,
+      };
+
+      // Replace large modules with smaller alternatives in production
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        '@sentry/node': false,
+        '@sentry/tracing': false,
+      };
+    }
+
+    return config;
+  },
+  // SECURITY: Comprehensive security headers for OWASP compliance
+  async headers() {
+    return [
           {
             // Apply security headers to all routes
             source: '/(.*)',
@@ -76,7 +191,7 @@ export default withSentryConfig(
                   "font-src 'self' https://fonts.gstatic.com",
                   "img-src 'self' data: https: blob:",
                   "media-src 'self' https: blob:",
-                  "connect-src 'self' https://api.stripe.com https://*.clerk.accounts.dev https://*.clerk.dev https://challenges.cloudflare.com wss://*.clerk.dev https://vitals.vercel-insights.com",
+                  "connect-src 'self' https://api.stripe.com https://*.clerk.accounts.dev https://*.clerk.dev https://challenges.cloudflare.com wss://*.clerk.dev https://vitals.vercel-insights.com https://clerk-telemetry.com http://localhost:8969",
                   "frame-src 'self' https://js.stripe.com https://*.stripe.com https://challenges.cloudflare.com",
                   "worker-src 'self' blob:",
                   "child-src 'self'",
@@ -107,9 +222,13 @@ export default withSentryConfig(
               },
             ],
           },
-        ];
-      },
-    }),
+      ];
+  },
+};
+
+export default withSentryConfig(
+  bundleAnalyzer(
+    withNextIntlConfig(nextConfig),
   ),
   {
     // For all available options, see:

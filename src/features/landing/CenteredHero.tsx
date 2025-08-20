@@ -4,7 +4,7 @@ export const CenteredHero = (props: {
   description: string;
   buttons: React.ReactNode;
 }) => (
-  <>
+  <div className="sage-gradient-hero rounded-2xl p-12 max-sm:p-6">
     <div className="text-center">{props.banner}</div>
 
     <div className="mt-3 text-center text-5xl font-bold tracking-tight">
@@ -18,5 +18,5 @@ export const CenteredHero = (props: {
     <div className="mt-8 flex justify-center gap-x-5 gap-y-3 max-sm:flex-col">
       {props.buttons}
     </div>
-  </>
+  </div>
 );

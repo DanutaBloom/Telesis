@@ -13,6 +13,12 @@ export interface AuthContext {
   sessionId: string;
 }
 
+export interface PartialAuthContext {
+  userId: string;
+  orgId: string | null;
+  sessionId: string;
+}
+
 /**
  * Authenticates the current request using Clerk
  * SECURITY: Validates both user authentication AND organization membership
@@ -28,6 +34,30 @@ export async function authenticateRequest(): Promise<AuthContext | null> {
     return {
       userId: authObj.userId,
       orgId: authObj.orgId,
+      sessionId: authObj.sessionId,
+    };
+  } catch (error) {
+    console.error('Authentication failed:', error);
+    return null;
+  }
+}
+
+/**
+ * Authenticates the current request using Clerk (flexible - allows missing orgId)
+ * SECURITY: Validates user authentication, organization membership is optional
+ * Use for endpoints that can work before organization selection
+ */
+export async function authenticateRequestPartial(): Promise<PartialAuthContext | null> {
+  try {
+    const authObj = await auth();
+    
+    if (!authObj.userId || !authObj.sessionId) {
+      return null;
+    }
+
+    return {
+      userId: authObj.userId,
+      orgId: authObj.orgId || null,
       sessionId: authObj.sessionId,
     };
   } catch (error) {
@@ -65,6 +95,68 @@ export function withAuth<T extends any[]>(
       }
 
       return await handler(authContext, ...args);
+    } catch (error) {
+      console.error('Auth middleware error:', error);
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Authentication error',
+          code: 'AUTH_ERROR'
+        },
+        { status: 500 }
+      );
+    }
+  };
+}
+
+/**
+ * Middleware wrapper for API routes requiring authentication (flexible - allows missing orgId)
+ * SECURITY: Validates user authentication, handles organization selection gracefully
+ * Use for endpoints that need to work before organization selection
+ */
+export function withPartialAuth<T extends any[]>(
+  handler: (auth: PartialAuthContext, ...args: T) => Promise<NextResponse>
+) {
+  return async (...args: T): Promise<NextResponse> => {
+    try {
+      const authContext = await authenticateRequestPartial();
+      
+      if (!authContext) {
+        return NextResponse.json(
+          { 
+            success: false, 
+            error: 'Authentication required',
+            code: 'UNAUTHORIZED'
+          },
+          { 
+            status: 401,
+            headers: {
+              'WWW-Authenticate': 'Bearer',
+              'Cache-Control': 'no-store',
+            }
+          }
+        );
+      }
+
+      // If orgId is missing, return a more specific error code
+      if (!authContext.orgId) {
+        return NextResponse.json(
+          { 
+            success: false, 
+            error: 'Organization selection required',
+            code: 'ORGANIZATION_SELECTION_REQUIRED',
+            redirectTo: '/onboarding/organization-selection'
+          },
+          { 
+            status: 428, // Precondition Required
+            headers: {
+              'Cache-Control': 'no-store',
+            }
+          }
+        );
+      }
+
+      return await handler(authContext as AuthContext, ...args);
     } catch (error) {
       console.error('Auth middleware error:', error);
       return NextResponse.json(

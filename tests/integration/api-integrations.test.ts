@@ -3,7 +3,7 @@
  * Tests all external API integrations for connectivity, authentication, and error handling
  */
 
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import { NextRequest } from 'next/server';
 import { Client } from 'pg';
 import Stripe from 'stripe';
@@ -53,15 +53,29 @@ describe('API Integration Tests', () => {
     });
 
     it('should handle authentication middleware properly', async () => {
+      // Mock console.error since we expect Clerk to fail in test environment
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      
       // Test unauthenticated request
       const authResult = await authenticateRequest();
       
       // In test environment without proper Clerk setup, this should return null
       // In a real environment with valid session, this would return AuthContext
       expect(authResult).toBeNull();
+      
+      // Verify that the expected error was logged
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Authentication failed:', 
+        expect.any(Error)
+      );
+      
+      consoleSpy.mockRestore();
     });
 
     it('should return 401 for protected endpoints without auth', async () => {
+      // Mock console.error since authentication will fail in test environment
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      
       const mockRequest = new NextRequest('http://localhost:3000/api/materials', {
         method: 'GET',
       });
@@ -73,6 +87,8 @@ describe('API Integration Tests', () => {
       expect(data.success).toBe(false);
       expect(data.error).toBe('Authentication required');
       expect(data.code).toBe('UNAUTHORIZED');
+      
+      consoleSpy.mockRestore();
     });
   });
 

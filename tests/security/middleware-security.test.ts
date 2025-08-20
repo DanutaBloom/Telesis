@@ -6,12 +6,31 @@
 
 import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import { NextRequest, NextResponse } from 'next/server';
-import middleware from '@/middleware';
 
-// Mock Next.js middleware dependencies
-const mockCreateMiddleware = vi.fn();
-const mockCreateRouteMatcher = vi.fn();
-const mockClerkMiddleware = vi.fn();
+// Mock Next.js middleware dependencies - must be hoisted
+const mockCreateMiddleware = vi.fn().mockReturnValue((req: NextRequest) => NextResponse.next());
+const mockCreateRouteMatcher = vi.fn().mockReturnValue(() => true);
+const mockClerkMiddleware = vi.fn().mockImplementation((callback) => (req: NextRequest, event: any) => {
+  return callback(
+    {
+      protect: vi.fn().mockResolvedValue(undefined),
+    },
+    req
+  );
+});
+
+// Mock modules at module level for proper hoisting
+vi.mock('next-intl/middleware', () => ({
+  default: mockCreateMiddleware,
+}));
+
+vi.mock('@clerk/nextjs/server', () => ({
+  clerkMiddleware: mockClerkMiddleware,
+  createRouteMatcher: mockCreateRouteMatcher,
+}));
+
+// Now import middleware after mocks are set up
+const { default: middleware } = await import('@/middleware');
 
 // Mock successful authentication
 const mockAuthSuccess = {
@@ -26,26 +45,6 @@ const mockAuthFail = {
   orgId: null,
   sessionId: null,
 };
-
-beforeAll(() => {
-  // Mock next-intl
-  vi.mock('next-intl/middleware', () => ({
-    default: mockCreateMiddleware.mockReturnValue((req: NextRequest) => NextResponse.next()),
-  }));
-
-  // Mock Clerk
-  vi.mock('@clerk/nextjs/server', () => ({
-    clerkMiddleware: mockClerkMiddleware.mockImplementation((callback) => (req: NextRequest, event: any) => {
-      return callback(
-        {
-          protect: vi.fn().mockResolvedValue(undefined),
-        },
-        req
-      );
-    }),
-    createRouteMatcher: mockCreateRouteMatcher.mockReturnValue(() => true),
-  }));
-});
 
 describe('Middleware Security - API Route Protection', () => {
   it('should protect /api/materials routes', async () => {

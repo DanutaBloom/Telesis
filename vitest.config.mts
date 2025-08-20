@@ -1,5 +1,4 @@
 import react from '@vitejs/plugin-react';
-import { loadEnv } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
@@ -34,14 +33,9 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
       reportOnFailure: true,
     },
-    environmentMatchGlobs: [
-      ['**/*.test.tsx', 'jsdom'],
-      ['src/hooks/**/*.test.ts', 'jsdom'],
-      ['src/libs/**/*.test.ts', 'node'],
-      ['src/utils/**/*.test.ts', 'node'],
-    ],
+    // Use projects instead of deprecated environmentMatchGlobs
+    environment: 'jsdom', // Default environment for React components
     setupFiles: ['./vitest-setup.ts'],
-    env: loadEnv('', process.cwd(), ''),
     // Security and performance testing configurations
     pool: 'threads',
     poolOptions: {

@@ -5,9 +5,8 @@
  * keyboard navigation, screen reader compatibility, and focus management
  */
 
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { UserEvent } from '@testing-library/user-event';
 
 // WCAG 2.1 AA Requirements
 export const WCAG_REQUIREMENTS = {
@@ -67,7 +66,7 @@ export async function testKeyboardNavigation(
     // Test specific focus order
     for (let i = 0; i < expectedFocusOrder.length; i++) {
       await user.tab();
-      const expectedElement = screen.getByTestId(expectedFocusOrder[i]);
+      const expectedElement = screen.getByTestId(expectedFocusOrder[i]!);
       expect(expectedElement).toHaveFocus();
     }
   } else {
@@ -138,7 +137,7 @@ export function testARIAAttributes(
 export async function testModalFocusManagement(
   modalTrigger: HTMLElement,
   modalTestId: string,
-  closeButton?: HTMLElement
+  _closeButton?: HTMLElement
 ): Promise<void> {
   const user = userEvent.setup();
   
@@ -302,8 +301,6 @@ export function testMinimumTapTargetSize(element: HTMLElement): void {
  * Test focus indicator visibility
  */
 export async function testFocusIndicator(element: HTMLElement): Promise<void> {
-  const user = userEvent.setup();
-  
   // Focus the element
   element.focus();
   expect(element).toHaveFocus();
@@ -340,7 +337,9 @@ export function testHeadingHierarchy(container: HTMLElement): void {
       const previousLevel = headingLevels[i - 1];
       
       // Should not skip more than one level
-      expect(currentLevel - previousLevel).toBeLessThanOrEqual(1);
+      if (currentLevel !== undefined && previousLevel !== undefined) {
+        expect(currentLevel - previousLevel).toBeLessThanOrEqual(1);
+      }
     }
   }
 }

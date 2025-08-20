@@ -9,20 +9,25 @@ async function globalTeardown(config: FullConfig) {
   console.log('🧹 Running global teardown...');
   
   try {
-    // Clean up authentication state files
-    const authFiles = [
-      './tests/auth/admin-auth.json',
-      './tests/auth/trainer-auth.json',
-      './tests/auth/learner-auth.json',
-    ];
+    // Skip auth file cleanup for development testing
+    console.log('🔧 Preserving auth files for development testing');
     
-    for (const authFile of authFiles) {
-      try {
-        await fs.access(authFile);
-        console.log(`🗑️  Cleaning up ${authFile}`);
-        await fs.unlink(authFile);
-      } catch (error) {
-        // File doesn't exist, which is fine
+    // Only clean up auth files in CI environment
+    if (process.env.CI) {
+      const authFiles = [
+        './tests/auth/admin-auth.json',
+        './tests/auth/trainer-auth.json',
+        './tests/auth/learner-auth.json',
+      ];
+      
+      for (const authFile of authFiles) {
+        try {
+          await fs.access(authFile);
+          console.log(`🗑️  Cleaning up ${authFile}`);
+          await fs.unlink(authFile);
+        } catch (error) {
+          // File doesn't exist, which is fine
+        }
       }
     }
     

@@ -6,7 +6,6 @@
  */
 
 import { vi } from 'vitest';
-import type { User, Organization } from '@clerk/nextjs/server';
 
 // Test user data types
 export interface TestUser {
@@ -223,7 +222,7 @@ export function mockLoadingState() {
  * Mock organization switching scenarios
  */
 export function mockOrganizationSwitch(
-  from: TestOrganization,
+  _from: TestOrganization,
   to: TestOrganization,
   user: TestUser = TEST_USERS.admin,
 ) {

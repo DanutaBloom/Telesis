@@ -1,0 +1,27 @@
+{
+  "cookies": [
+    {
+      "name": "__session",
+      "value": "mock-learner-session-token",
+      "domain": "localhost",
+      "path": "/",
+      "httpOnly": true,
+      "secure": false
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:3001",
+      "localStorage": [
+        {
+          "name": "auth-user",
+          "value": "{\"email\":\"learner@telesis-test.com\",\"password\":\"TestPassword123!\",\"firstName\":\"Learner\",\"lastName\":\"User\",\"role\":\"learner\"}"
+        },
+        {
+          "name": "auth-role",
+          "value": "learner"
+        }
+      ]
+    }
+  ]
+}

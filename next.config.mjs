@@ -54,6 +54,18 @@ const nextConfig = {
   },
   // Webpack configuration for advanced optimization
   webpack: (config, { dev, isServer }) => {
+    // Exclude test files from build
+    config.module.rules.push({
+      test: /\.(test|spec)\.(js|jsx|ts|tsx)$/,
+      use: 'ignore-loader',
+    });
+    
+    // Exclude test-utils directory from build
+    config.module.rules.push({
+      test: /src\/test-utils\/.*\.(js|jsx|ts|tsx)$/,
+      use: 'ignore-loader',
+    });
+    
     // Production optimizations
     if (!dev && !isServer) {
       // Split chunks for better caching

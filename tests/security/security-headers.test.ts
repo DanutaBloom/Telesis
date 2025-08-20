@@ -7,14 +7,15 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 
 // Import Next.js config to test security headers configuration
-const nextConfig = require('../../../next.config.mjs');
+import nextConfigModule from '../../../next.config.mjs';
+const nextConfig = nextConfigModule.default || nextConfigModule;
 
 describe('Security Headers Configuration', () => {
   let securityHeaders: any[];
 
   beforeAll(async () => {
     // Extract headers configuration from Next.js config
-    const headersFunction = nextConfig.default.headers;
+    const headersFunction = nextConfig.headers;
     if (typeof headersFunction === 'function') {
       securityHeaders = await headersFunction();
     }

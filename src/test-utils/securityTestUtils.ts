@@ -5,7 +5,6 @@
  * authentication flows, authorization controls, and input validation
  */
 
-import { vi } from 'vitest';
 import type { NextRequest } from 'next/server';
 
 // Security test scenarios
@@ -174,7 +173,7 @@ export async function testRateLimiting(
   endpoint: string,
   token: string,
   maxRequests: number = 10,
-  timeWindow: number = 60000 // 1 minute
+  _timeWindow: number = 60000 // 1 minute
 ): Promise<void> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
   const requests: Promise<Response>[] = [];
@@ -263,10 +262,7 @@ export async function testFileUploadSecurity(
     });
     
     // Should reject malicious files
-    expect(response.status).toBeOneOf([
-      SECURITY_RESPONSES.BAD_REQUEST,
-      SECURITY_RESPONSES.TOO_LARGE,
-    ]);
+    expect([SECURITY_RESPONSES.BAD_REQUEST, SECURITY_RESPONSES.TOO_LARGE]).toContain(response.status);
   }
 }
 
@@ -503,7 +499,7 @@ export async function runSecurityTestSuite(
   const {
     testAuth = true,
     testAuthorization = true,
-    testInputValidation = true,
+    testInputValidation: shouldTestInputValidation = true,
     testRateLimit = false, // Skip by default as it can be slow
     testCORS = true,
     validToken = 'test_token_123',
@@ -518,7 +514,7 @@ export async function runSecurityTestSuite(
     await testEndpointAuthorization(endpoint, validToken, invalidOrgId);
   }
   
-  if (testInputValidation) {
+  if (shouldTestInputValidation) {
     await testInputValidation(endpoint, validToken, 'testField');
     await testSQLInjectionProtection(endpoint, validToken);
     await testXSSProtection(endpoint, validToken);

@@ -1,0 +1,27 @@
+{
+  "cookies": [
+    {
+      "name": "__session",
+      "value": "mock-admin-session-token",
+      "domain": "localhost",
+      "path": "/",
+      "httpOnly": true,
+      "secure": false
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:3001",
+      "localStorage": [
+        {
+          "name": "auth-user",
+          "value": "{\"email\":\"admin@telesis-test.com\",\"password\":\"TestPassword123!\",\"firstName\":\"Admin\",\"lastName\":\"User\",\"role\":\"admin\"}"
+        },
+        {
+          "name": "auth-role",
+          "value": "admin"
+        }
+      ]
+    }
+  ]
+}

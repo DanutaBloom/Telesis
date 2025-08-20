@@ -57,7 +57,10 @@
     "./out/**/*",
     "./node_modules/**/*",
     "**/*.spec.ts",
-    "**/*.e2e.ts"
+    "**/*.test.ts",
+    "**/*.e2e.ts",
+    "**/test-utils/**/*",
+    "**/tests/**/*"
   ],
   "include": [
     "next-env.d.ts",

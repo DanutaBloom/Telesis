@@ -20,6 +20,9 @@ process.env.BILLING_PLAN_ENV = 'test';
 // NODE_ENV is already set to 'test' by vitest
 process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = 'pk_test_mock';
 process.env.CLERK_SECRET_KEY = 'sk_test_mock';
+process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL = '/sign-in';
+process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = 'pk_test_mock';
+process.env.DATABASE_URL = 'postgresql://test:test@localhost:5432/test_db';
 
 // Global test setup
 beforeAll(() => {

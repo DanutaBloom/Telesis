@@ -46,8 +46,8 @@ export const MODERN_SAGE_COLORS = {
   },
 } as const;
 
-// WCAG Compliance Requirements (from accessibility docs)
-export const WCAG_REQUIREMENTS = {
+// Color contrast requirements for theme testing
+const THEME_WCAG_REQUIREMENTS = {
   AA: {
     normalText: 4.5,
     largeText: 3.0,
@@ -84,7 +84,7 @@ export function calculateLuminance(hex: string): number {
     return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
   });
 
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return 0.2126 * (r ?? 0) + 0.7152 * (g ?? 0) + 0.0722 * (b ?? 0);
 }
 
 /**
@@ -105,9 +105,9 @@ export function calculateContrastRatio(color1: string, color2: string): number {
 export function hexToRgb(hex: string): [number, number, number] | null {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? [
-    parseInt(result[1], 16),
-    parseInt(result[2], 16),
-    parseInt(result[3], 16),
+    parseInt(result[1] || '0', 16),
+    parseInt(result[2] || '0', 16),
+    parseInt(result[3] || '0', 16),
   ] : null;
 }
 
@@ -121,7 +121,7 @@ export function meetsWCAGRequirements(
   isLargeText: boolean = false,
 ): boolean {
   const contrastRatio = calculateContrastRatio(foreground, background);
-  const requirement = WCAG_REQUIREMENTS[level][isLargeText ? 'largeText' : 'normalText'];
+  const requirement = THEME_WCAG_REQUIREMENTS[level][isLargeText ? 'largeText' : 'normalText'];
   
   return contrastRatio >= requirement;
 }
@@ -218,14 +218,14 @@ export function testThemeResponsiveness(
   },
 ): void {
   // Test light theme
-  const { rerender: rerenderLight } = renderComponent('light');
+  renderComponent('light');
   const lightElement = screen.getByTestId(testId);
   expectedBehavior.light.forEach(className => {
     expect(lightElement).toHaveClass(className);
   });
   
   // Test dark theme
-  const { rerender: rerenderDark } = renderComponent('dark');
+  renderComponent('dark');
   const darkElement = screen.getByTestId(testId);
   expectedBehavior.dark.forEach(className => {
     expect(darkElement).toHaveClass(className);
@@ -301,9 +301,6 @@ export function expectElementToFollowModernSageSpacing(element: HTMLElement): vo
  * Test Modern Sage border radius consistency
  */
 export function expectElementToHaveModernSageBorderRadius(element: HTMLElement): void {
-  const computedStyle = window.getComputedStyle(element);
-  const borderRadius = computedStyle.borderRadius;
-  
   // Should use CSS custom properties for border radius
   expect(element).toHaveClass(
     expect.stringMatching(/rounded-lg|rounded-md|rounded-sm|rounded-full/)

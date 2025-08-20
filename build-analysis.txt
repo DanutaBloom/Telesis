@@ -1,0 +1,35 @@
+
+> telesis@0.1.0 build-stats
+> cross-env ANALYZE=true npm run build
+
+
+> telesis@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.32
+  - Environments: .env.local, .env.production, .env
+  - Experiments (use with caution):
+    · instrumentationHook
+
+   Creating an optimized production build ...
+[@sentry/nextjs] The Sentry SDK has enabled source map generation for your Next.js app. If you don't want to serve Source Maps to your users, either set the `sourcemaps.deleteSourcemapsAfterUpload` option to true, or manually delete the source maps after the build. In future Sentry SDK versions `sourcemaps.deleteSourcemapsAfterUpload` will default to `true`. If you do not want to generate and upload sourcemaps, set the `sourcemaps.disable` option in `withSentryConfig()`.
+Webpack Bundle Analyzer saved report to /Users/philipgedrojc/Projects/telesis/.next/analyze/nodejs.html
+Webpack Bundle Analyzer saved report to /Users/philipgedrojc/Projects/telesis/.next/analyze/edge.html
+Webpack Bundle Analyzer saved report to /Users/philipgedrojc/Projects/telesis/.next/analyze/client.html
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+Failed to compile.
+
+./src/app/api/materials/route.ts:221:7
+Type error: No overload matches this call.
+  Overload 2 of 2, '(values: { organizationId: string | SQL<unknown> | Placeholder<string, any>; trainerId: string | SQL<unknown> | Placeholder<string, any>; title: string | SQL<...> | Placeholder<...>; ... 7 more ...; fileSize?: number | ... 3 more ... | undefined; }[]): PgInsertBase<...> | PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'organizationId' does not exist in type '{ organizationId: string | SQL<unknown> | Placeholder<string, any>; trainerId: string | SQL<unknown> | Placeholder<string, any>; title: string | SQL<unknown> | Placeholder<...>; ... 7 more ...; fileSize?: number | ... 3 more ... | undefined; }[]'.
+
+[0m [90m 219 |[39m     [90m// Create material with validated data[39m[0m
+[0m [90m 220 |[39m     [36mconst[39m newMaterial [33m=[39m [36mawait[39m db[33m.[39minsert(materialsSchema)[33m.[39mvalues({[0m
+[0m[31m[1m>[22m[39m[90m 221 |[39m       organizationId[33m:[39m materialData[33m.[39morganizationId[33m,[39m[0m
+[0m [90m     |[39m       [31m[1m^[22m[39m[0m
+[0m [90m 222 |[39m       trainerId[33m:[39m materialData[33m.[39mtrainerId[33m,[39m[0m
+[0m [90m 223 |[39m       title[33m:[39m materialData[33m.[39mtitle[33m,[39m[0m
+[0m [90m 224 |[39m       description[33m:[39m materialData[33m.[39mdescription[33m,[39m[0m
+Next.js build worker exited with code: 1 and signal: null

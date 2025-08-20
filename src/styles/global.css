@@ -4,70 +4,179 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Modern Sage Light Theme */
+    --background: 0 0% 99%;
+    --foreground: 220 13% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 13% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 13% 20%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary: Quietude (#A8C0BD) - HSL(173, 23%, 71%) */
+    --primary: 173 23% 71%;
+    --primary-foreground: 0 0% 99%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary: Soft Grey */
+    --secondary: 220 10% 95%;
+    --secondary-foreground: 220 13% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted: Light Grey */
+    --muted: 220 10% 95%;
+    --muted-foreground: 220 8% 46%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent: Growth Green (#4C9A2A) - HSL(102, 58%, 38%) */
+    --accent: 102 58% 38%;
+    --accent-foreground: 0 0% 99%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 99%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Neutral borders and inputs */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 173 23% 71%;
 
     --radius: 0.5rem;
+    
+    /* Modern Sage Brand Colors */
+    --sage-quietude: 173 23% 71%;
+    --sage-growth: 102 58% 38%;
+    --sage-mist: 173 15% 85%;
+    --sage-stone: 220 8% 60%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Modern Sage Dark Theme */
+    --background: 220 13% 9%;
+    --foreground: 0 0% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 13% 12%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 13% 12%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    /* Primary: Darker Quietude for better contrast */
+    --primary: 173 25% 65%;
+    --primary-foreground: 220 13% 9%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    /* Secondary: Dark Grey */
+    --secondary: 220 10% 18%;
+    --secondary-foreground: 0 0% 95%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    /* Muted: Medium Dark Grey */
+    --muted: 220 10% 18%;
+    --muted-foreground: 220 8% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    /* Accent: Brighter Growth Green for dark mode */
+    --accent: 102 55% 42%;
+    --accent-foreground: 220 13% 9%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 95%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    /* Dark neutral borders and inputs */
+    --border: 220 13% 25%;
+    --input: 220 13% 25%;
+    --ring: 173 25% 65%;
+    
+    /* Modern Sage Dark Brand Colors */
+    --sage-quietude: 173 25% 65%;
+    --sage-growth: 102 55% 42%;
+    --sage-mist: 173 15% 25%;
+    --sage-stone: 220 8% 50%;
   }
 }
 
 @layer base {
   * {
     @apply border-border;
+  }
+}
+
+@layer components {
+  /* Modern Sage Gradient Utilities */
+  .sage-gradient-primary {
+    @apply bg-gradient-to-r from-sage-quietude via-primary to-sage-growth;
+  }
+  
+  .sage-gradient-subtle {
+    @apply bg-gradient-to-br from-sage-mist to-sage-quietude;
+  }
+  
+  .sage-gradient-hero {
+    @apply bg-gradient-to-br from-sage-quietude/20 via-sage-mist/10 to-sage-growth/5;
+  }
+  
+  .sage-gradient-card {
+    @apply bg-gradient-to-br from-sage-mist/50 to-sage-quietude/30;
+  }
+  
+  /* Modern Sage Text Utilities */
+  .sage-text-gradient {
+    @apply bg-gradient-to-r from-sage-quietude via-primary to-sage-growth bg-clip-text text-transparent;
+  }
+  
+  .sage-text-primary {
+    @apply text-sage-quietude;
+  }
+  
+  .sage-text-accent {
+    @apply text-sage-growth;
+  }
+  
+  /* Modern Sage Borders and Accents */
+  .sage-border {
+    @apply border-sage-quietude/30;
+  }
+  
+  .sage-border-accent {
+    @apply border-sage-growth/30;
+  }
+  
+  .sage-ring {
+    @apply ring-sage-quietude focus-visible:ring-sage-quietude;
+  }
+  
+  .sage-ring-accent {
+    @apply ring-sage-growth focus-visible:ring-sage-growth;
+  }
+  
+  /* Modern Sage Background Utilities */
+  .sage-bg-primary {
+    @apply bg-sage-quietude;
+  }
+  
+  .sage-bg-accent {
+    @apply bg-sage-growth;
+  }
+  
+  .sage-bg-mist {
+    @apply bg-sage-mist;
+  }
+  
+  /* Modern Sage Interactive States */
+  .sage-hover-primary {
+    @apply hover:bg-sage-quietude/10 hover:text-sage-quietude transition-colors;
+  }
+  
+  .sage-hover-accent {
+    @apply hover:bg-sage-growth/10 hover:text-sage-growth transition-colors;
+  }
+  
+  /* Modern Sage Card Styles */
+  .sage-card {
+    @apply bg-card border sage-border rounded-lg shadow-sm;
+  }
+  
+  .sage-card-subtle {
+    @apply sage-gradient-card border-0 rounded-lg shadow-sm;
+  }
+  
+  /* Modern Sage Button Reset */
+  .sage-button-reset {
+    @apply bg-transparent border-0 p-0 m-0 text-inherit cursor-pointer;
   }
 }

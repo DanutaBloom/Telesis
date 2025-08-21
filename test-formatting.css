@@ -1,0 +1,15 @@
+/* CSS file with formatting issues */
+.badly-formatted {
+  color: red;
+  background: blue;
+}
+.another-class {
+  margin: 0;
+  padding: 5px 10px;
+}
+
+@media (max-width: 768px) {
+  .responsive {
+    display: none;
+  }
+}

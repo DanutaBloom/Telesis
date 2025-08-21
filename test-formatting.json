@@ -1,0 +1,7 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "Test JSON formatting",
+  "scripts": { "test": "echo test" },
+  "dependencies": { "react": "^18.0.0" }
+}

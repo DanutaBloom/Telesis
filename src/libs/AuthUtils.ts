@@ -224,7 +224,7 @@ export async function validateRequestBody<T>(
       success: true,
       data: result.data,
     };
-  } catch (error) {
+  } catch (_error) {
     return {
       success: false,
       error: 'Invalid JSON format',

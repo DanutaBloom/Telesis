@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { checkRateLimit, SECURITY_HEADERS } from '@/libs/AuthUtils';
 import { db } from '@/libs/DB';
+import { SECURITY_HEADERS, checkRateLimit } from '@/libs/AuthUtils';
 
 /**
  * SECURED Health Check API

@@ -305,7 +305,7 @@ describe('Input Component', () => {
         </form>,
       );
 
-      const form = screen.getByRole('form');
+      const form = document.querySelector('form')!;
       testFormAccessibility(form);
     });
 

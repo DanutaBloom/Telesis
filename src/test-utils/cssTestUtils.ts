@@ -110,10 +110,8 @@ export function logComputedStyles(element: HTMLElement, label?: string): void {
   // Log computed styles in development mode only
   if (process.env.NODE_ENV === 'development') {
     if (label) {
-      // eslint-disable-next-line no-console
       console.log(`${label} computed styles:`, styles);
     } else {
-      // eslint-disable-next-line no-console
       console.log('Computed styles:', styles);
     }
   }

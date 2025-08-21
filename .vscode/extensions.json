@@ -1,7 +1,8 @@
 {
   "recommendations": [
-    // Essential ESLint support
+    // Essential code formatting and linting
     "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
 
     // TypeScript and JavaScript support
     "ms-vscode.vscode-typescript-next",
@@ -20,27 +21,23 @@
     // Testing frameworks
     "ms-playwright.playwright",
     "vitest.explorer",
-    "orta.vscode-jest",
 
     // Development tools
     "usernamehw.errorlens",
     "aaron-bond.better-comments",
     "streetsidesoftware.code-spell-checker",
-    "ms-vscode.vscode-json",
     "redhat.vscode-yaml",
 
     // Visual enhancements
     "pkief.material-icon-theme",
     "zhuangtongfa.material-theme",
     "oderwat.indent-rainbow",
-    "mechatroner.rainbow-csv",
 
     // Productivity tools
     "ms-vscode.vscode-todo-highlight",
     "gruntfuggly.todo-tree",
     "formulahendry.auto-close-tag",
     "christian-kohler.path-intellisense",
-    "ms-vscode.vscode-typescript-next",
 
     // Database and API tools
     "ms-vscode.vscode-postgresql",
@@ -54,25 +51,20 @@
     "mikestead.dotenv",
     "ms-vscode.vscode-docker",
 
-    // Code formatting and style (disabled in favor of ESLint)
-    // "esbenp.prettier-vscode", // Deliberately not recommended to avoid conflicts
-
     // Advanced development tools
-    "ms-vscode.vscode-typescript-next",
     "ms-vscode.remote-containers",
     "ms-vscode.remote-ssh"
   ],
   "unwantedRecommendations": [
-    // Extensions that conflict with ESLint
-    "esbenp.prettier-vscode",
+    // Extensions that may cause conflicts or performance issues
     "hookyqr.beautify",
     "ms-vscode.vscode-typescript-tslint-plugin",
-
-    // Extensions that duplicate functionality
     "ms-vscode.vscode-json-languageservice",
     "ms-vscode.typescript-importer",
+    "ms-vscode.vscode-eslint-language-server",
 
-    // Extensions that may cause performance issues
-    "ms-vscode.vscode-eslint-language-server"
+    // Duplicate functionality
+    "orta.vscode-jest",
+    "mechatroner.rainbow-csv"
   ]
 }

@@ -1,0 +1,61 @@
+# Build outputs and generated files
+.next/
+out/
+build/
+dist/
+coverage/
+storybook-static/
+test-results/
+playwright-report/
+node_modules/
+
+# Generated files
+migrations/
+next-env.d.ts
+*.config.js
+*.config.mjs
+*.config.ts
+
+# Package files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Environment and config files
+.env*
+*.log
+
+# Public assets
+public/
+
+# Documentation (handled by ESLint formatters)
+**/*.md
+*.md
+docs/
+README.md
+CHANGELOG.md
+LICENSE
+*.MD
+
+# Configuration files that should maintain their format
+.gitignore
+.eslintignore
+.prettierignore
+
+# Scripts (handled by ESLint)
+scripts/
+
+# Files that ESLint already handles
+**/*.ts
+**/*.tsx
+**/*.js
+**/*.jsx
+
+# Only format files that ESLint doesn't handle well
+!**/*.css
+!**/*.scss
+!**/*.less
+!**/*.html
+!**/*.json
+!**/*.yaml
+!**/*.yml

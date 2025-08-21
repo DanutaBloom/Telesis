@@ -3,20 +3,26 @@
 
 echo "🚀 Running pre-push validations..."
 
-# Run ESLint but allow warnings (only block on errors)
-echo "📋 Running ESLint on entire codebase (errors only)..."
-npx eslint . --cache --max-warnings 999 --report-unused-disable-directives || {
-  echo "⚠️  ESLint found errors. Please fix critical errors before pushing."
-  echo "💡 Run 'npm run lint:fix' to auto-fix issues where possible."
+# Run format check first (this ensures code is properly formatted)
+echo "🎨 Checking code formatting with Prettier and ESLint..."
+npm run format:check || {
+  echo "⚠️  Code formatting issues found. Please fix formatting before pushing."
+  echo "💡 Run 'npm run format' to auto-fix formatting issues."
   exit 1
 }
 
 # Run type checking
 echo "🔍 Running TypeScript type checking..."
-npm run check-types
+npm run check-types || {
+  echo "⚠️  TypeScript type checking failed. Please fix type errors before pushing."
+  exit 1
+}
 
 # Run unit tests to ensure nothing is broken
 echo "🧪 Running unit tests..."
-npm run test
+npm run test || {
+  echo "⚠️  Unit tests failed. Please fix failing tests before pushing."
+  exit 1
+}
 
 echo "✅ Pre-push validations completed successfully!"

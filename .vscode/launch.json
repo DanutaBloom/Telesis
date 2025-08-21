@@ -40,10 +40,7 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/.bin/eslint",
-      "args": [
-        "--debug",
-        "${file}"
-      ],
+      "args": ["--debug", "${file}"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     },
@@ -52,10 +49,7 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/.bin/eslint",
-      "args": [
-        "--debug",
-        "."
-      ],
+      "args": ["--debug", "."],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     },
@@ -64,10 +58,7 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/.bin/vitest",
-      "args": [
-        "run",
-        "--reporter=verbose"
-      ],
+      "args": ["run", "--reporter=verbose"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "env": {
@@ -79,10 +70,7 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/.bin/playwright",
-      "args": [
-        "test",
-        "--debug"
-      ],
+      "args": ["test", "--debug"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "env": {
@@ -94,11 +82,7 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/.bin/tsc",
-      "args": [
-        "--noEmit",
-        "--pretty",
-        "--listFiles"
-      ],
+      "args": ["--noEmit", "--pretty", "--listFiles"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     },
@@ -117,9 +101,7 @@
       "restart": true,
       "localRoot": "${workspaceFolder}",
       "remoteRoot": "${workspaceFolder}",
-      "skipFiles": [
-        "<node_internals>/**"
-      ]
+      "skipFiles": ["<node_internals>/**"]
     }
   ],
   "compounds": [

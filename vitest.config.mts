@@ -46,9 +46,7 @@ export default defineConfig({
     testTimeout: 10000, // 10s timeout for integration tests
     hookTimeout: 5000, // 5s timeout for setup/teardown
     // Reporter configuration for CI/CD
-    reporters: process.env.CI
-      ? ['junit', 'github-actions']
-      : ['verbose', 'html'],
+    reporters: process.env.CI ? ['junit', 'github-actions'] : ['verbose', 'html'],
     outputFile: {
       junit: './test-results/junit.xml',
       html: './test-results/html/index.html',

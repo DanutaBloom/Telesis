@@ -163,41 +163,27 @@
   },
   "ESLint Disable Next Line": {
     "prefix": "eslintdisable",
-    "body": [
-      "// eslint-disable-next-line ${1:rule-name}"
-    ],
+    "body": ["// eslint-disable-next-line ${1:rule-name}"],
     "description": "Add ESLint disable comment for next line"
   },
   "ESLint Disable File": {
     "prefix": "eslintdisablefile",
-    "body": [
-      "/* eslint-disable ${1:rule-name} */"
-    ],
+    "body": ["/* eslint-disable ${1:rule-name} */"],
     "description": "Add ESLint disable comment for entire file"
   },
   "TypeScript Type Definition": {
     "prefix": "type",
-    "body": [
-      "export type ${1:TypeName} = {",
-      "  ${2:property}: ${3:type};",
-      "};"
-    ],
+    "body": ["export type ${1:TypeName} = {", "  ${2:property}: ${3:type};", "};"],
     "description": "Create a TypeScript type definition"
   },
   "TypeScript Interface": {
     "prefix": "interface",
-    "body": [
-      "export interface ${1:InterfaceName} {",
-      "  ${2:property}: ${3:type};",
-      "}"
-    ],
+    "body": ["export interface ${1:InterfaceName} {", "  ${2:property}: ${3:type};", "}"],
     "description": "Create a TypeScript interface"
   },
   "Console Log with Label": {
     "prefix": "clog",
-    "body": [
-      "console.log('${1:label}:', ${2:variable});"
-    ],
+    "body": ["console.log('${1:label}:', ${2:variable});"],
     "description": "Console log with descriptive label"
   },
   "Try Catch Block": {

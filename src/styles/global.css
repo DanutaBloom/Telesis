@@ -159,24 +159,24 @@
 
   /* Modern Sage Interactive States */
   .sage-hover-primary {
-    @apply hover:bg-sage-quietude/10 hover:text-sage-quietude transition-colors;
+    @apply transition-colors hover:bg-sage-quietude/10 hover:text-sage-quietude;
   }
 
   .sage-hover-accent {
-    @apply hover:bg-sage-growth/10 hover:text-sage-growth transition-colors;
+    @apply transition-colors hover:bg-sage-growth/10 hover:text-sage-growth;
   }
 
   /* Modern Sage Card Styles */
   .sage-card {
-    @apply bg-card border sage-border rounded-lg shadow-sm;
+    @apply sage-border rounded-lg border bg-card shadow-sm;
   }
 
   .sage-card-subtle {
-    @apply sage-gradient-card border-0 rounded-lg shadow-sm;
+    @apply sage-gradient-card rounded-lg border-0 shadow-sm;
   }
 
   /* Modern Sage Button Reset */
   .sage-button-reset {
-    @apply bg-transparent border-0 p-0 m-0 text-inherit cursor-pointer;
+    @apply m-0 cursor-pointer border-0 bg-transparent p-0 text-inherit;
   }
 }

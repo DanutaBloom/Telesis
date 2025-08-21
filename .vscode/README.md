@@ -1,205 +1,159 @@
-# VSCode/Cursor ESLint Integration Setup
+# VSCode Configuration for Telesis Project
 
-This directory contains optimized VSCode/Cursor configuration files for the best ESLint integration and developer experience with the Telesis project.
+This directory contains optimized VSCode/Cursor settings for the Telesis Next.js project with proper Prettier + ESLint integration.
 
-## 📁 Configuration Files
+## Configuration Overview
 
-### `settings.json`
-Main workspace settings that configure:
-- **ESLint Integration**: Flat config support, auto-fix on save, real-time linting
-- **TypeScript Settings**: Strict mode, auto-imports, inlay hints
-- **File Formatting**: ESLint as primary formatter, disabled Prettier conflicts
-- **Performance**: Optimized file watching and exclusions
-- **Cursor AI Integration**: Enhanced autocomplete and chat features
-- **Visual Enhancements**: Bracket colorization, error indicators, deprecation warnings
+### Hybrid Formatting Approach
 
-### `extensions.json`
-Recommended and unwanted extensions:
-- **Recommended**: ESLint, TypeScript, Tailwind CSS, Playwright, Vitest, GitLens
-- **Unwanted**: Prettier (conflicts with ESLint), duplicate functionality extensions
-- **Auto-installs** recommended extensions when opening the project
+- **ESLint**: Handles JavaScript, TypeScript, JSX, TSX files
+- **Prettier**: Handles CSS, JSON, HTML, Markdown, YAML files
+- **No conflicts**: eslint-config-prettier disables conflicting rules
 
-### `launch.json`
-Debug configurations for:
-- **Next.js**: Server-side, client-side, and full-stack debugging
-- **ESLint**: Debug ESLint rules and configuration
-- **Testing**: Vitest and Playwright test debugging
-- **TypeScript**: Compilation debugging
-- **API Routes**: Node.js debugging for API endpoints
+### Files Configured
 
-### `tasks.json`
-Predefined tasks for common operations:
-- **ESLint**: Check/fix all files or current file
-- **TypeScript**: Type checking
-- **Testing**: Unit tests, E2E tests
-- **Build**: Development server, production build
-- **Debugging**: ESLint configuration inspection
+- `settings.json` - Editor settings and formatter assignments
+- `extensions.json` - Recommended and unwanted extensions
+- `tasks.json` - Build and formatting tasks
+- `keybindings.json` - Custom keyboard shortcuts
 
-### `keybindings.json`
-Custom keyboard shortcuts:
-- `Ctrl+Shift+L` - Auto-fix ESLint errors in current file
-- `Ctrl+Shift+E` - Check current file with ESLint
-- `Ctrl+Shift+F` - Fix current file with ESLint
-- `Ctrl+Shift+A` - Check all files with ESLint
-- `Ctrl+Shift+T` - Run TypeScript type checking
-- `F8` / `Shift+F8` - Navigate between errors/warnings
+## Key Features
 
-### `snippets.json`
-Code snippets for faster development:
-- `rfc` - React functional component
-- `nextpage` - Next.js page component
-- `nextapi` - Next.js API route
-- `vitest` - Vitest test template
-- `playwright` - Playwright E2E test template
-- `type` - TypeScript type definition
-- `asyncfn` - Async function with error handling
+### Format on Save
+- **JS/TS files**: Formatted by ESLint with auto-fix
+- **CSS/JSON/HTML/Markdown**: Formatted by Prettier
+- **Auto imports**: Disabled to prevent conflicts
+- **Final newline**: Automatically added
 
-## 🚀 Getting Started
-
-1. **Open the project in Cursor/VSCode**
-2. **Install recommended extensions** when prompted
-3. **Verify ESLint is working** - you should see real-time error indicators
-4. **Test auto-fix** - save a file and watch ESLint auto-format it
-5. **Try keyboard shortcuts** - use `Ctrl+Shift+L` to fix ESLint errors
-
-## ✅ Verification Checklist
-
-### ESLint Integration
-- [ ] ESLint extension is installed and enabled
-- [ ] Real-time error/warning indicators appear in editor
-- [ ] Auto-fix works on save (`Ctrl+S`)
-- [ ] Problems panel shows ESLint issues (`Ctrl+Shift+M`)
-- [ ] No Prettier conflicts (Prettier should be disabled)
-
-### TypeScript Integration
-- [ ] TypeScript errors appear in real-time
-- [ ] Auto-imports work when typing component names
-- [ ] Go to definition works (`F12`)
-- [ ] Type checking task works (`Ctrl+Shift+T`)
-- [ ] Inlay hints show parameter and return types
-
-### Performance
-- [ ] File watching excludes build directories
-- [ ] ESLint runs without noticeable lag
-- [ ] Search excludes node_modules and build artifacts
-- [ ] No duplicate extension warnings
-
-### Testing Integration
-- [ ] Vitest tests can be run from Command Palette
-- [ ] Playwright tests can be debugged
-- [ ] Test files have proper syntax highlighting
-- [ ] Coverage reports generate correctly
-
-## 🛠️ Troubleshooting
-
-### ESLint Not Working
-1. **Check ESLint Output Panel**: View → Output → ESLint
-2. **Restart ESLint Server**: Command Palette → "ESLint: Restart ESLint Server"
-3. **Verify Flat Config**: Ensure `eslint.useFlatConfig: true` in settings
-4. **Check Working Directory**: Verify `eslint.workingDirectories: ["./"]`
-
-### Auto-Fix Not Working
-1. **Check Format on Save**: Ensure `editor.formatOnSave: true`
-2. **Verify Code Actions**: Ensure `source.fixAll.eslint: "explicit"`
-3. **File Association**: Check file type is associated with ESLint
-4. **ESLint Rule**: Verify the rule is fixable (some rules are warning-only)
-
-### Performance Issues
-1. **Disable Prettier**: Ensure Prettier extension is disabled
-2. **Check File Exclusions**: Verify large directories are excluded
-3. **Restart TypeScript**: Use `Ctrl+Shift+R` to restart TS server
-4. **Clear Cache**: Reload window with `Ctrl+Shift+P` → "Developer: Reload Window"
-
-### Cursor-Specific Issues
-1. **AI Features**: Ensure Cursor-specific settings are enabled in settings.json
-2. **Chat Integration**: Verify `cursor.chat.enableChatHistory: true`
-3. **Autocompletions**: Check `cursor.general.enableAutocompletions: true`
-
-## 🔧 Customization
-
-### Adding New ESLint Rules
-1. Edit `eslint.config.mjs` in project root
-2. Restart ESLint server
-3. Test with `Ctrl+Shift+E` on a file
-
-### Custom Snippets
-1. Edit `.vscode/snippets.json`
-2. Use snippet prefix in editor
-3. Tab through placeholder variables
-
-### Custom Keybindings
-1. Edit `.vscode/keybindings.json`
-2. Use Command Palette to find command names
-3. Test shortcuts immediately
-
-### Workspace Settings
-1. Edit `.vscode/settings.json`
-2. Settings apply only to this workspace
-3. Override user settings automatically
-
-## 📊 Performance Monitoring
-
-### ESLint Performance
-- **Lint Time**: Should complete in <2 seconds for most files
-- **Auto-fix Time**: Should be instantaneous on save
-- **Memory Usage**: Monitor ESLint server memory in Output panel
-
-### TypeScript Performance
-- **Type Checking**: Should complete in <5 seconds
-- **IntelliSense**: Should appear within 500ms
-- **File Navigation**: Should be instantaneous
-
-### File Watching
-- **Excluded Directories**: node_modules, .next, build, dist, coverage
-- **Watched Files**: Only source files and configurations
-- **Search Performance**: Should exclude build artifacts
-
-## 🧪 Testing the Setup
-
-### Manual Tests
-1. **Create a new TypeScript file** with intentional errors
-2. **Verify ESLint highlights** syntax and style issues
-3. **Save the file** and check auto-fix works
-4. **Use `Ctrl+Shift+L`** to manually trigger auto-fix
-5. **Check Problems panel** for comprehensive error list
-
-### Automated Verification
-```bash
-# Test ESLint configuration
-npm run lint
-
-# Test TypeScript compilation
-npm run check-types
-
-# Test all tasks work
-npm run test
-npm run build
+### Language-Specific Formatters
+```json
+"[typescript]": {
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+},
+"[css]": {
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
 ```
 
-## 🎯 Expected Developer Experience
+### Tailwind CSS Integration
+- Class attribute suggestions
+- Emmet completions
+- Custom class regex patterns for `cva`, `cn`, `cx`
 
-### Instant Feedback
-- **Red squiggles** for ESLint errors
-- **Yellow squiggles** for warnings
-- **Blue squiggles** for suggestions
-- **Grayed out text** for unused code
+## Keyboard Shortcuts
 
-### Auto-fixing
-- **Save file** → Auto-fix formatting and simple errors
-- **Organize imports** → Automatic import sorting
-- **Remove unused** → Automatic cleanup of unused variables
+| Shortcut | Action | File Types |
+|----------|--------|------------|
+| `Ctrl+Shift+F` | Format current file | All (context-aware) |
+| `Ctrl+Shift+.` | Quick fix ESLint issues | JS/TS |
+| `Ctrl+Shift+O` | Organize imports (on-demand) | JS/TS |
+| `Ctrl+K Ctrl+F` | Format all files in workspace | All |
+| `Ctrl+K Ctrl+C` | Check format (no fixes) | All |
+| `Alt+Z` | Toggle word wrap | All |
 
-### Visual Indicators
-- **Error count** in status bar
-- **Problem panel** with filterable issues
-- **File icons** show error/warning states
-- **Minimap** highlights problematic areas
+## Available Tasks (Ctrl+Shift+P → "Tasks: Run Task")
 
-### Productivity Features
-- **Quick fixes** with `Ctrl+.`
-- **Keyboard shortcuts** for common tasks
-- **Code snippets** for rapid development
-- **IntelliSense** with type information
-- **Auto-imports** for components and utilities
+### Formatting Tasks
+- **Format All Files (Prettier + ESLint)** - Complete project formatting
+- **Check Format (Prettier + ESLint)** - Validation without fixes
+- **Prettier: Fix All Files** - CSS/JSON/HTML/Markdown only
+- **ESLint: Fix All Files** - JS/TS only
 
-This setup ensures a smooth, productive development experience with minimal friction and maximum code quality assurance.
+### Development Tasks
+- **TypeScript: Check Types** - Type validation
+- **Build Next.js App** - Production build
+- **Start Development Server** - Dev server with hot reload
+
+## Extensions
+
+### Required Extensions
+- `dbaeumer.vscode-eslint` - ESLint support
+- `esbenp.prettier-vscode` - Prettier support
+- `bradlc.vscode-tailwindcss` - Tailwind CSS IntelliSense
+
+### Recommended Extensions
+- `ms-playwright.playwright` - E2E testing
+- `vitest.explorer` - Unit test runner
+- `usernamehw.errorlens` - Inline error display
+
+## Performance Optimizations
+
+### File Exclusions
+- Build outputs (`.next`, `dist`, `coverage`)
+- Node modules and lock files
+- Test results and reports
+
+### Search Exclusions  
+- Same as file exclusions plus binary files
+- Improves search performance
+
+### Explorer File Nesting
+- Groups related files together
+- Cleaner project structure view
+
+## Usage Tips
+
+### Format on Save Behavior
+1. Open any file
+2. Make changes
+3. Save (`Ctrl+S`) - automatically formats based on file type
+
+### Manual Formatting
+- **Single file**: `Ctrl+Shift+F`
+- **All files**: `Ctrl+K Ctrl+F`
+- **Check only**: `Ctrl+K Ctrl+C`
+
+### Quick Fixes
+- **ESLint issues**: `Ctrl+Shift+.`
+- **Import organization**: `Ctrl+Shift+O`
+
+### Troubleshooting
+
+#### Format on Save Not Working
+1. Check file associations in `settings.json`
+2. Verify correct formatter assigned per file type
+3. Ensure required extensions are installed
+
+#### ESLint/Prettier Conflicts
+- Configuration prevents conflicts via `eslint-config-prettier`
+- JS/TS files use ESLint only
+- Other files use Prettier only
+
+#### Performance Issues
+- File exclusions minimize VSCode overhead
+- Search exclusions improve find operations
+- Consider increasing VSCode memory if needed
+
+## Integration with npm Scripts
+
+The configuration integrates with project npm scripts:
+
+```bash
+npm run format        # Format all files (Prettier + ESLint)
+npm run format:check  # Check formatting without fixes
+npm run lint:fix      # ESLint auto-fix only
+npm run prettier:fix  # Prettier formatting only
+```
+
+## Customization
+
+### Adding New File Types
+Update `settings.json`:
+```json
+"[newtype]": {
+  "editor.defaultFormatter": "appropriate.formatter"
+}
+```
+
+### Adding Keyboard Shortcuts
+Update `keybindings.json` with new key bindings.
+
+### Adding Tasks
+Update `tasks.json` with new build or formatting tasks.
+
+## Compatibility
+
+- **VSCode**: All versions with extension support
+- **Cursor**: Full compatibility
+- **Extensions**: Regularly updated versions recommended
+- **Node.js**: Compatible with project's Node.js requirements

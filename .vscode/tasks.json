@@ -215,6 +215,105 @@
         "showReuseMessage": false,
         "clear": true
       }
+    },
+    {
+      "label": "Format All Files (Prettier + ESLint)",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "format"],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Check Format (Prettier + ESLint)",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "format:check"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Prettier: Fix All Files",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "prettier:fix"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Prettier: Check All Files",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "prettier"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Prettier: Fix Current File",
+      "type": "shell",
+      "command": "npx",
+      "args": ["prettier", "--write", "${file}"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Prettier: Check Current File",
+      "type": "shell",
+      "command": "npx",
+      "args": ["prettier", "--check", "${file}"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []
     }
   ]
 }

@@ -20,6 +20,8 @@ export default antfu({
 
   formatters: {
     css: true,
+    html: true,
+    markdown: 'prettier',
   },
 
   ignores: [
@@ -40,12 +42,22 @@ export default antfu({
     '*.config.js',
     '*.config.mjs',
     
-    // Documentation and markdown files
+    // Documentation and markdown files - more specific patterns
     '**/*.md',
+    '*.md',
     'docs/**/*',
     'README.md',
     'CHANGELOG.md',
     'LICENSE',
+    '*.MD',
+    'AUTHENTICATION_VALIDATION_REPORT.md',
+    'BUNDLE_OPTIMIZATION_REPORT.md',
+    'MODERN_SAGE_THEME_COMPLETION.md',
+    'PLAYWRIGHT_E2E_VALIDATION_REPORT.md',
+    'SECURITY.md',
+    'SECURITY_IMPLEMENTATION_EVIDENCE.md',
+    'TELESIS_API_INTEGRATION_REPORT.md',
+    'TESTING_INFRASTRUCTURE.md',
     
     // Package files
     'package-lock.json',
@@ -154,13 +166,17 @@ export default antfu({
     'vitest-setup.ts',
     'tests/**/*.ts',
     'tests/**/*.tsx',
+    '**/test-utils/**/*.ts',
+    '**/test-utils/**/*.tsx',
+    'src/test-utils/**/*.ts',
+    'src/test-utils/**/*.tsx',
   ],
   rules: {
     // Allow console in tests for debugging
     'no-console': 'off',
     // Allow global in test setup
     'no-restricted-globals': 'off',
-    // Allow require in tests
+    // Allow require in tests for mocks
     'ts/no-require-imports': 'off',
     // Allow unused variables in tests (mocks, etc.)
     'unused-imports/no-unused-vars': [
@@ -175,5 +191,17 @@ export default antfu({
         destructuredArrayIgnorePattern: '^_',
       },
     ],
+  },
+}, {
+  // Prettier integration - disable conflicting formatting rules
+  rules: {
+    // Disable ESLint formatting rules that conflict with Prettier
+    'style/max-len': 'off',
+    'style/quotes': 'off',
+    'style/semi': 'off',
+    'style/comma-dangle': 'off',
+    'style/indent': 'off', // Already disabled above
+    'style/object-curly-spacing': 'off',
+    'style/array-bracket-spacing': 'off',
   },
 });

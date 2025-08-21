@@ -3,7 +3,7 @@ export const CTABanner = (props: {
   description: string;
   buttons: React.ReactNode;
 }) => (
-  <div className="rounded-xl sage-gradient-primary px-6 py-10 text-center">
+  <div className="sage-gradient-primary rounded-xl px-6 py-10 text-center">
     <div className="text-3xl font-bold text-primary-foreground">
       {props.title}
     </div>

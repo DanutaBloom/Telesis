@@ -8,22 +8,22 @@ export enum SecurityEventType {
   AUTH_SUCCESS = 'auth_success',
   AUTH_FAILURE = 'auth_failure',
   AUTH_BYPASS_ATTEMPT = 'auth_bypass_attempt',
-  
+
   // Authorization events
   ACCESS_GRANTED = 'access_granted',
   ACCESS_DENIED = 'access_denied',
   PRIVILEGE_ESCALATION_ATTEMPT = 'privilege_escalation_attempt',
   CROSS_TENANT_ACCESS_ATTEMPT = 'cross_tenant_access_attempt',
-  
+
   // Input validation events
   VALIDATION_FAILED = 'validation_failed',
   XSS_ATTEMPT = 'xss_attempt',
   INJECTION_ATTEMPT = 'injection_attempt',
-  
+
   // Rate limiting events
   RATE_LIMIT_EXCEEDED = 'rate_limit_exceeded',
   SUSPICIOUS_ACTIVITY = 'suspicious_activity',
-  
+
   // System events
   SECURITY_CONFIG_CHANGE = 'security_config_change',
   ENCRYPTION_ERROR = 'encryption_error',
@@ -37,7 +37,7 @@ export enum SecurityLevel {
   EMERGENCY = 'emergency',
 }
 
-export interface SecurityEvent {
+export type SecurityEvent = {
   type: SecurityEventType;
   level: SecurityLevel;
   message: string;
@@ -51,7 +51,7 @@ export interface SecurityEvent {
   timestamp: string;
   context?: Record<string, any>;
   stackTrace?: string;
-}
+};
 
 class SecurityLogger {
   private events: SecurityEvent[] = [];
@@ -68,7 +68,7 @@ class SecurityLogger {
 
     // Add to in-memory store
     this.events.push(fullEvent);
-    
+
     // Maintain circular buffer
     if (this.events.length > this.maxEvents) {
       this.events.shift();
@@ -91,7 +91,7 @@ class SecurityLogger {
       if (event.stackTrace) {
         console.error('Stack trace:', event.stackTrace);
       }
-      
+
       // In production, you might want to send alerts here
       this.handleCriticalEvent(fullEvent);
     }
@@ -116,9 +116,9 @@ class SecurityLogger {
     // 1. Send alerts to monitoring systems (Sentry, DataDog, etc.)
     // 2. Notify security team
     // 3. Potentially trigger automated responses
-    
+
     console.error(`CRITICAL SECURITY EVENT: ${event.type}`, event);
-    
+
     // Example: Send to external monitoring (implement as needed)
     // await this.sendToSentry(event);
     // await this.sendSlackAlert(event);
@@ -130,7 +130,7 @@ class SecurityLogger {
   getRecentEvents(
     limit: number = 100,
     level?: SecurityLevel,
-    type?: SecurityEventType
+    type?: SecurityEventType,
   ): SecurityEvent[] {
     let filtered = this.events;
 
@@ -159,7 +159,7 @@ class SecurityLogger {
   } {
     const cutoff = new Date(Date.now() - timeframeHours * 60 * 60 * 1000);
     const recentEvents = this.events.filter(
-      event => new Date(event.timestamp) >= cutoff
+      event => new Date(event.timestamp) >= cutoff,
     );
 
     const eventsByLevel = {} as Record<SecurityLevel, number>;
@@ -167,18 +167,18 @@ class SecurityLogger {
     const endpointCounts = {} as Record<string, number>;
     const userCounts = {} as Record<string, number>;
 
-    recentEvents.forEach(event => {
+    recentEvents.forEach((event) => {
       // Count by level
       eventsByLevel[event.level] = (eventsByLevel[event.level] || 0) + 1;
-      
+
       // Count by type
       eventsByType[event.type] = (eventsByType[event.type] || 0) + 1;
-      
+
       // Count by endpoint
       if (event.endpoint) {
         endpointCounts[event.endpoint] = (endpointCounts[event.endpoint] || 0) + 1;
       }
-      
+
       // Count by user
       if (event.userId) {
         userCounts[event.userId] = (userCounts[event.userId] || 0) + 1;
@@ -206,7 +206,7 @@ class SecurityLogger {
   clearOldEvents(olderThanHours: number = 168): void { // 7 days default
     const cutoff = new Date(Date.now() - olderThanHours * 60 * 60 * 1000);
     this.events = this.events.filter(
-      event => new Date(event.timestamp) >= cutoff
+      event => new Date(event.timestamp) >= cutoff,
     );
   }
 }

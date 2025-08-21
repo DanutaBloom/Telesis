@@ -91,15 +91,15 @@ npm run test:runner ci -- --dry-run
 ### Theme Validation
 
 ```typescript
-import { 
+import {
   validateModernSageColors,
   expectElementToHaveModernSageTheme,
-  expectButtonToHaveModernSageVariant 
+  expectButtonToHaveModernSageVariant
 } from '@/test-utils';
 
 test('Button uses Modern Sage theme', () => {
   render(<Button variant="primary">Test</Button>);
-  
+
   const button = screen.getByRole('button');
   expectButtonToHaveModernSageVariant(button, 'primary');
   expectElementToHaveModernSageTheme(button, { primary: true });
@@ -115,16 +115,16 @@ test('Theme meets WCAG requirements', () => {
 ### Color Contrast Testing
 
 ```typescript
-import { 
+import {
   calculateContrastRatio,
   meetsWCAGRequirements,
-  MODERN_SAGE_COLORS 
+  MODERN_SAGE_COLORS
 } from '@/test-utils';
 
 test('Primary color meets WCAG AA', () => {
   const { quietude, background } = MODERN_SAGE_COLORS.light;
   const ratio = calculateContrastRatio(quietude, background);
-  
+
   expect(ratio).toBeGreaterThan(4.5); // WCAG AA requirement
   expect(meetsWCAGRequirements(quietude, background, 'AA')).toBe(true);
 });
@@ -135,22 +135,22 @@ test('Primary color meets WCAG AA', () => {
 ### Mocking Authentication States
 
 ```typescript
-import { 
+import {
   mockAuthenticatedState,
   mockUnauthenticatedState,
-  TEST_USERS 
+  TEST_USERS
 } from '@/test-utils';
 
 test('Component handles authenticated state', () => {
   mockAuthenticatedState({ user: TEST_USERS.admin });
-  
+
   render(<DashboardComponent />);
   expect(screen.getByText(/welcome admin/i)).toBeInTheDocument();
 });
 
 test('Component redirects when unauthenticated', () => {
   mockUnauthenticatedState();
-  
+
   render(<ProtectedComponent />);
   // Should redirect or show sign-in
 });
@@ -164,7 +164,7 @@ import { setupAuth, TEST_USERS } from '../../auth/auth-setup';
 test('User flow as admin', async ({ page }) => {
   await setupAuth(page, 'admin');
   await page.goto('/dashboard');
-  
+
   // Test admin functionality
 });
 ```
@@ -174,10 +174,10 @@ test('User flow as admin', async ({ page }) => {
 ### API Endpoint Security
 
 ```typescript
-import { 
+import {
   runSecurityTestSuite,
   testEndpointAuthentication,
-  testInputValidation 
+  testInputValidation
 } from '@/test-utils';
 
 test('API endpoint security', async () => {
@@ -188,7 +188,7 @@ test('API endpoint security', async () => {
     testInputValidation: true,
     testRateLimit: true,
   });
-  
+
   // Individual security tests
   await testEndpointAuthentication('/api/materials');
   await testInputValidation('/api/materials', 'validToken', 'title');
@@ -200,26 +200,26 @@ test('API endpoint security', async () => {
 ### WCAG 2.1 AA Compliance
 
 ```typescript
-import { 
+import {
   testKeyboardNavigation,
   testARIAAttributes,
-  runAccessibilityTestSuite 
+  runAccessibilityTestSuite
 } from '@/test-utils';
 
 test('Component is accessible', async () => {
   render(<FormComponent />);
-  
+
   const form = screen.getByRole('form');
-  
+
   // Test keyboard navigation
   await testKeyboardNavigation(form);
-  
+
   // Test ARIA attributes
   testARIAAttributes(form, {
     'aria-label': 'Contact form',
     'role': 'form',
   });
-  
+
   // Comprehensive accessibility test
   await runAccessibilityTestSuite(form);
 });
@@ -230,18 +230,18 @@ test('Component is accessible', async () => {
 ### Core Web Vitals
 
 ```typescript
-import { 
+import {
   measureCoreWebVitals,
-  validatePerformanceRequirements,
-  PERFORMANCE_REQUIREMENTS 
+  PERFORMANCE_REQUIREMENTS,
+  validatePerformanceRequirements
 } from '@/test-utils';
 
 test('Page meets performance requirements', async ({ page }) => {
   await page.goto('/dashboard');
-  
+
   const metrics = await measureCoreWebVitals(page);
   const validation = validatePerformanceRequirements(metrics);
-  
+
   expect(validation.passed).toBe(true);
   expect(metrics.fcp).toBeLessThan(PERFORMANCE_REQUIREMENTS.fcp);
   expect(metrics.tti).toBeLessThan(PERFORMANCE_REQUIREMENTS.tti);
@@ -309,11 +309,11 @@ The test infrastructure integrates with CI/CD pipelines:
 # Example GitHub Actions integration
 - name: Run Test Suite
   run: npm run test:ci
-  
+
 - name: Security Tests
   run: npm run test:security
-  
-- name: Performance Tests  
+
+- name: Performance Tests
   run: npm run test:performance
 
 - name: Upload Coverage
@@ -325,7 +325,7 @@ The test infrastructure integrates with CI/CD pipelines:
 ✅ **All 10 Testing Infrastructure Tasks Completed:**
 
 1. ✅ Enhanced Vitest configuration with security and theme test support
-2. ✅ Clerk auth mocking utilities for secure test environments  
+2. ✅ Clerk auth mocking utilities for secure test environments
 3. ✅ Modern Sage theme testing utilities and validators
 4. ✅ Security testing suite for API endpoints and authentication
 5. ✅ Playwright configuration with authentication state management
@@ -339,7 +339,7 @@ The test infrastructure integrates with CI/CD pipelines:
 
 ### Test Utilities (`src/test-utils/`)
 - `index.ts` - Main exports and documentation
-- `cssTestUtils.ts` - CSS and Tailwind testing utilities  
+- `cssTestUtils.ts` - CSS and Tailwind testing utilities
 - `themeTestUtils.ts` - Modern Sage theme testing and validation
 - `authMocks.ts` - Clerk authentication mocking utilities
 - `securityTestUtils.ts` - API security testing utilities
@@ -356,7 +356,7 @@ The test infrastructure integrates with CI/CD pipelines:
 
 ### Configuration Files
 - `vitest.config.mts` - Enhanced Vitest configuration
-- `playwright.config.ts` - Comprehensive Playwright configuration  
+- `playwright.config.ts` - Comprehensive Playwright configuration
 - `vitest-setup.ts` - Enhanced test setup with mocking
 - `tests/global.teardown.ts` - Global test cleanup
 - `scripts/test-runner.js` - Comprehensive test runner script
@@ -367,7 +367,7 @@ The test infrastructure integrates with CI/CD pipelines:
 The testing infrastructure is now fully established and ready to validate:
 
 - **Security Hardening**: All API endpoints and authentication flows
-- **Modern Sage Theme**: Complete theme implementation and compliance  
+- **Modern Sage Theme**: Complete theme implementation and compliance
 - **Performance**: PRD requirements (<1.2s FCP, <2.5s TTI, >90 Lighthouse)
 - **Accessibility**: WCAG 2.1 AA compliance across all components
 - **Core User Flows**: Authentication, organization management, content workflows

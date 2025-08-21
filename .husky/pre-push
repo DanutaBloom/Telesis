@@ -1,0 +1,22 @@
+#!/bin/sh
+# Pre-push hook for additional validation
+
+echo "🚀 Running pre-push validations..."
+
+# Run ESLint but allow warnings (only block on errors)
+echo "📋 Running ESLint on entire codebase (errors only)..."
+npx eslint . --cache --max-warnings 999 --report-unused-disable-directives || {
+  echo "⚠️  ESLint found errors. Please fix critical errors before pushing."
+  echo "💡 Run 'npm run lint:fix' to auto-fix issues where possible."
+  exit 1
+}
+
+# Run type checking
+echo "🔍 Running TypeScript type checking..."
+npm run check-types
+
+# Run unit tests to ensure nothing is broken
+echo "🧪 Running unit tests..."
+npm run test
+
+echo "✅ Pre-push validations completed successfully!"

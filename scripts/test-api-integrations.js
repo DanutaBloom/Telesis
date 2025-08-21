@@ -4,9 +4,9 @@
  * Runs comprehensive tests for all API integrations and generates a report
  */
 
-const { spawn } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+const { spawn } = require('node:child_process');
+const fs = require('node:fs');
+const path = require('node:path');
 
 class APIIntegrationTester {
   constructor() {
@@ -18,8 +18,8 @@ class APIIntegrationTester {
         total: 0,
         passed: 0,
         failed: 0,
-        warnings: 0
-      }
+        warnings: 0,
+      },
     };
   }
 
@@ -44,7 +44,6 @@ class APIIntegrationTester {
 
       // Generate final report
       this.generateReport();
-
     } catch (error) {
       console.error('❌ Test execution failed:', error.message);
       process.exit(1);
@@ -58,42 +57,45 @@ class APIIntegrationTester {
       'Clerk Authentication': [
         'CLERK_SECRET_KEY',
         'NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY',
-        'NEXT_PUBLIC_CLERK_SIGN_IN_URL'
+        'NEXT_PUBLIC_CLERK_SIGN_IN_URL',
       ],
       'Stripe Payments': [
         'STRIPE_SECRET_KEY',
         'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY',
         'STRIPE_WEBHOOK_SECRET',
-        'BILLING_PLAN_ENV'
+        'BILLING_PLAN_ENV',
       ],
       'Database': [
-        'DATABASE_URL' // Optional - has PGlite fallback
+        'DATABASE_URL', // Optional - has PGlite fallback
       ],
       'OpenAI (Missing)': [
         'OPENAI_API_KEY',
-        'OPENAI_ORG_ID'
-      ]
+        'OPENAI_ORG_ID',
+      ],
     };
 
     Object.entries(requiredEnvVars).forEach(([service, vars]) => {
       const serviceStatus = {
         configured: 0,
         missing: 0,
-        vars: {}
+        vars: {},
       };
 
       console.log(`${service}:`);
-      
-      vars.forEach(varName => {
+
+      vars.forEach((varName) => {
         const isConfigured = !!process.env[varName];
         const status = isConfigured ? '✅' : '❌';
         const value = isConfigured ? 'Configured' : 'Missing';
-        
+
         console.log(`  ${status} ${varName}: ${value}`);
-        
+
         serviceStatus.vars[varName] = isConfigured;
-        if (isConfigured) serviceStatus.configured++;
-        else serviceStatus.missing++;
+        if (isConfigured) {
+ serviceStatus.configured++;
+} else {
+ serviceStatus.missing++;
+}
       });
 
       this.testResults.integrations[service.toLowerCase().replace(/[^a-z]/g, '_')] = serviceStatus;
@@ -105,11 +107,11 @@ class APIIntegrationTester {
     return new Promise((resolve, reject) => {
       const vitestProcess = spawn('npm', ['run', 'test', '--', 'tests/integration/'], {
         stdio: 'pipe',
-        shell: true
+        shell: true,
       });
 
       let output = '';
-      let hasError = false;
+      let _hasError = false;
 
       vitestProcess.stdout.on('data', (data) => {
         const chunk = data.toString();
@@ -122,15 +124,15 @@ class APIIntegrationTester {
         output += chunk;
         process.stderr.write(chunk);
         if (chunk.includes('Error') || chunk.includes('Failed')) {
-          hasError = true;
+          _hasError = true;
         }
       });
 
       vitestProcess.on('close', (code) => {
         this.testResults.unitTests = {
           exitCode: code,
-          output: output,
-          status: code === 0 ? 'passed' : 'failed'
+          output,
+          status: code === 0 ? 'passed' : 'failed',
         };
 
         if (code === 0) {
@@ -156,7 +158,7 @@ class APIIntegrationTester {
   async runE2ETests() {
     // Check if development server is running
     const serverRunning = await this.checkServerRunning();
-    
+
     if (!serverRunning) {
       console.log('⚠️ Development server not running - starting it...');
       // Note: In a real scenario, you'd start the server here
@@ -167,13 +169,13 @@ class APIIntegrationTester {
 
     return new Promise((resolve, reject) => {
       const playwrightProcess = spawn('npx', [
-        'playwright', 
-        'test', 
+        'playwright',
+        'test',
         'tests/e2e/api-integrations.e2e.ts',
-        '--reporter=dot'
+        '--reporter=dot',
       ], {
         stdio: 'pipe',
-        shell: true
+        shell: true,
       });
 
       let output = '';
@@ -193,8 +195,8 @@ class APIIntegrationTester {
       playwrightProcess.on('close', (code) => {
         this.testResults.e2eTests = {
           exitCode: code,
-          output: output,
-          status: code === 0 ? 'passed' : 'failed'
+          output,
+          status: code === 0 ? 'passed' : 'failed',
         };
 
         if (code === 0) {
@@ -221,7 +223,7 @@ class APIIntegrationTester {
     try {
       const response = await fetch('http://localhost:3000/api/health');
       return response.ok;
-    } catch (error) {
+    } catch (_error) {
       return false;
     }
   }
@@ -231,7 +233,7 @@ class APIIntegrationTester {
 
     const endpoints = [
       { name: 'Health Check', url: 'http://localhost:3000/api/health', method: 'GET' },
-      { name: 'Materials (Auth Required)', url: 'http://localhost:3000/api/materials', method: 'GET' }
+      { name: 'Materials (Auth Required)', url: 'http://localhost:3000/api/materials', method: 'GET' },
     ];
 
     for (const endpoint of endpoints) {
@@ -241,11 +243,11 @@ class APIIntegrationTester {
         const statusText = response.statusText;
 
         console.log(`${endpoint.name}: ${status} ${statusText}`);
-        
+
         this.testResults.integrations[endpoint.name.toLowerCase().replace(/\s+/g, '_')] = {
-          status: status,
-          statusText: statusText,
-          accessible: status < 500
+          status,
+          statusText,
+          accessible: status < 500,
         };
 
         if (status < 500) {
@@ -253,16 +255,15 @@ class APIIntegrationTester {
         } else {
           this.testResults.summary.failed++;
         }
-
       } catch (error) {
         console.log(`${endpoint.name}: ❌ Connection failed - ${error.message}`);
         this.testResults.integrations[endpoint.name.toLowerCase().replace(/\s+/g, '_')] = {
           error: error.message,
-          accessible: false
+          accessible: false,
         };
         this.testResults.summary.failed++;
       }
-      
+
       this.testResults.summary.total++;
     }
   }
@@ -289,7 +290,7 @@ class APIIntegrationTester {
       'Clerk Authentication': this.getClerkStatus(),
       'Database Connection': this.getDatabaseStatus(),
       'Stripe Payments': this.getStripeStatus(),
-      'OpenAI Integration': 'Not Configured ❌'
+      'OpenAI Integration': 'Not Configured ❌',
     };
 
     Object.entries(integrationStatus).forEach(([service, status]) => {
@@ -299,7 +300,7 @@ class APIIntegrationTester {
     // Recommendations
     console.log('\n💡 Recommendations:');
     console.log('-------------------');
-    
+
     const recommendations = this.generateRecommendations();
     recommendations.forEach(rec => console.log(`• ${rec}`));
 
@@ -351,7 +352,7 @@ class APIIntegrationTester {
       recommendations.push('Configure Clerk authentication keys in .env.local');
     }
 
-    // Check Stripe  
+    // Check Stripe
     const stripe = this.testResults.integrations.stripe_payments;
     if (!stripe || stripe.missing > 0) {
       recommendations.push('Configure Stripe payment keys in .env.local');
@@ -434,7 +435,7 @@ ${this.generateRecommendations().map(rec => `- ${rec}`).join('\n')}
 // Run the integration tests
 if (require.main === module) {
   const tester = new APIIntegrationTester();
-  tester.runTests().catch(error => {
+  tester.runTests().catch((error) => {
     console.error('Fatal error:', error);
     process.exit(1);
   });

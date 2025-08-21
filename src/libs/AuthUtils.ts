@@ -1,23 +1,24 @@
 import { auth } from '@clerk/nextjs/server';
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import type { z } from 'zod';
 
 /**
  * Security utilities for API authentication and authorization
  * Implements OWASP security best practices for authentication
  */
 
-export interface AuthContext {
+export type AuthContext = {
   userId: string;
   orgId: string;
   sessionId: string;
-}
+};
 
-export interface PartialAuthContext {
+export type PartialAuthContext = {
   userId: string;
   orgId: string | null;
   sessionId: string;
-}
+};
 
 /**
  * Authenticates the current request using Clerk
@@ -26,7 +27,7 @@ export interface PartialAuthContext {
 export async function authenticateRequest(): Promise<AuthContext | null> {
   try {
     const authObj = await auth();
-    
+
     if (!authObj.userId || !authObj.orgId || !authObj.sessionId) {
       return null;
     }
@@ -50,7 +51,7 @@ export async function authenticateRequest(): Promise<AuthContext | null> {
 export async function authenticateRequestPartial(): Promise<PartialAuthContext | null> {
   try {
     const authObj = await auth();
-    
+
     if (!authObj.userId || !authObj.sessionId) {
       return null;
     }
@@ -71,26 +72,26 @@ export async function authenticateRequestPartial(): Promise<PartialAuthContext |
  * SECURITY: Prevents authentication bypass attacks (OWASP A01)
  */
 export function withAuth<T extends any[]>(
-  handler: (auth: AuthContext, ...args: T) => Promise<NextResponse>
+  handler: (auth: AuthContext, ...args: T) => Promise<NextResponse>,
 ) {
   return async (...args: T): Promise<NextResponse> => {
     try {
       const authContext = await authenticateRequest();
-      
+
       if (!authContext) {
         return NextResponse.json(
-          { 
-            success: false, 
+          {
+            success: false,
             error: 'Authentication required',
-            code: 'UNAUTHORIZED'
+            code: 'UNAUTHORIZED',
           },
-          { 
+          {
             status: 401,
             headers: {
               'WWW-Authenticate': 'Bearer',
               'Cache-Control': 'no-store',
-            }
-          }
+            },
+          },
         );
       }
 
@@ -98,12 +99,12 @@ export function withAuth<T extends any[]>(
     } catch (error) {
       console.error('Auth middleware error:', error);
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Authentication error',
-          code: 'AUTH_ERROR'
+          code: 'AUTH_ERROR',
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
   };
@@ -115,44 +116,44 @@ export function withAuth<T extends any[]>(
  * Use for endpoints that need to work before organization selection
  */
 export function withPartialAuth<T extends any[]>(
-  handler: (auth: PartialAuthContext, ...args: T) => Promise<NextResponse>
+  handler: (auth: PartialAuthContext, ...args: T) => Promise<NextResponse>,
 ) {
   return async (...args: T): Promise<NextResponse> => {
     try {
       const authContext = await authenticateRequestPartial();
-      
+
       if (!authContext) {
         return NextResponse.json(
-          { 
-            success: false, 
+          {
+            success: false,
             error: 'Authentication required',
-            code: 'UNAUTHORIZED'
+            code: 'UNAUTHORIZED',
           },
-          { 
+          {
             status: 401,
             headers: {
               'WWW-Authenticate': 'Bearer',
               'Cache-Control': 'no-store',
-            }
-          }
+            },
+          },
         );
       }
 
       // If orgId is missing, return a more specific error code
       if (!authContext.orgId) {
         return NextResponse.json(
-          { 
-            success: false, 
+          {
+            success: false,
             error: 'Organization selection required',
             code: 'ORGANIZATION_SELECTION_REQUIRED',
-            redirectTo: '/onboarding/organization-selection'
+            redirectTo: '/onboarding/organization-selection',
           },
-          { 
+          {
             status: 428, // Precondition Required
             headers: {
               'Cache-Control': 'no-store',
-            }
-          }
+            },
+          },
         );
       }
 
@@ -160,12 +161,12 @@ export function withPartialAuth<T extends any[]>(
     } catch (error) {
       console.error('Auth middleware error:', error);
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Authentication error',
-          code: 'AUTH_ERROR'
+          code: 'AUTH_ERROR',
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
   };
@@ -176,13 +177,13 @@ export function withPartialAuth<T extends any[]>(
  * SECURITY: Prevents cross-tenant data exposure (OWASP A01)
  */
 export function validateOrganizationAccess(
-  userOrgId: string, 
-  requestedOrgId: string
+  userOrgId: string,
+  requestedOrgId: string,
 ): boolean {
   if (!userOrgId || !requestedOrgId) {
     return false;
   }
-  
+
   // Strict organization boundary enforcement
   return userOrgId === requestedOrgId;
 }
@@ -193,40 +194,40 @@ export function validateOrganizationAccess(
  */
 export async function validateRequestBody<T>(
   request: NextRequest,
-  schema: z.ZodSchema<T>
+  schema: z.ZodSchema<T>,
 ): Promise<{ success: true; data: T } | { success: false; error: string }> {
   try {
     const contentType = request.headers.get('content-type');
-    
+
     if (!contentType || !contentType.includes('application/json')) {
       return {
         success: false,
-        error: 'Content-Type must be application/json'
+        error: 'Content-Type must be application/json',
       };
     }
 
     const body = await request.json();
     const result = schema.safeParse(body);
-    
+
     if (!result.success) {
-      const errors = result.error.errors.map(err => 
-        `${err.path.join('.')}: ${err.message}`
+      const errors = result.error.errors.map(err =>
+        `${err.path.join('.')}: ${err.message}`,
       ).join(', ');
-      
+
       return {
         success: false,
-        error: `Validation failed: ${errors}`
+        error: `Validation failed: ${errors}`,
       };
     }
 
     return {
       success: true,
-      data: result.data
+      data: result.data,
     };
   } catch (error) {
     return {
       success: false,
-      error: 'Invalid JSON format'
+      error: 'Invalid JSON format',
     };
   }
 }
@@ -252,7 +253,7 @@ export function createSecureErrorResponse(
   error: unknown,
   userMessage: string,
   statusCode: number = 500,
-  context?: Record<string, any>
+  context?: Record<string, any>,
 ): NextResponse {
   // Log full error details for security monitoring
   const errorDetails = {
@@ -261,9 +262,9 @@ export function createSecureErrorResponse(
     timestamp: new Date().toISOString(),
     context,
   };
-  
+
   console.error('API Security Error:', errorDetails);
-  
+
   // Return sanitized error to client
   return NextResponse.json(
     {
@@ -274,7 +275,7 @@ export function createSecureErrorResponse(
     {
       status: statusCode,
       headers: SECURITY_HEADERS,
-    }
+    },
   );
 }
 
@@ -287,29 +288,29 @@ const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 export function checkRateLimit(
   identifier: string,
   maxRequests: number = 100,
-  windowMs: number = 60000 // 1 minute
+  windowMs: number = 60000, // 1 minute
 ): { allowed: boolean; resetTime: number } {
   const now = Date.now();
   const windowStart = now - windowMs;
-  
+
   // Clean old entries
   for (const [key, value] of rateLimitMap.entries()) {
     if (value.resetTime < windowStart) {
       rateLimitMap.delete(key);
     }
   }
-  
+
   const current = rateLimitMap.get(identifier);
-  
+
   if (!current || current.resetTime < windowStart) {
     rateLimitMap.set(identifier, { count: 1, resetTime: now + windowMs });
     return { allowed: true, resetTime: now + windowMs };
   }
-  
+
   if (current.count >= maxRequests) {
     return { allowed: false, resetTime: current.resetTime };
   }
-  
+
   current.count++;
   return { allowed: true, resetTime: current.resetTime };
 }

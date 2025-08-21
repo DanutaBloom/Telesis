@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
+import { checkRateLimit, SECURITY_HEADERS } from '@/libs/AuthUtils';
 import { db } from '@/libs/DB';
-import { SECURITY_HEADERS, checkRateLimit } from '@/libs/AuthUtils';
 
 /**
  * SECURED Health Check API
@@ -10,24 +10,24 @@ import { SECURITY_HEADERS, checkRateLimit } from '@/libs/AuthUtils';
 export async function GET(request: Request) {
   try {
     // Rate limiting for health endpoint
-    const clientIp = request.headers.get('x-forwarded-for') || 
-                     request.headers.get('x-real-ip') || 
-                     'unknown';
-    
+    const clientIp = request.headers.get('x-forwarded-for')
+      || request.headers.get('x-real-ip')
+      || 'unknown';
+
     const rateLimitResult = checkRateLimit(`health:${clientIp}`, 30, 60000); // 30 requests per minute
     if (!rateLimitResult.allowed) {
       return NextResponse.json(
-        { 
+        {
           status: 'rate_limited',
           timestamp: new Date().toISOString(),
         },
-        { 
+        {
           status: 429,
           headers: {
             ...SECURITY_HEADERS,
-            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
-          }
-        }
+            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString(),
+          },
+        },
       );
     }
 
@@ -37,7 +37,7 @@ export async function GET(request: Request) {
       version: '1.0.0', // Safe to expose
       services: {
         database: 'unknown',
-        authentication: 'unknown', 
+        authentication: 'unknown',
         payments: 'unknown',
       },
     };
@@ -54,7 +54,7 @@ export async function GET(request: Request) {
         timestamp: new Date().toISOString(),
         clientIp,
       });
-      
+
       healthCheck.services.database = 'degraded';
       healthCheck.status = 'degraded';
     }
@@ -64,7 +64,7 @@ export async function GET(request: Request) {
       // SECURITY: Only check if keys exist, don't expose any values or specifics
       const hasClerkKeys = !!(process.env.CLERK_SECRET_KEY && process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
       const hasStripeKeys = !!(process.env.STRIPE_SECRET_KEY && process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-      
+
       healthCheck.services.authentication = hasClerkKeys ? 'configured' : 'not-configured';
       healthCheck.services.payments = hasStripeKeys ? 'configured' : 'not-configured';
     } catch (error) {
@@ -75,7 +75,7 @@ export async function GET(request: Request) {
     }
 
     const httpStatus = healthCheck.status === 'healthy' ? 200 : 503;
-    
+
     // SECURITY: Log health check access for monitoring
     console.log('Health check accessed:', {
       status: healthCheck.status,
@@ -83,15 +83,14 @@ export async function GET(request: Request) {
       userAgent: request.headers.get('user-agent'),
       timestamp: new Date().toISOString(),
     });
-    
-    return NextResponse.json(healthCheck, { 
+
+    return NextResponse.json(healthCheck, {
       status: httpStatus,
       headers: {
         ...SECURITY_HEADERS,
         'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
-      }
+      },
     });
-
   } catch (error) {
     // SECURITY: Log the full error server-side
     console.error('Health check endpoint error:', {
@@ -106,10 +105,10 @@ export async function GET(request: Request) {
         status: 'error',
         timestamp: new Date().toISOString(),
       },
-      { 
+      {
         status: 500,
-        headers: SECURITY_HEADERS
-      }
+        headers: SECURITY_HEADERS,
+      },
     );
   }
 }

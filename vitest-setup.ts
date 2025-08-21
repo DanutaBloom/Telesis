@@ -1,17 +1,17 @@
 import '@testing-library/jest-dom/vitest';
 import '@/styles/global.css';
-import { cleanup } from '@testing-library/react';
 
-import failOnConsole from 'vitest-fail-on-console';
-import { beforeAll, afterEach, vi } from 'vitest';
+import { cleanup } from '@testing-library/react';
 import React from 'react';
+import { afterEach, beforeAll, vi } from 'vitest';
+import failOnConsole from 'vitest-fail-on-console';
 
 // Console failure configuration - less strict for development
 failOnConsole({
   shouldFailOnDebug: false, // Allow debug statements in tests
   shouldFailOnError: true,
-  shouldFailOnInfo: false,  // Allow info logs for test debugging
-  shouldFailOnLog: false,   // Allow console.log for debugging
+  shouldFailOnInfo: false, // Allow info logs for test debugging
+  shouldFailOnLog: false, // Allow console.log for debugging
   shouldFailOnWarn: true,
 });
 
@@ -103,7 +103,7 @@ beforeAll(() => {
       disconnect: vi.fn(),
     }));
 
-    // Mock IntersectionObserver for lazy loading components  
+    // Mock IntersectionObserver for lazy loading components
     global.IntersectionObserver = vi.fn().mockImplementation(() => ({
       observe: vi.fn(),
       unobserve: vi.fn(),

@@ -59,13 +59,13 @@ const nextConfig = {
       test: /\.(test|spec)\.(js|jsx|ts|tsx)$/,
       use: 'ignore-loader',
     });
-    
+
     // Exclude test-utils directory from build
     config.module.rules.push({
       test: /src\/test-utils\/.*\.(js|jsx|ts|tsx)$/,
       use: 'ignore-loader',
     });
-    
+
     // Production optimizations
     if (!dev && !isServer) {
       // Split chunks for better caching
@@ -187,7 +187,7 @@ const nextConfig = {
                   'magnetometer=()',
                   'microphone=()',
                   'payment=()',
-                  'usb=()'
+                  'usb=()',
                 ].join(', '), // Disables potentially dangerous browser APIs
               },
               {
@@ -197,21 +197,21 @@ const nextConfig = {
               {
                 key: 'Content-Security-Policy',
                 value: [
-                  "default-src 'self'",
-                  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://*.clerk.accounts.dev https://*.clerk.dev https://challenges.cloudflare.com",
-                  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-                  "font-src 'self' https://fonts.gstatic.com",
-                  "img-src 'self' data: https: blob:",
-                  "media-src 'self' https: blob:",
-                  "connect-src 'self' https://api.stripe.com https://*.clerk.accounts.dev https://*.clerk.dev https://challenges.cloudflare.com wss://*.clerk.dev https://vitals.vercel-insights.com https://clerk-telemetry.com http://localhost:8969",
-                  "frame-src 'self' https://js.stripe.com https://*.stripe.com https://challenges.cloudflare.com",
-                  "worker-src 'self' blob:",
-                  "child-src 'self'",
-                  "object-src 'none'",
-                  "base-uri 'self'",
-                  "form-action 'self'",
-                  "frame-ancestors 'none'",
-                  "upgrade-insecure-requests"
+                  'default-src \'self\'',
+                  'script-src \'self\' \'unsafe-inline\' \'unsafe-eval\' https://js.stripe.com https://*.clerk.accounts.dev https://*.clerk.dev https://challenges.cloudflare.com',
+                  'style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com',
+                  'font-src \'self\' https://fonts.gstatic.com',
+                  'img-src \'self\' data: https: blob:',
+                  'media-src \'self\' https: blob:',
+                  'connect-src \'self\' https://api.stripe.com https://*.clerk.accounts.dev https://*.clerk.dev https://challenges.cloudflare.com wss://*.clerk.dev https://vitals.vercel-insights.com https://clerk-telemetry.com http://localhost:8969',
+                  'frame-src \'self\' https://js.stripe.com https://*.stripe.com https://challenges.cloudflare.com',
+                  'worker-src \'self\' blob:',
+                  'child-src \'self\'',
+                  'object-src \'none\'',
+                  'base-uri \'self\'',
+                  'form-action \'self\'',
+                  'frame-ancestors \'none\'',
+                  'upgrade-insecure-requests',
                 ].join('; '), // Comprehensive CSP for XSS prevention
               },
             ],

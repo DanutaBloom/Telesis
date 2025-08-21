@@ -4,8 +4,9 @@
  * Validates authentication, authorization, input validation, and security headers
  */
 
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import type { NextRequest } from 'next/server';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+
 import { GET as materialsGET, POST as materialsPOST } from '@/app/api/materials/route';
 import { GET as organizationsGET, POST as organizationsPOST } from '@/app/api/organizations/route';
 
@@ -248,9 +249,10 @@ describe('API Security - Input Validation Tests', () => {
     });
 
     const response = await materialsPOST(request as NextRequest);
-    
+
     if (response.status === 200 || response.status === 201) {
       const data = await response.json();
+
       // Verify XSS was sanitized
       expect(data.data.title).not.toContain('<script>');
       expect(data.data.title).toBe('Test Material'); // HTML tags should be stripped
@@ -392,23 +394,23 @@ describe('API Security - Security Headers Tests', () => {
 describe('API Security - Rate Limiting Tests', () => {
   it('should apply rate limiting to materials GET requests', async () => {
     const requests = [];
-    
+
     // Make multiple requests rapidly
     for (let i = 0; i < 55; i++) { // Exceeds limit of 50 per minute
       mockAuth.mockResolvedValueOnce(mockAuthSuccess);
-      
+
       const request = new Request('http://localhost:3000/api/materials', {
         method: 'GET',
         headers: { 'content-type': 'application/json' },
       });
-      
+
       requests.push(materialsGET(request as NextRequest));
     }
-    
+
     const responses = await Promise.all(requests);
     const lastResponse = responses[responses.length - 1];
     const data = await lastResponse.json();
-    
+
     // Should eventually hit rate limit
     expect(lastResponse.status).toBe(429);
     expect(data.error).toContain('Rate limit exceeded');
@@ -417,11 +419,11 @@ describe('API Security - Rate Limiting Tests', () => {
 
   it('should apply stricter rate limiting to organizations POST requests', async () => {
     const requests = [];
-    
+
     // Make multiple requests rapidly
     for (let i = 0; i < 5; i++) { // Exceeds limit of 2 per 5 minutes
       mockAuth.mockResolvedValueOnce(mockAuthSuccess);
-      
+
       const request = new Request('http://localhost:3000/api/organizations', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
@@ -430,14 +432,14 @@ describe('API Security - Rate Limiting Tests', () => {
           stripeCustomerId: `cus_test${i}`,
         }),
       });
-      
+
       requests.push(organizationsPOST(request as NextRequest));
     }
-    
+
     const responses = await Promise.all(requests);
     const lastResponse = responses[responses.length - 1];
     const data = await lastResponse.json();
-    
+
     // Should hit rate limit
     expect(lastResponse.status).toBe(429);
     expect(data.error).toContain('Rate limit exceeded');

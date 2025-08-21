@@ -1,5 +1,5 @@
-import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 
 import { DynamicOrganizationList } from '@/components/clerk/DynamicClerkComponents';
 import { isOrganizationsEnabled } from '@/libs/ClerkUtils';
@@ -29,7 +29,7 @@ const OrganizationSelectionPage = (props: { params: { locale: string } }) => {
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold">Select Organization</h1>
-          <p className="text-sm text-muted-foreground mt-2">
+          <p className="mt-2 text-sm text-muted-foreground">
             Choose an organization to continue or create a new one
           </p>
         </div>

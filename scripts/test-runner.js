@@ -1,23 +1,23 @@
 #!/usr/bin/env node
 /**
  * Telesis Test Runner
- * 
+ *
  * Comprehensive test runner for all test types:
  * - Unit tests (Vitest)
  * - Component tests with theme validation
- * - E2E tests (Playwright) 
+ * - E2E tests (Playwright)
  * - Security tests
  * - Performance tests
  * - Accessibility tests
  */
 
-const { spawn, execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+const { spawn, execSync } = require('node:child_process');
+const fs = require('node:fs');
+const _path = require('node:path');
 
 // Test configurations
 const TEST_CONFIGS = {
-  unit: {
+  'unit': {
     command: 'npm',
     args: ['run', 'test'],
     description: '🧪 Unit Tests (Vitest)',
@@ -35,7 +35,7 @@ const TEST_CONFIGS = {
     description: '📊 Unit Tests with Coverage',
     timeout: 120000,
   },
-  e2e: {
+  'e2e': {
     command: 'npx',
     args: ['playwright', 'test'],
     description: '🎭 E2E Tests (Playwright)',
@@ -53,31 +53,31 @@ const TEST_CONFIGS = {
     description: '🐛 E2E Tests (Debug Mode)',
     timeout: 0,
   },
-  security: {
+  'security': {
     command: 'npx',
     args: ['playwright', 'test', '--grep', '@security'],
     description: '🔒 Security Tests',
     timeout: 300000, // 5 minutes
   },
-  performance: {
+  'performance': {
     command: 'npx',
     args: ['playwright', 'test', '--grep', '@performance'],
     description: '⚡ Performance Tests',
     timeout: 300000,
   },
-  accessibility: {
+  'accessibility': {
     command: 'npx',
     args: ['playwright', 'test', '--grep', '@a11y'],
     description: '♿ Accessibility Tests',
     timeout: 180000,
   },
-  theme: {
+  'theme': {
     command: 'npm',
     args: ['run', 'test', '--', '--grep', 'Modern Sage'],
     description: '🎨 Modern Sage Theme Tests',
     timeout: 60000,
   },
-  auth: {
+  'auth': {
     command: 'npx',
     args: ['playwright', 'test', 'tests/e2e/auth/'],
     description: '🔐 Authentication Tests',
@@ -111,14 +111,14 @@ const TEST_SUITES = {
 
 // Colors for console output
 const colors = {
-  reset: '\x1b[0m',
-  bright: '\x1b[1m',
-  red: '\x1b[31m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  magenta: '\x1b[35m',
-  cyan: '\x1b[36m',
+  reset: '\x1B[0m',
+  bright: '\x1B[1m',
+  red: '\x1B[31m',
+  green: '\x1B[32m',
+  yellow: '\x1B[33m',
+  blue: '\x1B[34m',
+  magenta: '\x1B[35m',
+  cyan: '\x1B[36m',
 };
 
 function colorize(text, color) {
@@ -148,26 +148,26 @@ function logInfo(message) {
 function showUsage() {
   log('\n🧪 Telesis Test Runner', 'bright');
   log('================================\n');
-  
+
   log('Usage: npm run test:runner [suite|test] [options]\n', 'cyan');
-  
+
   log('Available Test Suites:', 'bright');
   Object.entries(TEST_SUITES).forEach(([suite, tests]) => {
     log(`  ${colorize(suite, 'yellow')}: ${tests.join(', ')}`);
   });
-  
+
   log('\nAvailable Individual Tests:', 'bright');
   Object.entries(TEST_CONFIGS).forEach(([test, config]) => {
     log(`  ${colorize(test, 'yellow')}: ${config.description}`);
   });
-  
+
   log('\nOptions:', 'bright');
   log('  --help, -h     Show this help message');
   log('  --list, -l     List available tests and suites');
   log('  --verbose, -v  Verbose output');
   log('  --dry-run, -d  Show what would be executed without running');
   log('  --sequential   Run tests sequentially instead of in parallel');
-  
+
   log('\nExamples:', 'bright');
   log('  npm run test:runner quick       # Run quick test suite');
   log('  npm run test:runner unit        # Run unit tests only');
@@ -178,12 +178,12 @@ function showUsage() {
 
 function listTests() {
   log('\n📋 Available Tests and Suites\n', 'bright');
-  
+
   log('Test Suites:', 'cyan');
   Object.entries(TEST_SUITES).forEach(([suite, tests]) => {
     log(`  📦 ${colorize(suite, 'yellow')}: ${tests.join(', ')}`);
   });
-  
+
   log('\nIndividual Tests:', 'cyan');
   Object.entries(TEST_CONFIGS).forEach(([test, config]) => {
     log(`  🧪 ${colorize(test, 'yellow')}: ${config.description}`);
@@ -193,7 +193,7 @@ function listTests() {
 function runCommand(command, args, options = {}) {
   return new Promise((resolve, reject) => {
     const { timeout = 60000, verbose = false, description = '' } = options;
-    
+
     if (verbose || options.dryRun) {
       log(`\n${description}`, 'bright');
       log(`Command: ${command} ${args.join(' ')}`, 'cyan');
@@ -202,42 +202,48 @@ function runCommand(command, args, options = {}) {
         return;
       }
     }
-    
+
     const child = spawn(command, args, {
       stdio: verbose ? 'inherit' : 'pipe',
       shell: process.platform === 'win32',
     });
-    
+
     let output = '';
     let errorOutput = '';
-    
+
     if (!verbose) {
       child.stdout?.on('data', (data) => {
         output += data.toString();
       });
-      
+
       child.stderr?.on('data', (data) => {
         errorOutput += data.toString();
       });
     }
-    
-    const timeoutId = timeout > 0 ? setTimeout(() => {
+
+    const timeoutId = timeout > 0
+? setTimeout(() => {
       child.kill();
       reject(new Error(`Command timed out after ${timeout}ms`));
-    }, timeout) : null;
-    
+    }, timeout)
+: null;
+
     child.on('close', (code) => {
-      if (timeoutId) clearTimeout(timeoutId);
-      
+      if (timeoutId) {
+ clearTimeout(timeoutId);
+}
+
       if (code === 0) {
         resolve({ success: true, output, errorOutput });
       } else {
         reject(new Error(`Command failed with code ${code}\n${errorOutput}`));
       }
     });
-    
+
     child.on('error', (error) => {
-      if (timeoutId) clearTimeout(timeoutId);
+      if (timeoutId) {
+ clearTimeout(timeoutId);
+}
       reject(error);
     });
   });
@@ -248,28 +254,28 @@ async function runTest(testName, options = {}) {
   if (!config) {
     throw new Error(`Unknown test: ${testName}`);
   }
-  
+
   const startTime = Date.now();
-  
+
   try {
     logInfo(`\n▶️  Running ${config.description}...`);
-    
+
     await runCommand(config.command, config.args, {
       timeout: config.timeout,
       verbose: options.verbose,
       dryRun: options.dryRun,
       description: config.description,
     });
-    
+
     const duration = Date.now() - startTime;
     logSuccess(`✅ ${config.description} completed in ${duration}ms`);
-    
+
     return { success: true, duration, test: testName };
   } catch (error) {
     const duration = Date.now() - startTime;
     logError(`❌ ${config.description} failed after ${duration}ms`);
     logError(error.message);
-    
+
     return { success: false, duration, test: testName, error: error.message };
   }
 }
@@ -279,19 +285,19 @@ async function runTestSuite(suiteName, options = {}) {
   if (!tests) {
     throw new Error(`Unknown test suite: ${suiteName}`);
   }
-  
+
   log(`\n🚀 Running test suite: ${colorize(suiteName, 'bright')}`, 'cyan');
   log(`Tests: ${tests.join(', ')}\n`);
-  
+
   const results = [];
   const startTime = Date.now();
-  
+
   if (options.sequential) {
     // Run tests sequentially
     for (const testName of tests) {
       const result = await runTest(testName, options);
       results.push(result);
-      
+
       if (!result.success && options.failFast) {
         break;
       }
@@ -300,7 +306,7 @@ async function runTestSuite(suiteName, options = {}) {
     // Run tests in parallel
     const promises = tests.map(testName => runTest(testName, options));
     const parallelResults = await Promise.allSettled(promises);
-    
+
     parallelResults.forEach((result, index) => {
       if (result.status === 'fulfilled') {
         results.push(result.value);
@@ -314,24 +320,24 @@ async function runTestSuite(suiteName, options = {}) {
       }
     });
   }
-  
+
   const totalDuration = Date.now() - startTime;
   const successful = results.filter(r => r.success).length;
   const failed = results.filter(r => !r.success).length;
-  
+
   log(`\n📊 Test Suite Results for ${colorize(suiteName, 'bright')}:`, 'cyan');
   log(`   Total: ${results.length} tests`);
   log(`   ${colorize(`Passed: ${successful}`, 'green')}`);
   log(`   ${colorize(`Failed: ${failed}`, failed > 0 ? 'red' : 'reset')}`);
   log(`   Duration: ${totalDuration}ms\n`);
-  
+
   if (failed > 0) {
     logError('Failed tests:');
-    results.filter(r => !r.success).forEach(result => {
+    results.filter(r => !r.success).forEach((result) => {
       logError(`  ❌ ${result.test}: ${result.error}`);
     });
   }
-  
+
   return {
     success: failed === 0,
     results,
@@ -342,34 +348,34 @@ async function runTestSuite(suiteName, options = {}) {
 
 function checkPrerequisites() {
   const issues = [];
-  
+
   // Check if playwright is installed
   try {
     execSync('npx playwright --version', { stdio: 'ignore' });
   } catch {
     issues.push('Playwright is not installed. Run: npx playwright install');
   }
-  
+
   // Check if dependencies are installed
   if (!fs.existsSync('node_modules')) {
     issues.push('Dependencies not installed. Run: npm install');
   }
-  
+
   // Check if test directories exist
   const testDirs = ['tests', 'src/test-utils'];
-  testDirs.forEach(dir => {
+  testDirs.forEach((dir) => {
     if (!fs.existsSync(dir)) {
       issues.push(`Test directory missing: ${dir}`);
     }
   });
-  
+
   if (issues.length > 0) {
     logError('\n❌ Prerequisites check failed:');
     issues.forEach(issue => logError(`   - ${issue}`));
     logError('');
     return false;
   }
-  
+
   logSuccess('✅ Prerequisites check passed');
   return true;
 }
@@ -384,35 +390,35 @@ async function main() {
     help: args.includes('--help') || args.includes('-h'),
     list: args.includes('--list') || args.includes('-l'),
   };
-  
+
   const testArgs = args.filter(arg => !arg.startsWith('--') && !arg.startsWith('-'));
-  
+
   if (options.help || testArgs.includes('help')) {
     showUsage();
     process.exit(0);
   }
-  
+
   if (options.list || testArgs.includes('list')) {
     listTests();
     process.exit(0);
   }
-  
+
   if (testArgs.length === 0) {
     logWarning('No test specified. Use --help to see available options.');
     showUsage();
     process.exit(1);
   }
-  
+
   log('\n🧪 Telesis Test Runner', 'bright');
   log('================================\n');
-  
+
   if (!options.dryRun && !checkPrerequisites()) {
     process.exit(1);
   }
-  
+
   const target = testArgs[0];
   let success = true;
-  
+
   try {
     if (TEST_SUITES[target]) {
       // Run test suite
@@ -431,7 +437,7 @@ async function main() {
     logError(`\n❌ Test runner error: ${error.message}`);
     success = false;
   }
-  
+
   log('\n================================');
   if (success) {
     logSuccess('🎉 All tests completed successfully!');

@@ -3,7 +3,7 @@
  * Tests for missing OpenAI/ChatGPT integration and provides setup guidance
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 
 // Mock OpenAI configuration schema for validation
@@ -20,7 +20,7 @@ type OpenAIConfig = z.infer<typeof OpenAIConfigSchema>;
 // Mock OpenAI client for testing integration readiness
 class MockOpenAIClient {
   private apiKey: string;
-  
+
   constructor(apiKey: string) {
     this.apiKey = apiKey;
   }
@@ -32,7 +32,9 @@ class MockOpenAIClient {
 
   async generateContent(prompt: string): Promise<string> {
     // Mock content generation
-    if (!this.apiKey) throw new Error('API key required');
+    if (!this.apiKey) {
+ throw new Error('API key required');
+}
     return `Generated content for: ${prompt.substring(0, 50)}...`;
   }
 
@@ -41,8 +43,10 @@ class MockOpenAIClient {
     tokensUsed: number;
     processingTime: number;
   }> {
-    if (!this.apiKey) throw new Error('API key required');
-    
+    if (!this.apiKey) {
+ throw new Error('API key required');
+}
+
     return {
       content: `Transformed ${transformationType} content: ${materialContent.substring(0, 100)}...`,
       tokensUsed: Math.floor(Math.random() * 1000) + 100,
@@ -78,6 +82,7 @@ describe('OpenAI Integration Tests', () => {
       };
 
       const validation = OpenAIConfigSchema.safeParse(mockConfig);
+
       expect(validation.success).toBe(true);
 
       if (validation.success) {
@@ -97,13 +102,13 @@ describe('OpenAI Integration Tests', () => {
           OPENAI_MODEL: 'gpt-4',
           OPENAI_MAX_TOKENS: 2000,
           OPENAI_TEMPERATURE: 0.7,
-        }
+        },
       };
 
       console.log('\n💡 Recommended OpenAI Configuration:');
       console.log('Add these environment variables to .env.local:');
       console.log('');
-      
+
       Object.entries(recommendedConfig.required).forEach(([key, value]) => {
         console.log(`${key}=${value}`);
       });
@@ -123,12 +128,13 @@ describe('OpenAI Integration Tests', () => {
       const openaiClient = new MockOpenAIClient(mockApiKey);
 
       const isConnected = await openaiClient.testConnection();
+
       expect(isConnected).toBe(true);
     });
 
     it('should handle missing API key gracefully', async () => {
       const openaiClient = new MockOpenAIClient('');
-      
+
       await expect(openaiClient.generateContent('test prompt')).rejects.toThrow('API key required');
     });
 
@@ -165,15 +171,16 @@ describe('OpenAI Integration Tests', () => {
       // These schemas exist in the database and are ready for AI integration
       const aiSchemas = [
         'ai_transformations',
-        'micro_modules', 
+        'micro_modules',
         'materials',
         'user_preferences',
         'enrollments',
-        'learning_paths'
+        'learning_paths',
       ];
 
-      aiSchemas.forEach(schema => {
+      aiSchemas.forEach((schema) => {
         expect(schema).toBeTruthy();
+
         console.log(`✅ Schema ready: ${schema}`);
       });
 
@@ -187,11 +194,11 @@ describe('OpenAI Integration Tests', () => {
         modelUsed: 'string', // 'gpt-4', 'gpt-3.5-turbo', etc.
         transformationType: 'string', // 'summary', 'visual', 'audio', etc.
         inputTokens: 'number',
-        outputTokens: 'number', 
+        outputTokens: 'number',
         processingTime: 'number',
         qualityScore: 'number',
         status: 'string', // 'pending', 'processing', 'completed', 'failed'
-        errorMessage: 'string'
+        errorMessage: 'string',
       };
 
       Object.entries(aiTransformationFields).forEach(([field, type]) => {
@@ -212,10 +219,10 @@ describe('OpenAI Integration Tests', () => {
         '/api/ai/generate-quiz',
         '/api/ai/generate-visual',
         '/api/ai/generate-audio',
-        '/api/ai/analyze-content'
+        '/api/ai/analyze-content',
       ];
 
-      missingEndpoints.forEach(endpoint => {
+      missingEndpoints.forEach((endpoint) => {
         console.warn(`❌ Missing endpoint: ${endpoint}`);
       });
 
@@ -229,15 +236,15 @@ describe('OpenAI Integration Tests', () => {
           purpose: 'Transform uploaded materials using OpenAI',
           requiredFields: ['materialId', 'transformationType'],
           authentication: 'required',
-          rateLimit: '10 requests per minute'
+          rateLimit: '10 requests per minute',
         },
         '/api/ai/generate-content': {
-          method: 'POST', 
+          method: 'POST',
           purpose: 'Generate micro-learning content',
           requiredFields: ['sourceContent', 'contentType', 'difficulty'],
           authentication: 'required',
-          rateLimit: '20 requests per minute'
-        }
+          rateLimit: '20 requests per minute',
+        },
       };
 
       Object.entries(recommendedStructure).forEach(([endpoint, config]) => {
@@ -290,7 +297,7 @@ describe('OpenAI Integration Tests', () => {
           'Create progress indicators': false,
           'Add error handling displays': false,
           'Implement content preview': false,
-        }
+        },
       };
 
       console.log('\n📋 OpenAI Integration Checklist:');

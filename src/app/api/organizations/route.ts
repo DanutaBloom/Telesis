@@ -1,22 +1,22 @@
+import { eq } from 'drizzle-orm';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { eq } from 'drizzle-orm';
 
-import { db } from '@/libs/DB';
-import { organizationSchema } from '@/models/Schema';
-import { 
-  withPartialAuth, 
-  validateRequestBody, 
-  createSecureErrorResponse,
+import {
   checkRateLimit,
+  createSecureErrorResponse,
+  type PartialAuthContext,
   SECURITY_HEADERS,
-  type PartialAuthContext
+  validateRequestBody,
+  withPartialAuth,
 } from '@/libs/AuthUtils';
 import { isOrganizationsEnabled } from '@/libs/ClerkUtils';
-import { 
-  CreateOrganizationSchema, 
-  GetOrganizationsQuerySchema 
+import { db } from '@/libs/DB';
+import {
+  CreateOrganizationSchema,
+  GetOrganizationsQuerySchema,
 } from '@/libs/ValidationSchemas';
+import { organizationSchema } from '@/models/Schema';
 
 /**
  * SECURED Organizations API - GET endpoint
@@ -28,51 +28,51 @@ export const GET = withPartialAuth(async (auth: PartialAuthContext, request: Nex
     const rateLimitResult = checkRateLimit(`${auth.userId}:organizations:get`, 20, 60000);
     if (!rateLimitResult.allowed) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Rate limit exceeded. Please try again later.',
-          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
+          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000),
         },
-        { 
+        {
           status: 429,
           headers: {
             ...SECURITY_HEADERS,
-            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
-          }
-        }
+            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString(),
+          },
+        },
       );
     }
 
     // Check if organizations are enabled
     if (!isOrganizationsEnabled()) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Organizations feature is not enabled',
-          code: 'ORGANIZATIONS_DISABLED'
+          code: 'ORGANIZATIONS_DISABLED',
         },
-        { status: 403, headers: SECURITY_HEADERS }
+        { status: 403, headers: SECURITY_HEADERS },
       );
     }
 
     // Check if user has organization
     if (!auth.orgId) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Organization selection required',
           code: 'ORGANIZATION_SELECTION_REQUIRED',
-          redirectTo: '/onboarding/organization-selection'
+          redirectTo: '/onboarding/organization-selection',
         },
-        { status: 403, headers: SECURITY_HEADERS }
+        { status: 403, headers: SECURITY_HEADERS },
       );
     }
 
     // Parse and validate query parameters
     const url = new URL(request.url);
     const queryParams = {
-      limit: parseInt(url.searchParams.get('limit') || '10'),
-      offset: parseInt(url.searchParams.get('offset') || '0'),
+      limit: Number.parseInt(url.searchParams.get('limit') || '10'),
+      offset: Number.parseInt(url.searchParams.get('offset') || '0'),
       hasStripeCustomer: url.searchParams.get('hasStripeCustomer') === 'true' || undefined,
     };
 
@@ -82,11 +82,11 @@ export const GET = withPartialAuth(async (auth: PartialAuthContext, request: Nex
         {
           success: false,
           error: 'Invalid query parameters',
-          details: validation.error.errors.map(err => 
-            `${err.path.join('.')}: ${err.message}`
-          ).join(', ')
+          details: validation.error.errors.map(err =>
+            `${err.path.join('.')}: ${err.message}`,
+          ).join(', '),
         },
-        { status: 400, headers: SECURITY_HEADERS }
+        { status: 400, headers: SECURITY_HEADERS },
       );
     }
 
@@ -109,12 +109,12 @@ export const GET = withPartialAuth(async (auth: PartialAuthContext, request: Nex
 
     if (organization.length === 0) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Organization not found or access denied',
-          code: 'ORGANIZATION_NOT_FOUND'
+          code: 'ORGANIZATION_NOT_FOUND',
         },
-        { status: 404, headers: SECURITY_HEADERS }
+        { status: 404, headers: SECURITY_HEADERS },
       );
     }
 
@@ -137,15 +137,14 @@ export const GET = withPartialAuth(async (auth: PartialAuthContext, request: Nex
           requestId: auth.sessionId,
         },
       },
-      { headers: SECURITY_HEADERS }
+      { headers: SECURITY_HEADERS },
     );
-
   } catch (error) {
     return createSecureErrorResponse(
       error,
       'Failed to fetch organization',
       500,
-      { userId: auth.userId, orgId: auth.orgId }
+      { userId: auth.userId, orgId: auth.orgId },
     );
   }
 });
@@ -160,30 +159,30 @@ export const POST = withPartialAuth(async (auth: PartialAuthContext, request: Ne
     const rateLimitResult = checkRateLimit(`${auth.userId}:organizations:post`, 2, 300000); // 2 requests per 5 minutes
     if (!rateLimitResult.allowed) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Rate limit exceeded. Organization creation is limited.',
-          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
+          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000),
         },
-        { 
+        {
           status: 429,
           headers: {
             ...SECURITY_HEADERS,
-            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
-          }
-        }
+            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString(),
+          },
+        },
       );
     }
 
     // Check if organizations are enabled
     if (!isOrganizationsEnabled()) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Organizations feature is not enabled',
-          code: 'ORGANIZATIONS_DISABLED'
+          code: 'ORGANIZATIONS_DISABLED',
         },
-        { status: 403, headers: SECURITY_HEADERS }
+        { status: 403, headers: SECURITY_HEADERS },
       );
     }
 
@@ -194,9 +193,9 @@ export const POST = withPartialAuth(async (auth: PartialAuthContext, request: Ne
         {
           success: false,
           error: 'Invalid request data',
-          details: bodyValidation.error
+          details: bodyValidation.error,
         },
-        { status: 400, headers: SECURITY_HEADERS }
+        { status: 400, headers: SECURITY_HEADERS },
       );
     }
 
@@ -211,12 +210,12 @@ export const POST = withPartialAuth(async (auth: PartialAuthContext, request: Ne
 
     if (existingOrg.length > 0) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Organization with this ID already exists',
-          code: 'ORGANIZATION_ID_CONFLICT'
+          code: 'ORGANIZATION_ID_CONFLICT',
         },
-        { status: 409, headers: SECURITY_HEADERS }
+        { status: 409, headers: SECURITY_HEADERS },
       );
     }
 
@@ -230,12 +229,12 @@ export const POST = withPartialAuth(async (auth: PartialAuthContext, request: Ne
 
       if (stripeConflict.length > 0) {
         return NextResponse.json(
-          { 
-            success: false, 
+          {
+            success: false,
             error: 'Stripe customer ID already in use',
-            code: 'STRIPE_CUSTOMER_CONFLICT'
+            code: 'STRIPE_CUSTOMER_CONFLICT',
           },
-          { status: 409, headers: SECURITY_HEADERS }
+          { status: 409, headers: SECURITY_HEADERS },
         );
       }
     }
@@ -265,18 +264,17 @@ export const POST = withPartialAuth(async (auth: PartialAuthContext, request: Ne
           requestId: auth.sessionId,
         },
       },
-      { 
+      {
         status: 201,
-        headers: SECURITY_HEADERS 
-      }
+        headers: SECURITY_HEADERS,
+      },
     );
-
   } catch (error) {
     return createSecureErrorResponse(
       error,
       'Failed to create organization',
       500,
-      { userId: auth.userId, orgId: auth.orgId }
+      { userId: auth.userId, orgId: auth.orgId },
     );
   }
 });

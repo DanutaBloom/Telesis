@@ -3,14 +3,17 @@
  * Utilities for Playwright E2E tests without vitest dependencies
  */
 
-import { Page, expect } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { expect } from '@playwright/test';
 
 /**
  * Wait for element to be visible and return it
  */
 export async function waitForElement(page: Page, selector: string, timeout = 5000) {
   const element = page.locator(selector);
+
   await expect(element).toBeVisible({ timeout });
+
   return element;
 }
 
@@ -44,6 +47,7 @@ export async function getTextContent(page: Page, selector: string): Promise<stri
 export async function pageHasText(page: Page, text: string): Promise<boolean> {
   try {
     await expect(page.locator(`text=${text}`)).toBeVisible({ timeout: 2000 });
+
     return true;
   } catch {
     return false;
@@ -59,12 +63,12 @@ export class AccessibilityHelpers {
    */
   static async hasAccessibleName(page: Page, selector: string): Promise<boolean> {
     const element = page.locator(selector);
-    
+
     const text = await element.textContent().catch(() => null);
     const ariaLabel = await element.getAttribute('aria-label').catch(() => null);
     const ariaLabelledby = await element.getAttribute('aria-labelledby').catch(() => null);
     const title = await element.getAttribute('title').catch(() => null);
-    
+
     return !!(text?.trim() || ariaLabel || ariaLabelledby || title);
   }
 
@@ -105,13 +109,13 @@ export class SecurityHelpers {
    */
   static async checkSecurityHeaders(page: Page, url: string): Promise<{ [key: string]: string | null }> {
     const response = await page.goto(url);
-    
+
     if (!response) {
       return {};
     }
 
     const headers = response.headers();
-    
+
     return {
       'x-content-type-options': headers['x-content-type-options'] || null,
       'x-frame-options': headers['x-frame-options'] || null,
@@ -128,9 +132,9 @@ export class SecurityHelpers {
     try {
       const input = page.locator(inputSelector);
       await input.fill(dangerousValue);
-      
+
       const value = await input.inputValue();
-      
+
       // Check if dangerous content was sanitized
       return !value.includes('<script>') && !value.includes('javascript:');
     } catch {
@@ -150,15 +154,15 @@ export class ThemeHelpers {
     try {
       const element = page.locator(selector);
       const classes = await element.getAttribute('class') || '';
-      
+
       // Check for common Modern Sage theme classes
-      const hasThemeClasses = 
-        classes.includes('bg-primary') || 
-        classes.includes('bg-secondary') ||
-        classes.includes('text-primary-foreground') ||
-        classes.includes('border') ||
-        classes.includes('rounded-md');
-        
+      const hasThemeClasses
+        = classes.includes('bg-primary')
+          || classes.includes('bg-secondary')
+          || classes.includes('text-primary-foreground')
+          || classes.includes('border')
+          || classes.includes('rounded-md');
+
       return hasThemeClasses;
     } catch {
       return false;

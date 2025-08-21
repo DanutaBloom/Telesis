@@ -1,14 +1,78 @@
 {
   "recommendations": [
+    // Essential ESLint support
     "dbaeumer.vscode-eslint",
-    "mikestead.dotenv",
-    "csstools.postcss",
+
+    // TypeScript and JavaScript support
+    "ms-vscode.vscode-typescript-next",
+
+    // React and Next.js development
+    "ms-vscode.vscode-json",
     "bradlc.vscode-tailwindcss",
-    "vitest.explorer",
-    "humao.rest-client",
-    "yoavbls.pretty-ts-errors",
-    "ms-playwright.playwright",
+    "formulahendry.auto-rename-tag",
+    "ms-vscode.vscode-css-peek",
+
+    // Git and version control
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
     "github.vscode-github-actions",
-    "lokalise.i18n-ally"
+
+    // Testing frameworks
+    "ms-playwright.playwright",
+    "vitest.explorer",
+    "orta.vscode-jest",
+
+    // Development tools
+    "usernamehw.errorlens",
+    "aaron-bond.better-comments",
+    "streetsidesoftware.code-spell-checker",
+    "ms-vscode.vscode-json",
+    "redhat.vscode-yaml",
+
+    // Visual enhancements
+    "pkief.material-icon-theme",
+    "zhuangtongfa.material-theme",
+    "oderwat.indent-rainbow",
+    "mechatroner.rainbow-csv",
+
+    // Productivity tools
+    "ms-vscode.vscode-todo-highlight",
+    "gruntfuggly.todo-tree",
+    "formulahendry.auto-close-tag",
+    "christian-kohler.path-intellisense",
+    "ms-vscode.vscode-typescript-next",
+
+    // Database and API tools
+    "ms-vscode.vscode-postgresql",
+    "humao.rest-client",
+
+    // Documentation and markdown
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+
+    // Environment and configuration
+    "mikestead.dotenv",
+    "ms-vscode.vscode-docker",
+
+    // Code formatting and style (disabled in favor of ESLint)
+    // "esbenp.prettier-vscode", // Deliberately not recommended to avoid conflicts
+
+    // Advanced development tools
+    "ms-vscode.vscode-typescript-next",
+    "ms-vscode.remote-containers",
+    "ms-vscode.remote-ssh"
+  ],
+  "unwantedRecommendations": [
+    // Extensions that conflict with ESLint
+    "esbenp.prettier-vscode",
+    "hookyqr.beautify",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+
+    // Extensions that duplicate functionality
+    "ms-vscode.vscode-json-languageservice",
+    "ms-vscode.typescript-importer",
+
+    // Extensions that may cause performance issues
+    "ms-vscode.vscode-eslint-language-server"
   ]
 }

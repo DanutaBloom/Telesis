@@ -5,8 +5,8 @@ let sentryModule: any = null;
 
 // Only load Sentry in production or when explicitly enabled
 const shouldLoadSentry = () => {
-  return process.env.NODE_ENV === 'production' || 
-         process.env.NEXT_PUBLIC_SENTRY_ENABLED === 'true';
+  return process.env.NODE_ENV === 'production'
+    || process.env.NEXT_PUBLIC_SENTRY_ENABLED === 'true';
 };
 
 // Lazy load Sentry modules
@@ -14,7 +14,7 @@ export const getSentryBrowser = async () => {
   if (!shouldLoadSentry()) {
     return null;
   }
-  
+
   if (!sentryModule) {
     sentryModule = await import('@sentry/nextjs');
   }
@@ -28,7 +28,7 @@ export const captureException = async (error: Error, context?: any) => {
     console.error('Error (Sentry disabled):', error, context);
     return;
   }
-  
+
   const sentry = await getSentryBrowser();
   if (sentry) {
     sentry.captureException(error, context);
@@ -41,7 +41,7 @@ export const captureMessage = async (message: string, level: 'info' | 'warning' 
     console.log(`[${level.toUpperCase()}] ${message}`);
     return;
   }
-  
+
   const sentry = await getSentryBrowser();
   if (sentry) {
     sentry.captureMessage(message, level);
@@ -53,7 +53,7 @@ export const startTransaction = async (name: string, op?: string) => {
   if (!shouldLoadSentry()) {
     return null;
   }
-  
+
   const sentry = await getSentryBrowser();
   if (sentry) {
     return sentry.startTransaction({ name, op });

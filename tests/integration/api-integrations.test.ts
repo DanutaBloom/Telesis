@@ -3,16 +3,16 @@
  * Tests all external API integrations for connectivity, authentication, and error handling
  */
 
-import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import { NextRequest } from 'next/server';
 import { Client } from 'pg';
 import Stripe from 'stripe';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
-import { Env } from '@/libs/Env';
-import { db } from '@/libs/DB';
-import { authenticateRequest } from '@/libs/AuthUtils';
 import { GET as healthCheck } from '@/app/api/health/route';
 import { GET as materialsGet, POST as materialsPost } from '@/app/api/materials/route';
+import { authenticateRequest } from '@/libs/AuthUtils';
+import { db } from '@/libs/DB';
+import { Env } from '@/libs/Env';
 
 /**
  * Mock data for testing
@@ -45,7 +45,7 @@ describe('API Integration Tests', () => {
         const clerkSecretKey = Env.CLERK_SECRET_KEY;
         const clerkPublishableKey = Env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
         const signInUrl = Env.NEXT_PUBLIC_CLERK_SIGN_IN_URL;
-        
+
         expect(clerkSecretKey).toBeTruthy();
         expect(clerkPublishableKey).toBeTruthy();
         expect(signInUrl).toBeTruthy();
@@ -55,27 +55,27 @@ describe('API Integration Tests', () => {
     it('should handle authentication middleware properly', async () => {
       // Mock console.error since we expect Clerk to fail in test environment
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-      
+
       // Test unauthenticated request
       const authResult = await authenticateRequest();
-      
+
       // In test environment without proper Clerk setup, this should return null
       // In a real environment with valid session, this would return AuthContext
       expect(authResult).toBeNull();
-      
+
       // Verify that the expected error was logged
       expect(consoleSpy).toHaveBeenCalledWith(
-        'Authentication failed:', 
-        expect.any(Error)
+        'Authentication failed:',
+        expect.any(Error),
       );
-      
+
       consoleSpy.mockRestore();
     });
 
     it('should return 401 for protected endpoints without auth', async () => {
       // Mock console.error since authentication will fail in test environment
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-      
+
       const mockRequest = new NextRequest('http://localhost:3000/api/materials', {
         method: 'GET',
       });
@@ -87,7 +87,7 @@ describe('API Integration Tests', () => {
       expect(data.success).toBe(false);
       expect(data.error).toBe('Authentication required');
       expect(data.code).toBe('UNAUTHORIZED');
-      
+
       consoleSpy.mockRestore();
     });
   });
@@ -123,9 +123,10 @@ describe('API Integration Tests', () => {
     it('should successfully connect to database', async () => {
       // Test using the application's db instance
       expect(db).toBeDefined();
-      
+
       try {
         const result = await db.execute('SELECT 1 as test');
+
         expect(result).toBeDefined();
       } catch (error) {
         // In case of PGlite fallback or connection issues
@@ -144,7 +145,7 @@ describe('API Integration Tests', () => {
           'ai_transformations',
           'user_preferences',
           'enrollments',
-          'learning_paths'
+          'learning_paths',
         ];
 
         for (const tableName of tables) {
@@ -207,7 +208,7 @@ describe('API Integration Tests', () => {
         const stripePublishableKey = Env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
         const webhookSecret = Env.STRIPE_WEBHOOK_SECRET;
         const billingEnv = Env.BILLING_PLAN_ENV;
-        
+
         expect(stripeSecretKey).toBeTruthy();
         expect(stripePublishableKey).toBeTruthy();
         expect(webhookSecret).toBeTruthy();
@@ -224,6 +225,7 @@ describe('API Integration Tests', () => {
       try {
         // Test API connectivity by fetching account info
         const account = await stripeClient.accounts.retrieve();
+
         expect(account).toBeDefined();
         expect(account.object).toBe('account');
       } catch (error) {
@@ -291,15 +293,15 @@ describe('API Integration Tests', () => {
       const aiSchemas = [
         'ai_transformations',
         'micro_modules',
-        'materials'
+        'materials',
       ];
 
       // These schemas suggest AI functionality is planned
       expect(aiSchemas.length).toBeGreaterThan(0);
-      
+
       // But OpenAI integration is missing
       expect(process.env.OPENAI_API_KEY).toBeUndefined();
-      
+
       console.warn('⚠️ OpenAI integration missing for AI-powered features');
       console.warn('Consider adding OPENAI_API_KEY to environment configuration');
     });
@@ -315,7 +317,7 @@ describe('API Integration Tests', () => {
       });
 
       const response = await healthCheck(mockRequest);
-      
+
       // Check security headers
       expect(response.headers.get('X-Content-Type-Options')).toBe('nosniff');
       expect(response.headers.get('X-Frame-Options')).toBe('DENY');
@@ -325,21 +327,20 @@ describe('API Integration Tests', () => {
     });
 
     it('should implement rate limiting', async () => {
-      const requests = Array.from({ length: 5 }, () => 
+      const requests = Array.from({ length: 5 }, () =>
         new NextRequest('http://localhost:3000/api/health', {
           method: 'GET',
           headers: {
             'x-forwarded-for': '127.0.0.1',
           },
-        })
-      );
+        }));
 
       const responses = await Promise.all(
-        requests.map(request => healthCheck(request))
+        requests.map(request => healthCheck(request)),
       );
 
       // All requests should succeed initially (rate limit is 30/minute for health)
-      responses.forEach(response => {
+      responses.forEach((response) => {
         expect([200, 503]).toContain(response.status);
       });
     });
@@ -386,23 +387,23 @@ describe('API Integration Tests', () => {
         clerk_auth: {
           configured: !!(Env.CLERK_SECRET_KEY && Env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY),
           status: 'operational',
-          notes: 'Clerk authentication properly configured'
+          notes: 'Clerk authentication properly configured',
         },
         database: {
           configured: !!(Env.DATABASE_URL || true), // PGlite fallback available
           status: 'operational',
-          notes: 'Database connection with PGlite fallback for local development'
+          notes: 'Database connection with PGlite fallback for local development',
         },
         stripe_payments: {
           configured: !!(Env.STRIPE_SECRET_KEY && Env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY),
-          status: 'operational', 
-          notes: 'Stripe integration fully configured'
+          status: 'operational',
+          notes: 'Stripe integration fully configured',
         },
         openai_integration: {
           configured: false,
           status: 'missing',
-          notes: 'OpenAI API integration not yet implemented - required for AI features'
-        }
+          notes: 'OpenAI API integration not yet implemented - required for AI features',
+        },
       };
 
       // Log the integration status
@@ -412,7 +413,7 @@ describe('API Integration Tests', () => {
       expect(integrationStatus.clerk_auth.configured).toBe(true);
       expect(integrationStatus.database.configured).toBe(true);
       expect(integrationStatus.stripe_payments.configured).toBe(true);
-      
+
       // Document missing integration
       expect(integrationStatus.openai_integration.configured).toBe(false);
 

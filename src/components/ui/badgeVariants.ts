@@ -5,13 +5,13 @@ export const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default:
+        'default':
           'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
-        secondary:
+        'secondary':
           'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        destructive:
+        'destructive':
           'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
-        outline: 'text-foreground sage-border',
+        'outline': 'sage-border text-foreground',
         // Modern Sage specific variants
         'sage-primary':
           'border-transparent bg-sage-quietude text-white hover:bg-sage-quietude/80',
@@ -20,7 +20,7 @@ export const badgeVariants = cva(
         'sage-subtle':
           'border-sage-quietude/30 bg-sage-mist text-sage-stone hover:bg-sage-mist/80',
         'sage-gradient':
-          'border-transparent sage-gradient-subtle text-sage-stone hover:opacity-80',
+          'sage-gradient-subtle border-transparent text-sage-stone hover:opacity-80',
       },
     },
     defaultVariants: {

@@ -1,6 +1,6 @@
 /**
  * Clerk Authentication Mocking Utilities
- * 
+ *
  * Provides comprehensive mocking for Clerk authentication in tests,
  * including security scenarios and multi-tenant organization testing
  */
@@ -8,21 +8,21 @@
 import { vi } from 'vitest';
 
 // Test user data types
-export interface TestUser {
+export type TestUser = {
   id: string;
   username: string;
   firstName: string;
   lastName: string;
   emailAddress: string;
   role?: 'admin' | 'member' | 'trainer' | 'learner';
-}
+};
 
-export interface TestOrganization {
+export type TestOrganization = {
   id: string;
   name: string;
   slug: string;
   role: 'admin' | 'basic_member';
-}
+};
 
 // Default test users
 export const TEST_USERS = {
@@ -126,7 +126,7 @@ export function createMockUser(userData: TestUser) {
 }
 
 /**
- * Create mock organization object  
+ * Create mock organization object
  */
 export function createMockOrganization(orgData: TestOrganization) {
   return {
@@ -237,7 +237,7 @@ export function mockOrganizationSwitch(
     ...mockAuth,
     setActive,
   });
-  
+
   vi.mocked(require('@clerk/nextjs')).useOrganization.mockReturnValue({
     isLoaded: true,
     organization: mockToOrg,
@@ -258,8 +258,8 @@ export function mockUnauthorizedAccess(
   user: TestUser = TEST_USERS.learner,
   organization: TestOrganization = TEST_ORGANIZATIONS.secondary,
 ) {
-  const mockAuth = createMockAuth({ 
-    user, 
+  const mockAuth = createMockAuth({
+    user,
     organization: { ...organization, role: 'basic_member' },
   });
   const mockUser = createMockUser(user);
@@ -288,7 +288,7 @@ export function mockUnauthorizedAccess(
  */
 export function mockTokenExpiration(user: TestUser = TEST_USERS.admin) {
   const mockAuth = createMockAuth({ user });
-  
+
   // Mock expired token
   mockAuth.getToken = vi.fn().mockRejectedValue(new Error('Token expired'));
 
@@ -302,7 +302,7 @@ export function mockTokenExpiration(user: TestUser = TEST_USERS.admin) {
  */
 export function resetClerkMocks() {
   vi.clearAllMocks();
-  
+
   // Reset to default authenticated state
   mockAuthenticatedState();
 }
@@ -313,7 +313,7 @@ export function resetClerkMocks() {
 export async function simulateSignIn(user: TestUser = TEST_USERS.admin) {
   // Start with unauthenticated state
   mockUnauthenticatedState();
-  
+
   // Simulate sign in process
   const mockAuth = createMockAuth({ isSignedIn: true, user });
   const mockUser = createMockUser(user);
@@ -333,9 +333,9 @@ export async function simulateSignIn(user: TestUser = TEST_USERS.admin) {
  */
 export async function simulateSignOut() {
   const mockAuth = mockUnauthenticatedState();
-  
+
   // Mock successful sign out
   mockAuth.signOut = vi.fn().mockResolvedValue(undefined);
-  
+
   return mockAuth;
 }

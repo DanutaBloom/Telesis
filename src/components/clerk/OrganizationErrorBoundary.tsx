@@ -5,15 +5,15 @@ import React from 'react';
 
 import { Button } from '@/components/ui/button';
 
-interface Props {
+type Props = {
   children: React.ReactNode;
   fallback?: React.ReactNode;
-}
+};
 
-interface State {
+type State = {
   hasError: boolean;
   error?: Error;
-}
+};
 
 /**
  * Error boundary for organization-related components
@@ -36,9 +36,9 @@ export class OrganizationErrorBoundary extends React.Component<Props, State> {
   render() {
     if (this.state.hasError) {
       // Check if error is related to disabled organizations
-      const isOrgError = this.state.error?.message?.includes('organization') ||
-                        this.state.error?.message?.includes('Organization');
-      
+      const isOrgError = this.state.error?.message?.includes('organization')
+        || this.state.error?.message?.includes('Organization');
+
       if (isOrgError) {
         return (
           this.props.fallback || (
@@ -70,7 +70,7 @@ export class OrganizationErrorBoundary extends React.Component<Props, State> {
 
 const ContinueToDashboardButton = () => {
   const router = useRouter();
-  
+
   const handleContinue = () => {
     router.push('/dashboard');
   };
@@ -80,7 +80,7 @@ const ContinueToDashboardButton = () => {
       type="button"
       size="sm"
       onClick={handleContinue}
-      className="bg-yellow-600 hover:bg-yellow-700 text-white"
+      className="bg-yellow-600 text-white hover:bg-yellow-700"
     >
       Continue to Dashboard
     </Button>

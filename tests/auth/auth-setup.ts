@@ -1,4 +1,5 @@
-import { test as setup, expect, Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { expect, test as setup } from '@playwright/test';
 
 /**
  * Authentication setup for different user roles
@@ -12,29 +13,29 @@ export const TEST_USERS = {
     password: 'TestPassword123!',
     firstName: 'Admin',
     lastName: 'User',
-    role: 'admin'
+    role: 'admin',
   },
   trainer: {
     email: 'trainer@telesis-test.com',
     password: 'TestPassword123!',
     firstName: 'Trainer',
     lastName: 'User',
-    role: 'trainer'
+    role: 'trainer',
   },
   learner: {
     email: 'learner@telesis-test.com',
     password: 'TestPassword123!',
     firstName: 'Learner',
     lastName: 'User',
-    role: 'learner'
-  }
+    role: 'learner',
+  },
 };
 
 // Test organization configuration
 export const TEST_ORGANIZATION = {
   name: 'Telesis Test Organization',
   description: 'Test organization for E2E testing',
-  domain: 'telesis-test.com'
+  domain: 'telesis-test.com',
 };
 
 /**
@@ -44,7 +45,7 @@ export const TEST_ORGANIZATION = {
  */
 export async function setupAuth(page: Page, userRole: keyof typeof TEST_USERS) {
   const user = TEST_USERS[userRole];
-  
+
   // For now, create mock authentication state
   // In a real implementation, you would sign in and save the state
   await page.context().addCookies([
@@ -54,10 +55,10 @@ export async function setupAuth(page: Page, userRole: keyof typeof TEST_USERS) {
       domain: 'localhost',
       path: '/',
       httpOnly: true,
-      secure: false
-    }
+      secure: false,
+    },
   ]);
-  
+
   // Add localStorage items that might be used for auth state
   await page.addInitScript((userData) => {
     localStorage.setItem('auth-user', JSON.stringify(userData));
@@ -72,6 +73,7 @@ export async function setupAuth(page: Page, userRole: keyof typeof TEST_USERS) {
  */
 export async function verifyAuthState(page: Page, expectedRole: string) {
   const authRole = await page.evaluate(() => localStorage.getItem('auth-role'));
+
   expect(authRole).toBe(expectedRole);
 }
 
@@ -79,16 +81,16 @@ setup('authenticate as admin', async ({ page }) => {
   try {
     // Navigate to home page first
     await page.goto('/');
-    
+
     // Set up mock authentication state
     await setupAuth(page, 'admin');
-    
+
     // Save authentication state
     await page.context().storageState({ path: './tests/auth/admin-auth.json' });
     console.log('✅ Admin authentication state created');
   } catch (error) {
     console.error('❌ Failed to create admin auth state:', error);
-    
+
     // Create minimal state file to prevent errors
     await page.context().storageState({ path: './tests/auth/admin-auth.json' });
   }

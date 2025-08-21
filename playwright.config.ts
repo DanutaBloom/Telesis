@@ -24,9 +24,9 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   // Run tests in parallel
   workers: process.env.CI ? '50%' : undefined,
-  
+
   // Reporter configuration with multiple formats
-  reporter: process.env.CI 
+  reporter: process.env.CI
     ? [
         ['github'],
         ['junit', { outputFile: './test-results/playwright-results.xml' }],

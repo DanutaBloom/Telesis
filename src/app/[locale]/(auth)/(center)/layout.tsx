@@ -1,7 +1,7 @@
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 
-export default async function CenteredLayout(props: { 
+export default async function CenteredLayout(props: {
   children: React.ReactNode;
   params: { locale: string };
 }) {
@@ -9,8 +9,8 @@ export default async function CenteredLayout(props: {
 
   if (userId) {
     // Include locale in redirect path
-    const dashboardPath = props.params?.locale && props.params.locale !== 'en' 
-      ? `/${props.params.locale}/dashboard` 
+    const dashboardPath = props.params?.locale && props.params.locale !== 'en'
+      ? `/${props.params.locale}/dashboard`
       : '/dashboard';
     redirect(dashboardPath);
   }

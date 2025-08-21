@@ -1,6 +1,7 @@
-import { chromium, expect, FullConfig } from '@playwright/test';
-import { promises as fs } from 'fs';
-import { join } from 'path';
+import { promises as fs } from 'node:fs';
+
+import type { FullConfig } from '@playwright/test';
+import { chromium, expect } from '@playwright/test';
 
 /**
  * Global setup function for Playwright tests
@@ -8,7 +9,7 @@ import { join } from 'path';
  */
 async function globalSetup(config: FullConfig) {
   console.log('🚀 Starting global setup...');
-  
+
   // Launch a browser to verify the app is accessible
   const browser = await chromium.launch();
   const page = await browser.newPage();
@@ -20,6 +21,7 @@ async function globalSetup(config: FullConfig) {
 
     // Verify the app is accessible
     await expect(page).toHaveTitle(/Telesis/);
+
     console.log('✅ App is accessible and ready for testing');
 
     // Ensure auth directories exist
@@ -30,7 +32,6 @@ async function globalSetup(config: FullConfig) {
       await fs.mkdir(authDir, { recursive: true });
       console.log('📁 Created auth directory for state storage');
     }
-
   } catch (error) {
     console.error('❌ Global setup failed:', error);
     throw error;

@@ -16,7 +16,7 @@ export default defineConfig({
       provider: 'v8',
       include: ['src/**/*'],
       exclude: [
-        'src/**/*.stories.{js,jsx,ts,tsx}', 
+        'src/**/*.stories.{js,jsx,ts,tsx}',
         '**/*.d.ts',
         'src/test-utils/**',
         'src/**/*.config.*',
@@ -46,8 +46,8 @@ export default defineConfig({
     testTimeout: 10000, // 10s timeout for integration tests
     hookTimeout: 5000, // 5s timeout for setup/teardown
     // Reporter configuration for CI/CD
-    reporters: process.env.CI 
-      ? ['junit', 'github-actions'] 
+    reporters: process.env.CI
+      ? ['junit', 'github-actions']
       : ['verbose', 'html'],
     outputFile: {
       junit: './test-results/junit.xml',

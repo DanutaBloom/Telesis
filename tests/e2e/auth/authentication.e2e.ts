@@ -1,12 +1,13 @@
 /**
  * Authentication Flow E2E Tests
- * 
+ *
  * Tests core authentication user flows including sign-up, sign-in,
  * organization selection, and security validations
  */
 
-import { test, expect } from '@playwright/test';
-import { setupAuth, verifyAuthState, TEST_USERS, TEST_ORGANIZATION } from '../../auth/auth-setup';
+import { expect, test } from '@playwright/test';
+
+import { setupAuth, TEST_USERS } from '../../auth/auth-setup';
 
 test.describe('Authentication Flows', () => {
   test.describe.configure({ mode: 'serial' });
@@ -31,7 +32,7 @@ test.describe('Authentication Flows', () => {
     try {
       // Wait for verification step or success redirect
       await page.waitForSelector('input[name="code"], [data-testid="dashboard"]', { timeout: 10000 });
-      
+
       if (await page.locator('input[name="code"]').isVisible()) {
         // Enter test verification code
         await page.fill('input[name="code"]', '424242');
@@ -104,7 +105,7 @@ test.describe('Authentication Flows', () => {
 
     // Should show error message
     await expect(page.locator('[role="alert"], .error, [data-testid="error"]')).toBeVisible();
-    
+
     // Should remain on sign-in page
     await expect(page).toHaveURL(/sign-in/);
   });
@@ -136,7 +137,8 @@ test.describe('Authentication Flows', () => {
     const userButton = page.locator('[data-testid="user-button"]');
     if (await userButton.isVisible()) {
       await userButton.click();
-      await expect(page.locator('text=' + TEST_USERS.admin.email)).toBeVisible();
+
+      await expect(page.locator(`text=${TEST_USERS.admin.email}`)).toBeVisible();
     }
   });
 
@@ -154,13 +156,14 @@ test.describe('Authentication Flows', () => {
 
     // Navigate to dashboard
     await page.goto('/dashboard');
+
     await expect(page).toHaveURL(/dashboard/);
 
     // Find and click sign out
     const userButton = page.locator('[data-testid="user-button"], .user-menu');
     if (await userButton.isVisible()) {
       await userButton.click();
-      
+
       const signOutButton = page.locator('button:has-text("Sign out"), a:has-text("Sign out")');
       await signOutButton.click();
     } else {
@@ -174,6 +177,7 @@ test.describe('Authentication Flows', () => {
 
     // Verify user is signed out by trying to access dashboard
     await page.goto('/dashboard');
+
     await expect(page).toHaveURL(/sign-in/);
   });
 
@@ -182,7 +186,7 @@ test.describe('Authentication Flows', () => {
 
     // Look for "Forgot password" link
     const forgotPasswordLink = page.locator('a:has-text("Forgot"), a:has-text("Reset"), [data-testid="forgot-password"]');
-    
+
     if (await forgotPasswordLink.isVisible()) {
       await forgotPasswordLink.click();
 
@@ -204,6 +208,7 @@ test.describe('Authentication Flows', () => {
 
     // Navigate to dashboard
     await page.goto('/dashboard');
+
     await expect(page).toHaveURL(/dashboard/);
 
     // Refresh the page
@@ -287,6 +292,7 @@ test.describe('Authentication Flows', () => {
 
     // Test form accessibility
     const form = page.locator('form');
+
     await expect(form).toBeVisible();
 
     // Check for proper labels
@@ -301,19 +307,23 @@ test.describe('Authentication Flows', () => {
     const emailLabel = page.locator('label[for]');
     if (await emailLabel.isVisible()) {
       const forValue = await emailLabel.getAttribute('for');
+
       await expect(page.locator(`#${forValue}`)).toBeVisible();
     }
 
     // Form should be keyboard navigable
     await page.keyboard.press('Tab');
+
     await expect(emailInput).toBeFocused();
 
     await page.keyboard.press('Tab');
+
     await expect(passwordInput).toBeFocused();
 
     // Submit button should be reachable
     await page.keyboard.press('Tab');
     const submitButton = page.locator('button[type="submit"]');
+
     await expect(submitButton).toBeFocused();
   });
 });

@@ -4,18 +4,18 @@
  * Validates API route protection, authentication flow, and security headers
  */
 
-import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import { NextRequest, NextResponse } from 'next/server';
+import { afterAll, describe, expect, it, vi } from 'vitest';
 
 // Mock Next.js middleware dependencies - must be hoisted
 const mockCreateMiddleware = vi.fn().mockReturnValue((req: NextRequest) => NextResponse.next());
 const mockCreateRouteMatcher = vi.fn().mockReturnValue(() => true);
-const mockClerkMiddleware = vi.fn().mockImplementation((callback) => (req: NextRequest, event: any) => {
+const mockClerkMiddleware = vi.fn().mockImplementation(callback => (req: NextRequest, event: any) => {
   return callback(
     {
       protect: vi.fn().mockResolvedValue(undefined),
     },
-    req
+    req,
   );
 });
 
@@ -54,12 +54,12 @@ describe('Middleware Security - API Route Protection', () => {
     });
 
     const event = { waitUntil: vi.fn() };
-    
+
     // Mock route matcher to identify this as an API route
     mockCreateRouteMatcher.mockReturnValue(() => true);
-    
+
     const response = await middleware(request, event);
-    
+
     // Verify that Clerk middleware was called for API routes
     expect(mockClerkMiddleware).toHaveBeenCalled();
   });
@@ -71,12 +71,12 @@ describe('Middleware Security - API Route Protection', () => {
     });
 
     const event = { waitUntil: vi.fn() };
-    
+
     // Mock route matcher to identify this as an API route
     mockCreateRouteMatcher.mockReturnValue(() => true);
-    
+
     const response = await middleware(request, event);
-    
+
     // Verify that Clerk middleware was called for API routes
     expect(mockClerkMiddleware).toHaveBeenCalled();
   });
@@ -87,9 +87,9 @@ describe('Middleware Security - API Route Protection', () => {
     });
 
     const event = { waitUntil: vi.fn() };
-    
+
     const response = await middleware(request, event);
-    
+
     // Public routes should bypass authentication but still go through i18n middleware
     expect(mockCreateMiddleware).toHaveBeenCalled();
   });
@@ -100,9 +100,9 @@ describe('Middleware Security - API Route Protection', () => {
     });
 
     const event = { waitUntil: vi.fn() };
-    
+
     const response = await middleware(request, event);
-    
+
     // Public routes should bypass authentication
     expect(mockCreateMiddleware).toHaveBeenCalled();
   });
@@ -113,12 +113,12 @@ describe('Middleware Security - API Route Protection', () => {
     });
 
     const event = { waitUntil: vi.fn() };
-    
+
     // Mock route matcher to identify this as an API route
     mockCreateRouteMatcher.mockReturnValue(() => true);
-    
+
     const response = await middleware(request, event);
-    
+
     // Should be protected by Clerk
     expect(mockClerkMiddleware).toHaveBeenCalled();
   });
@@ -131,12 +131,12 @@ describe('Middleware Security - Dashboard Protection', () => {
     });
 
     const event = { waitUntil: vi.fn() };
-    
+
     // Mock route matcher to identify this as a protected route
     mockCreateRouteMatcher.mockReturnValue(() => true);
-    
+
     const response = await middleware(request, event);
-    
+
     // Dashboard routes should be protected
     expect(mockClerkMiddleware).toHaveBeenCalled();
   });
@@ -147,12 +147,12 @@ describe('Middleware Security - Dashboard Protection', () => {
     });
 
     const event = { waitUntil: vi.fn() };
-    
+
     // Mock route matcher to identify this as a protected route
     mockCreateRouteMatcher.mockReturnValue(() => true);
-    
+
     const response = await middleware(request, event);
-    
+
     // Localized dashboard routes should be protected
     expect(mockClerkMiddleware).toHaveBeenCalled();
   });
@@ -163,12 +163,12 @@ describe('Middleware Security - Dashboard Protection', () => {
     });
 
     const event = { waitUntil: vi.fn() };
-    
+
     // Mock route matcher to identify this as a protected route
     mockCreateRouteMatcher.mockReturnValue(() => true);
-    
+
     const response = await middleware(request, event);
-    
+
     // Onboarding routes should be protected
     expect(mockClerkMiddleware).toHaveBeenCalled();
   });
@@ -181,31 +181,31 @@ describe('Middleware Security - Organization Flow', () => {
     });
 
     const event = { waitUntil: vi.fn() };
-    
+
     // Mock Clerk middleware to simulate authenticated user without organization
-    mockClerkMiddleware.mockImplementationOnce((callback) => (req: NextRequest, event: any) => {
+    mockClerkMiddleware.mockImplementationOnce(callback => (req: NextRequest, event: any) => {
       return callback(
         {
           protect: vi.fn().mockResolvedValue(undefined),
         },
-        req
+        req,
       ).then(() => {
         // Simulate auth object with userId but no orgId
         const authObj = { userId: 'user_123', orgId: null };
-        
+
         if (authObj.userId && !authObj.orgId && req.nextUrl.pathname.includes('/dashboard')) {
           return NextResponse.redirect(new URL('/onboarding/organization-selection', req.url));
         }
-        
+
         return NextResponse.next();
       });
     });
-    
+
     // Mock route matcher to identify this as a protected route
     mockCreateRouteMatcher.mockReturnValue(() => true);
-    
+
     const response = await middleware(request, event);
-    
+
     // Should trigger organization selection flow
     expect(mockClerkMiddleware).toHaveBeenCalled();
   });
@@ -218,9 +218,9 @@ describe('Middleware Security - Route Exclusions', () => {
     });
 
     const event = { waitUntil: vi.fn() };
-    
+
     const response = await middleware(request, event);
-    
+
     // Static files should be handled by the middleware config exclusion
     // The middleware function should still run but handle static files appropriately
     expect(response).toBeDefined();
@@ -232,9 +232,9 @@ describe('Middleware Security - Route Exclusions', () => {
     });
 
     const event = { waitUntil: vi.fn() };
-    
+
     const response = await middleware(request, event);
-    
+
     // _next assets should be handled by the middleware config exclusion
     expect(response).toBeDefined();
   });
@@ -245,9 +245,9 @@ describe('Middleware Security - Route Exclusions', () => {
     });
 
     const event = { waitUntil: vi.fn() };
-    
+
     const response = await middleware(request, event);
-    
+
     // Monitoring routes should be excluded
     expect(response).toBeDefined();
   });
@@ -258,18 +258,18 @@ describe('Middleware Security - Configuration Validation', () => {
     // Import the middleware config
     const middlewareModule = require('@/middleware');
     const config = middlewareModule.config;
-    
+
     expect(config).toBeDefined();
     expect(config.matcher).toBeDefined();
     expect(Array.isArray(config.matcher)).toBe(true);
-    
+
     // Should exclude API routes from Next.js middleware processing
     // (they are handled separately in the middleware function)
     expect(config.matcher.some((pattern: string) => pattern.includes('api'))).toBe(false);
-    
+
     // Should exclude static assets
     expect(config.matcher.some((pattern: string) => pattern.includes('_next'))).toBe(false);
-    
+
     // Should exclude monitoring
     expect(config.matcher.some((pattern: string) => pattern.includes('monitoring'))).toBe(false);
   });

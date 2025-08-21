@@ -7,7 +7,7 @@
   - Contrast Ratio: 4.52:1 ✅ WCAG AA compliant
   - Use case: Primary buttons, accent elements
 
-- **Accent (#4C9A2A)** on **Background (#FCFCFC)**  
+- **Accent (#4C9A2A)** on **Background (#FCFCFC)**
   - Contrast Ratio: 7.8:1 ✅ WCAG AAA compliant
   - Use case: Call-to-action buttons, success states
 
@@ -18,7 +18,7 @@
 ### Dark Theme
 - **Primary (#A1BDB9)** on **Background (#171717)**
   - Contrast Ratio: 5.1:1 ✅ WCAG AA compliant
-  
+
 - **Accent (#5BA032)** on **Background (#171717)**
   - Contrast Ratio: 6.2:1 ✅ WCAG AA compliant
 
@@ -41,7 +41,7 @@
 ## Modern Sage Utility Classes
 
 - `.sage-gradient-primary`: Main brand gradient
-- `.sage-gradient-subtle`: Soft background gradient  
+- `.sage-gradient-subtle`: Soft background gradient
 - `.sage-gradient-hero`: Hero section background
 - `.sage-text-gradient`: Brand text gradient
 - `.sage-border`: Branded border color

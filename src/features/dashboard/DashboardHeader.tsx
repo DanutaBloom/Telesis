@@ -5,7 +5,6 @@ import { useLocale } from 'next-intl';
 
 import { ActiveLink } from '@/components/ActiveLink';
 import { DynamicOrganizationSwitcher, DynamicUserButton } from '@/components/clerk/DynamicClerkComponents';
-import { isOrganizationsEnabled } from '@/libs/ClerkUtils';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { ToggleMenuButton } from '@/components/ToggleMenuButton';
 import {
@@ -15,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
+import { isOrganizationsEnabled } from '@/libs/ClerkUtils';
 import { Logo } from '@/templates/Logo';
 import { getI18nPath } from '@/utils/Helpers';
 

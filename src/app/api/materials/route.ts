@@ -1,22 +1,22 @@
+import { and, eq } from 'drizzle-orm';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { eq, and } from 'drizzle-orm';
 
-import { db } from '@/libs/DB';
-import { materialsSchema } from '@/models/Schema';
-import { 
-  withPartialAuth, 
-  validateRequestBody, 
-  createSecureErrorResponse,
+import {
   checkRateLimit,
+  createSecureErrorResponse,
+  type PartialAuthContext,
   SECURITY_HEADERS,
-  type PartialAuthContext
+  validateRequestBody,
+  withPartialAuth,
 } from '@/libs/AuthUtils';
 import { isOrganizationsEnabled } from '@/libs/ClerkUtils';
-import { 
-  CreateMaterialSchema, 
-  GetMaterialsQuerySchema
+import { db } from '@/libs/DB';
+import {
+  CreateMaterialSchema,
+  GetMaterialsQuerySchema,
 } from '@/libs/ValidationSchemas';
+import { materialsSchema } from '@/models/Schema';
 
 /**
  * SECURED Materials API - GET endpoint
@@ -28,47 +28,47 @@ export const GET = withPartialAuth(async (auth: PartialAuthContext, request: Nex
     const rateLimitResult = checkRateLimit(`${auth.userId}:materials:get`, 50, 60000);
     if (!rateLimitResult.allowed) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Rate limit exceeded. Please try again later.',
-          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
+          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000),
         },
-        { 
+        {
           status: 429,
           headers: {
             ...SECURITY_HEADERS,
-            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
-          }
-        }
+            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString(),
+          },
+        },
       );
     }
 
     // Check if organizations are enabled and handle auth accordingly
     const organizationsEnabled = isOrganizationsEnabled();
-    
+
     if (organizationsEnabled && !auth.orgId) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Organization selection required',
           code: 'ORGANIZATION_SELECTION_REQUIRED',
-          redirectTo: '/onboarding/organization-selection'
+          redirectTo: '/onboarding/organization-selection',
         },
-        { status: 403, headers: SECURITY_HEADERS }
+        { status: 403, headers: SECURITY_HEADERS },
       );
     }
 
     // Parse and validate query parameters
     const url = new URL(request.url);
     const queryParams = {
-      organizationId: organizationsEnabled 
+      organizationId: organizationsEnabled
         ? (url.searchParams.get('organizationId') || auth.orgId)
         : url.searchParams.get('organizationId') || null,
       trainerId: url.searchParams.get('trainerId'),
       status: url.searchParams.get('status'),
       fileType: url.searchParams.get('fileType'),
-      limit: parseInt(url.searchParams.get('limit') || '10'),
-      offset: parseInt(url.searchParams.get('offset') || '0'),
+      limit: Number.parseInt(url.searchParams.get('limit') || '10'),
+      offset: Number.parseInt(url.searchParams.get('offset') || '0'),
     };
 
     const validation = GetMaterialsQuerySchema.safeParse(queryParams);
@@ -77,11 +77,11 @@ export const GET = withPartialAuth(async (auth: PartialAuthContext, request: Nex
         {
           success: false,
           error: 'Invalid query parameters',
-          details: validation.error.errors.map(err => 
-            `${err.path.join('.')}: ${err.message}`
-          ).join(', ')
+          details: validation.error.errors.map(err =>
+            `${err.path.join('.')}: ${err.message}`,
+          ).join(', '),
         },
-        { status: 400, headers: SECURITY_HEADERS }
+        { status: 400, headers: SECURITY_HEADERS },
       );
     }
 
@@ -91,19 +91,19 @@ export const GET = withPartialAuth(async (auth: PartialAuthContext, request: Nex
     if (organizationsEnabled) {
       if (query.organizationId && query.organizationId !== auth.orgId) {
         return NextResponse.json(
-          { 
-            success: false, 
+          {
+            success: false,
             error: 'Access denied: Cannot access materials from other organizations',
-            code: 'FORBIDDEN_CROSS_TENANT_ACCESS'
+            code: 'FORBIDDEN_CROSS_TENANT_ACCESS',
           },
-          { status: 403, headers: SECURITY_HEADERS }
+          { status: 403, headers: SECURITY_HEADERS },
         );
       }
     }
 
     // Build secure query with appropriate filtering
     const filters = [];
-    
+
     // Add organization filter if organizations are enabled
     if (organizationsEnabled && auth.orgId) {
       filters.push(eq(materialsSchema.organizationId, auth.orgId));
@@ -111,7 +111,7 @@ export const GET = withPartialAuth(async (auth: PartialAuthContext, request: Nex
       // When organizations are disabled, filter by user
       filters.push(eq(materialsSchema.trainerId, auth.userId));
     }
-    
+
     if (query.trainerId) {
       filters.push(eq(materialsSchema.trainerId, query.trainerId));
     }
@@ -166,21 +166,20 @@ export const GET = withPartialAuth(async (auth: PartialAuthContext, request: Nex
           requestId: auth.sessionId,
         },
       },
-      { headers: SECURITY_HEADERS }
+      { headers: SECURITY_HEADERS },
     );
-
   } catch (error) {
     return createSecureErrorResponse(
       error,
       'Failed to fetch materials',
       500,
-      { userId: auth.userId, orgId: auth.orgId }
+      { userId: auth.userId, orgId: auth.orgId },
     );
   }
 });
 
 /**
- * SECURED Materials API - POST endpoint  
+ * SECURED Materials API - POST endpoint
  * SECURITY: Authentication required, input validation, organization enforcement
  */
 export const POST = withPartialAuth(async (auth: PartialAuthContext, request: NextRequest) => {
@@ -189,33 +188,33 @@ export const POST = withPartialAuth(async (auth: PartialAuthContext, request: Ne
     const rateLimitResult = checkRateLimit(`${auth.userId}:materials:post`, 10, 60000);
     if (!rateLimitResult.allowed) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Rate limit exceeded. Please try again later.',
-          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
+          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000),
         },
-        { 
+        {
           status: 429,
           headers: {
             ...SECURITY_HEADERS,
-            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
-          }
-        }
+            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString(),
+          },
+        },
       );
     }
 
     // Check if organizations are enabled and handle auth accordingly
     const organizationsEnabled = isOrganizationsEnabled();
-    
+
     if (organizationsEnabled && !auth.orgId) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Organization selection required',
           code: 'ORGANIZATION_SELECTION_REQUIRED',
-          redirectTo: '/onboarding/organization-selection'
+          redirectTo: '/onboarding/organization-selection',
         },
-        { status: 403, headers: SECURITY_HEADERS }
+        { status: 403, headers: SECURITY_HEADERS },
       );
     }
 
@@ -226,9 +225,9 @@ export const POST = withPartialAuth(async (auth: PartialAuthContext, request: Ne
         {
           success: false,
           error: 'Invalid request data',
-          details: bodyValidation.error
+          details: bodyValidation.error,
         },
-        { status: 400, headers: SECURITY_HEADERS }
+        { status: 400, headers: SECURITY_HEADERS },
       );
     }
 
@@ -238,12 +237,12 @@ export const POST = withPartialAuth(async (auth: PartialAuthContext, request: Ne
     if (organizationsEnabled) {
       if (materialData.organizationId !== auth.orgId) {
         return NextResponse.json(
-          { 
-            success: false, 
+          {
+            success: false,
             error: 'Access denied: Cannot create materials for other organizations',
-            code: 'FORBIDDEN_CROSS_TENANT_CREATE'
+            code: 'FORBIDDEN_CROSS_TENANT_CREATE',
           },
-          { status: 403, headers: SECURITY_HEADERS }
+          { status: 403, headers: SECURITY_HEADERS },
         );
       }
     }
@@ -251,18 +250,18 @@ export const POST = withPartialAuth(async (auth: PartialAuthContext, request: Ne
     // SECURITY: Validate trainer ID matches authenticated user (if provided)
     if (materialData.trainerId !== auth.userId) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Access denied: Cannot create materials for other trainers',
-          code: 'FORBIDDEN_IMPERSONATION'
+          code: 'FORBIDDEN_IMPERSONATION',
         },
-        { status: 403, headers: SECURITY_HEADERS }
+        { status: 403, headers: SECURITY_HEADERS },
       );
     }
 
     // Create material with validated data
     const insertData = {
-      organizationId: organizationsEnabled 
+      organizationId: organizationsEnabled
         ? (materialData.organizationId as string)
         : (auth.orgId || 'default'), // Fallback for disabled organizations
       trainerId: materialData.trainerId as string,
@@ -273,7 +272,7 @@ export const POST = withPartialAuth(async (auth: PartialAuthContext, request: Ne
       fileSize: materialData.fileSize as number | null,
       status: 'uploaded' as const,
     };
-    
+
     const newMaterial = await db.insert(materialsSchema).values(insertData).returning();
 
     // Security logging
@@ -297,18 +296,17 @@ export const POST = withPartialAuth(async (auth: PartialAuthContext, request: Ne
           requestId: auth.sessionId,
         },
       },
-      { 
+      {
         status: 201,
-        headers: SECURITY_HEADERS 
-      }
+        headers: SECURITY_HEADERS,
+      },
     );
-
   } catch (error) {
     return createSecureErrorResponse(
       error,
       'Failed to create material',
       500,
-      { userId: auth.userId, orgId: auth.orgId }
+      { userId: auth.userId, orgId: auth.orgId },
     );
   }
 });

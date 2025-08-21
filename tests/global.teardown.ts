@@ -1,5 +1,6 @@
-import { FullConfig } from '@playwright/test';
-import { promises as fs } from 'fs';
+import { promises as fs } from 'node:fs';
+
+import type { FullConfig } from '@playwright/test';
 
 /**
  * Global teardown function for Playwright tests
@@ -7,11 +8,11 @@ import { promises as fs } from 'fs';
  */
 async function globalTeardown(config: FullConfig) {
   console.log('🧹 Running global teardown...');
-  
+
   try {
     // Skip auth file cleanup for development testing
     console.log('🔧 Preserving auth files for development testing');
-    
+
     // Only clean up auth files in CI environment
     if (process.env.CI) {
       const authFiles = [
@@ -19,7 +20,7 @@ async function globalTeardown(config: FullConfig) {
         './tests/auth/trainer-auth.json',
         './tests/auth/learner-auth.json',
       ];
-      
+
       for (const authFile of authFiles) {
         try {
           await fs.access(authFile);
@@ -30,13 +31,13 @@ async function globalTeardown(config: FullConfig) {
         }
       }
     }
-    
+
     // Clean up any temporary test files or directories
     const tempDirs = [
       './test-uploads',
       './test-tmp',
     ];
-    
+
     for (const dir of tempDirs) {
       try {
         await fs.rmdir(dir, { recursive: true });
@@ -45,7 +46,7 @@ async function globalTeardown(config: FullConfig) {
         // Directory doesn't exist, which is fine
       }
     }
-    
+
     console.log('✅ Global teardown completed successfully');
   } catch (error) {
     console.log('⚠️ Global teardown encountered issues:', error);

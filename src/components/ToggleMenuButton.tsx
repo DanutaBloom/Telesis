@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
  */
 const ToggleMenuButtonInternal = (
   props: {
-    onClick?: () => void;
+    'onClick'?: () => void;
     'data-testid'?: string;
   } & React.ComponentPropsWithoutRef<'button'>,
   ref?: ForwardedRef<HTMLButtonElement>,

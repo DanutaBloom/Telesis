@@ -72,11 +72,11 @@ export default function middleware(
         // Extract locale from the current path
         const pathSegments = req.nextUrl.pathname.split('/');
         const locale = pathSegments[1] && pathSegments[1].length === 2 ? pathSegments[1] : '';
-        
-        const orgSelectionPath = locale 
+
+        const orgSelectionPath = locale
           ? `/${locale}/onboarding/organization-selection`
           : '/onboarding/organization-selection';
-          
+
         const orgSelection = new URL(orgSelectionPath, req.url);
 
         return NextResponse.redirect(orgSelection);

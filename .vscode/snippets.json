@@ -1,0 +1,229 @@
+{
+  "React Functional Component": {
+    "prefix": "rfc",
+    "body": [
+      "import type { FC } from 'react';",
+      "",
+      "type ${1:ComponentName}Props = {",
+      "  $2",
+      "};",
+      "",
+      "const ${1:ComponentName}: FC<${1:ComponentName}Props> = ({ $3 }) => {",
+      "  return (",
+      "    <div>",
+      "      $0",
+      "    </div>",
+      "  );",
+      "};",
+      "",
+      "export default ${1:ComponentName};"
+    ],
+    "description": "Create a React functional component with TypeScript"
+  },
+  "React Functional Component with Props": {
+    "prefix": "rfcp",
+    "body": [
+      "import type { FC, ReactNode } from 'react';",
+      "",
+      "type ${1:ComponentName}Props = {",
+      "  children?: ReactNode;",
+      "  className?: string;",
+      "  $2",
+      "};",
+      "",
+      "const ${1:ComponentName}: FC<${1:ComponentName}Props> = ({ children, className, $3 }) => {",
+      "  return (",
+      "    <div className={className}>",
+      "      {children}",
+      "      $0",
+      "    </div>",
+      "  );",
+      "};",
+      "",
+      "export default ${1:ComponentName};"
+    ],
+    "description": "Create a React functional component with common props"
+  },
+  "Custom Hook": {
+    "prefix": "hook",
+    "body": [
+      "import { useState, useEffect } from 'react';",
+      "",
+      "export const use${1:HookName} = ($2) => {",
+      "  const [${3:state}, set${3/(.*)/${3:/capitalize}/}] = useState($4);",
+      "",
+      "  useEffect(() => {",
+      "    $5",
+      "  }, [$6]);",
+      "",
+      "  return { ${3:state}, set${3/(.*)/${3:/capitalize}/} };",
+      "};"
+    ],
+    "description": "Create a custom React hook"
+  },
+  "Next.js Page Component": {
+    "prefix": "nextpage",
+    "body": [
+      "import type { Metadata } from 'next';",
+      "",
+      "export const metadata: Metadata = {",
+      "  title: '${1:Page Title}',",
+      "  description: '${2:Page description}',",
+      "};",
+      "",
+      "export default function ${3:PageName}Page() {",
+      "  return (",
+      "    <div>",
+      "      <h1>${1:Page Title}</h1>",
+      "      $0",
+      "    </div>",
+      "  );",
+      "}"
+    ],
+    "description": "Create a Next.js page component with metadata"
+  },
+  "Next.js API Route": {
+    "prefix": "nextapi",
+    "body": [
+      "import type { NextRequest } from 'next/server';",
+      "import { NextResponse } from 'next/server';",
+      "",
+      "export async function GET(request: NextRequest) {",
+      "  try {",
+      "    $1",
+      "    return NextResponse.json({ success: true });",
+      "  } catch (error) {",
+      "    console.error('API Error:', error);",
+      "    return NextResponse.json(",
+      "      { error: 'Internal server error' },",
+      "      { status: 500 }",
+      "    );",
+      "  }",
+      "}",
+      "",
+      "export async function POST(request: NextRequest) {",
+      "  try {",
+      "    const data = await request.json();",
+      "    $2",
+      "    return NextResponse.json({ success: true, data });",
+      "  } catch (error) {",
+      "    console.error('API Error:', error);",
+      "    return NextResponse.json(",
+      "      { error: 'Internal server error' },",
+      "      { status: 500 }",
+      "    );",
+      "  }",
+      "}"
+    ],
+    "description": "Create a Next.js API route with error handling"
+  },
+  "Vitest Test": {
+    "prefix": "vitest",
+    "body": [
+      "import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';",
+      "import { render, screen } from '@testing-library/react';",
+      "import userEvent from '@testing-library/user-event';",
+      "",
+      "import ${1:ComponentName} from './${1:ComponentName}';",
+      "",
+      "describe('${1:ComponentName}', () => {",
+      "  beforeEach(() => {",
+      "    $2",
+      "  });",
+      "",
+      "  afterEach(() => {",
+      "    vi.clearAllMocks();",
+      "  });",
+      "",
+      "  it('should render correctly', () => {",
+      "    render(<${1:ComponentName} />);",
+      "    $0",
+      "  });",
+      "});"
+    ],
+    "description": "Create a Vitest test file"
+  },
+  "Playwright E2E Test": {
+    "prefix": "playwright",
+    "body": [
+      "import { test, expect } from '@playwright/test';",
+      "",
+      "test.describe('${1:Feature Name}', () => {",
+      "  test.beforeEach(async ({ page }) => {",
+      "    await page.goto('${2:url}');",
+      "  });",
+      "",
+      "  test('should ${3:test description}', async ({ page }) => {",
+      "    $0",
+      "    await expect(page).toHaveTitle(/${4:title}/);",
+      "  });",
+      "});"
+    ],
+    "description": "Create a Playwright E2E test"
+  },
+  "ESLint Disable Next Line": {
+    "prefix": "eslintdisable",
+    "body": [
+      "// eslint-disable-next-line ${1:rule-name}"
+    ],
+    "description": "Add ESLint disable comment for next line"
+  },
+  "ESLint Disable File": {
+    "prefix": "eslintdisablefile",
+    "body": [
+      "/* eslint-disable ${1:rule-name} */"
+    ],
+    "description": "Add ESLint disable comment for entire file"
+  },
+  "TypeScript Type Definition": {
+    "prefix": "type",
+    "body": [
+      "export type ${1:TypeName} = {",
+      "  ${2:property}: ${3:type};",
+      "};"
+    ],
+    "description": "Create a TypeScript type definition"
+  },
+  "TypeScript Interface": {
+    "prefix": "interface",
+    "body": [
+      "export interface ${1:InterfaceName} {",
+      "  ${2:property}: ${3:type};",
+      "}"
+    ],
+    "description": "Create a TypeScript interface"
+  },
+  "Console Log with Label": {
+    "prefix": "clog",
+    "body": [
+      "console.log('${1:label}:', ${2:variable});"
+    ],
+    "description": "Console log with descriptive label"
+  },
+  "Try Catch Block": {
+    "prefix": "trycatch",
+    "body": [
+      "try {",
+      "  ${1:// code that may throw}",
+      "} catch (error) {",
+      "  console.error('${2:Error description}:', error);",
+      "  ${3:// error handling}",
+      "}"
+    ],
+    "description": "Create a try-catch block with error logging"
+  },
+  "Async Function": {
+    "prefix": "asyncfn",
+    "body": [
+      "const ${1:functionName} = async (${2:params}) => {",
+      "  try {",
+      "    ${3:// async operations}",
+      "  } catch (error) {",
+      "    console.error('Error in ${1:functionName}:', error);",
+      "    throw error;",
+      "  }",
+      "};"
+    ],
+    "description": "Create an async function with error handling"
+  }
+}

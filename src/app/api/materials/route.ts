@@ -1,7 +1,6 @@
 import { and, eq } from 'drizzle-orm';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { eq, and } from 'drizzle-orm';
 
 import {
   checkRateLimit,
@@ -18,19 +17,6 @@ import {
   GetMaterialsQuerySchema,
 } from '@/libs/ValidationSchemas';
 import { materialsSchema } from '@/models/Schema';
-import { 
-  withPartialAuth, 
-  validateRequestBody, 
-  createSecureErrorResponse,
-  checkRateLimit,
-  SECURITY_HEADERS,
-  type PartialAuthContext
-} from '@/libs/AuthUtils';
-import { isOrganizationsEnabled } from '@/libs/ClerkUtils';
-import { 
-  CreateMaterialSchema, 
-  GetMaterialsQuerySchema
-} from '@/libs/ValidationSchemas';
 
 /**
  * SECURED Materials API - GET endpoint

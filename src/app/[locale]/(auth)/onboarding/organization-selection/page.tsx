@@ -1,9 +1,5 @@
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { redirect } from 'next/navigation';
-
-import { DynamicOrganizationList } from '@/components/clerk/DynamicClerkComponents';
-import { isOrganizationsEnabled } from '@/libs/ClerkUtils';
 
 import { DynamicOrganizationList } from '@/components/clerk/DynamicClerkComponents';
 import { isOrganizationsEnabled } from '@/libs/ClerkUtils';

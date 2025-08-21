@@ -1,7 +1,6 @@
 import { eq } from 'drizzle-orm';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { eq } from 'drizzle-orm';
 
 import {
   checkRateLimit,
@@ -18,19 +17,6 @@ import {
   GetOrganizationsQuerySchema,
 } from '@/libs/ValidationSchemas';
 import { organizationSchema } from '@/models/Schema';
-import { 
-  withPartialAuth, 
-  validateRequestBody, 
-  createSecureErrorResponse,
-  checkRateLimit,
-  SECURITY_HEADERS,
-  type PartialAuthContext
-} from '@/libs/AuthUtils';
-import { isOrganizationsEnabled } from '@/libs/ClerkUtils';
-import { 
-  CreateOrganizationSchema, 
-  GetOrganizationsQuerySchema 
-} from '@/libs/ValidationSchemas';
 
 /**
  * SECURED Organizations API - GET endpoint

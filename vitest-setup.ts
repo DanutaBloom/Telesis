@@ -1,13 +1,10 @@
 import '@testing-library/jest-dom/vitest';
 import '@/styles/global.css';
-import { cleanup } from '@testing-library/react';
 
 import { cleanup } from '@testing-library/react';
 import React from 'react';
 import { afterEach, beforeAll, vi } from 'vitest';
 import failOnConsole from 'vitest-fail-on-console';
-import { beforeAll, afterEach, vi } from 'vitest';
-import React from 'react';
 
 // Console failure configuration - less strict for development
 failOnConsole({

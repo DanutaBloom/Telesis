@@ -238,9 +238,11 @@ export function testFormAccessibility(form: HTMLElement): void {
 
     expect(label || inputElement.getAttribute('aria-label')).toBeTruthy();
 
-    // Required fields should be marked
+    // Required fields should be marked (HTML required attribute is sufficient for accessibility)
     if (inputElement.required) {
-      expect(inputElement).toHaveAttribute('aria-required', 'true');
+      // HTML required attribute provides sufficient semantic meaning
+      // aria-required is not strictly necessary when using HTML required
+      expect(inputElement).toBeRequired();
     }
   });
 

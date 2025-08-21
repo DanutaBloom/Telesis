@@ -119,7 +119,7 @@ describe('Button Component', () => {
 
       const button = screen.getByRole('button');
 
-      expect(button).toHaveClass('h-10', 'w-10');
+      expect(button).toHaveClass('size-10');
     });
   });
 
@@ -240,6 +240,7 @@ describe('Button Component', () => {
 
   describe('Custom Props and Styling', () => {
     it('accepts custom className', () => {
+      // eslint-disable-next-line tailwindcss/no-custom-classname
       render(<Button className="custom-class">Custom Button</Button>);
 
       const button = screen.getByRole('button');

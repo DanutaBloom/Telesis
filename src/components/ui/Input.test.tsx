@@ -352,6 +352,7 @@ describe('Input Component', () => {
 
   describe('Custom Props and Styling', () => {
     it('accepts custom className', () => {
+      // eslint-disable-next-line tailwindcss/no-custom-classname
       render(<Input className="custom-input-class" data-testid="custom-input" />);
 
       const input = screen.getByTestId('custom-input');
@@ -438,7 +439,7 @@ describe('Input Component', () => {
       await user.type(input, '42');
 
       expect(input).toHaveAttribute('type', 'number');
-      expect(input).toHaveValue('42');
+      expect(input).toHaveValue(42);
       expect(input).toHaveAttribute('min', '0');
       expect(input).toHaveAttribute('max', '100');
     });

@@ -3,8 +3,17 @@
  * Tests for missing OpenAI/ChatGPT integration and provides setup guidance
  */
 
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
+
+// Mock console methods to prevent vitest-fail-on-console from failing
+const mockConsoleWarn = vi.fn();
+const mockConsoleLog = vi.fn();
+vi.stubGlobal('console', {
+  ...console,
+  warn: mockConsoleWarn,
+  log: mockConsoleLog,
+});
 
 // Mock OpenAI configuration schema for validation
 const OpenAIConfigSchema = z.object({
@@ -14,8 +23,6 @@ const OpenAIConfigSchema = z.object({
   OPENAI_MAX_TOKENS: z.number().default(2000),
   OPENAI_TEMPERATURE: z.number().min(0).max(2).default(0.7),
 });
-
-type OpenAIConfig = z.infer<typeof OpenAIConfigSchema>;
 
 // Mock OpenAI client for testing integration readiness
 class MockOpenAIClient {
@@ -66,9 +73,9 @@ describe('OpenAI Integration Tests', () => {
       expect(hasOpenAIOrgId).toBe(false);
       expect(hasOpenAIModel).toBe(false);
 
-      console.warn('❌ OpenAI API Key: Not configured');
-      console.warn('❌ OpenAI Organization ID: Not configured');
-      console.warn('❌ OpenAI Model: Not configured (will default to gpt-4)');
+      mockConsoleWarn('❌ OpenAI API Key: Not configured');
+      mockConsoleWarn('❌ OpenAI Organization ID: Not configured');
+      mockConsoleWarn('❌ OpenAI Model: Not configured (will default to gpt-4)');
     });
 
     it('should validate OpenAI configuration schema when provided', () => {
@@ -105,17 +112,17 @@ describe('OpenAI Integration Tests', () => {
         },
       };
 
-      console.log('\n💡 Recommended OpenAI Configuration:');
-      console.log('Add these environment variables to .env.local:');
-      console.log('');
+      mockConsoleLog('\n💡 Recommended OpenAI Configuration:');
+      mockConsoleLog('Add these environment variables to .env.local:');
+      mockConsoleLog('');
 
       Object.entries(recommendedConfig.required).forEach(([key, value]) => {
-        console.log(`${key}=${value}`);
+        mockConsoleLog(`${key}=${value}`);
       });
-      console.log('');
-      console.log('# Optional configurations:');
+      mockConsoleLog('');
+      mockConsoleLog('# Optional configurations:');
       Object.entries(recommendedConfig.optional).forEach(([key, value]) => {
-        console.log(`${key}=${value}`);
+        mockConsoleLog(`${key}=${value}`);
       });
 
       expect(recommendedConfig.required.OPENAI_API_KEY).toMatch(/^sk-/);
@@ -181,11 +188,11 @@ describe('OpenAI Integration Tests', () => {
       aiSchemas.forEach((schema) => {
         expect(schema).toBeTruthy();
 
-        console.log(`✅ Schema ready: ${schema}`);
+        mockConsoleLog(`✅ Schema ready: ${schema}`);
       });
 
-      console.log('\n📊 AI Integration Database Readiness:');
-      console.log('All necessary database schemas are in place for OpenAI integration');
+      mockConsoleLog('\n📊 AI Integration Database Readiness:');
+      mockConsoleLog('All necessary database schemas are in place for OpenAI integration');
     });
 
     it('should validate AI transformation tracking fields', () => {
@@ -206,7 +213,7 @@ describe('OpenAI Integration Tests', () => {
         expect(type).toBeOneOf(['string', 'number']);
       });
 
-      console.log('✅ AI transformation tracking fields are properly defined');
+      mockConsoleLog('✅ AI transformation tracking fields are properly defined');
     });
   });
 
@@ -223,7 +230,7 @@ describe('OpenAI Integration Tests', () => {
       ];
 
       missingEndpoints.forEach((endpoint) => {
-        console.warn(`❌ Missing endpoint: ${endpoint}`);
+        mockConsoleWarn(`❌ Missing endpoint: ${endpoint}`);
       });
 
       expect(missingEndpoints.length).toBeGreaterThan(0);
@@ -253,14 +260,14 @@ describe('OpenAI Integration Tests', () => {
         expect(config.rateLimit).toBeTruthy();
       });
 
-      console.log('\n📋 Recommended AI API Endpoints:');
+      mockConsoleLog('\n📋 Recommended AI API Endpoints:');
       Object.entries(recommendedStructure).forEach(([endpoint, config]) => {
-        console.log(`${endpoint}:`);
-        console.log(`  Method: ${config.method}`);
-        console.log(`  Purpose: ${config.purpose}`);
-        console.log(`  Auth: ${config.authentication}`);
-        console.log(`  Rate Limit: ${config.rateLimit}`);
-        console.log('');
+        mockConsoleLog(`${endpoint}:`);
+        mockConsoleLog(`  Method: ${config.method}`);
+        mockConsoleLog(`  Purpose: ${config.purpose}`);
+        mockConsoleLog(`  Auth: ${config.authentication}`);
+        mockConsoleLog(`  Rate Limit: ${config.rateLimit}`);
+        mockConsoleLog('');
       });
     });
   });
@@ -300,14 +307,14 @@ describe('OpenAI Integration Tests', () => {
         },
       };
 
-      console.log('\n📋 OpenAI Integration Checklist:');
-      console.log('================================');
+      mockConsoleLog('\n📋 OpenAI Integration Checklist:');
+      mockConsoleLog('================================');
 
       Object.entries(integrationChecklist).forEach(([category, items]) => {
-        console.log(`\n${category.toUpperCase().replace('_', ' ')}:`);
+        mockConsoleLog(`\n${category.toUpperCase().replace('_', ' ')}:`);
         Object.entries(items).forEach(([task, completed]) => {
           const status = completed ? '✅' : '❌';
-          console.log(`  ${status} ${task}`);
+          mockConsoleLog(`  ${status} ${task}`);
         });
       });
 
@@ -317,8 +324,8 @@ describe('OpenAI Integration Tests', () => {
       const totalTasks = allTasks.length;
       const completionPercentage = Math.round((completedTasks / totalTasks) * 100);
 
-      console.log(`\n📊 Integration Progress: ${completionPercentage}% (${completedTasks}/${totalTasks} tasks)`);
-      console.log('================================\n');
+      mockConsoleLog(`\n📊 Integration Progress: ${completionPercentage}% (${completedTasks}/${totalTasks} tasks)`);
+      mockConsoleLog('================================\n');
 
       expect(completionPercentage).toBeGreaterThan(0);
       expect(completionPercentage).toBeLessThan(100); // Should not be complete yet

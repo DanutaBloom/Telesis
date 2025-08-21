@@ -15,6 +15,25 @@ type State = {
   error?: Error;
 };
 
+const ContinueToDashboardButton = () => {
+  const router = useRouter();
+
+  const handleContinue = () => {
+    router.push('/dashboard');
+  };
+
+  return (
+    <Button
+      type="button"
+      size="sm"
+      onClick={handleContinue}
+      className="bg-yellow-600 text-white hover:bg-yellow-700"
+    >
+      Continue to Dashboard
+    </Button>
+  );
+};
+
 /**
  * Error boundary for organization-related components
  * Gracefully handles cases where Organizations feature is disabled
@@ -67,22 +86,3 @@ export class OrganizationErrorBoundary extends React.Component<Props, State> {
     return this.props.children;
   }
 }
-
-const ContinueToDashboardButton = () => {
-  const router = useRouter();
-
-  const handleContinue = () => {
-    router.push('/dashboard');
-  };
-
-  return (
-    <Button
-      type="button"
-      size="sm"
-      onClick={handleContinue}
-      className="bg-yellow-600 text-white hover:bg-yellow-700"
-    >
-      Continue to Dashboard
-    </Button>
-  );
-};

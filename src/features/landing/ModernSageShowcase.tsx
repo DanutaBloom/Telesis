@@ -79,12 +79,12 @@ export const ModernSageShowcase = () => {
         <h2 className="sage-text-primary text-2xl font-semibold">Form Elements</h2>
         <div className="grid max-w-2xl grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-medium">Standard Input</label>
-            <Input placeholder="Enter text here..." />
+            <label htmlFor="standard-input" className="text-sm font-medium">Standard Input</label>
+            <Input id="standard-input" placeholder="Enter text here..." />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium">Email Input</label>
-            <Input type="email" placeholder="user@example.com" />
+            <label htmlFor="email-input" className="text-sm font-medium">Email Input</label>
+            <Input id="email-input" type="email" placeholder="user@example.com" />
           </div>
         </div>
       </div>
@@ -121,10 +121,10 @@ export const ModernSageShowcase = () => {
       <div className="space-y-4">
         <h2 className="sage-text-primary text-2xl font-semibold">Interactive States</h2>
         <div className="space-y-3">
-          <button className="sage-hover-primary sage-border w-full rounded-md border p-3 text-left">
+          <button type="button" className="sage-hover-primary sage-border w-full rounded-md border p-3 text-left">
             Hover for Primary Effect (sage-hover-primary)
           </button>
-          <button className="sage-hover-accent sage-border w-full rounded-md border p-3 text-left">
+          <button type="button" className="sage-hover-accent sage-border w-full rounded-md border p-3 text-left">
             Hover for Accent Effect (sage-hover-accent)
           </button>
         </div>

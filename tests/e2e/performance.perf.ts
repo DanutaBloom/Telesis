@@ -67,9 +67,15 @@ test.describe('Performance Tests', () => {
 
           try {
             observer.observe({ entryTypes: ['paint', 'largest-contentful-paint', 'layout-shift'] });
-          } catch (e) {
+          } catch (_e) {
             console.warn('Performance observer not supported:', e);
           }
+
+          const checkCompletion = () => {
+            setTimeout(() => {
+              resolve(metrics as PerformanceMetrics);
+            }, 2000);
+          };
 
           // FID measurement (simplified)
           let fidMeasured = false;
@@ -90,12 +96,6 @@ test.describe('Performance Tests', () => {
 
           // Auto-trigger after timeout if no interaction
           setTimeout(measureFID, 1000);
-
-          const checkCompletion = () => {
-            setTimeout(() => {
-              resolve(metrics as PerformanceMetrics);
-            }, 2000);
-          };
 
           // Start completion check
           setTimeout(checkCompletion, 3000);
@@ -173,7 +173,7 @@ test.describe('Performance Tests', () => {
       // Wait for main content (dashboard or redirect to sign-in)
       try {
         await page.waitForSelector('main, form', { timeout: 10000 });
-      } catch (e) {
+      } catch (_e) {
         console.warn('Timeout waiting for main content, continuing with test');
       }
 
@@ -191,7 +191,7 @@ test.describe('Performance Tests', () => {
       const resourceCounts: { [key: string]: number } = {};
 
       page.on('response', (response) => {
-        const url = response.url();
+        const _url = response.url();
         const resourceType = response.request().resourceType();
 
         // Track resource types
@@ -233,7 +233,7 @@ test.describe('Performance Tests', () => {
       const resourceLoadOrder: Array<{ url: string; type: string; time: number }> = [];
 
       page.on('response', (response) => {
-        const url = response.url();
+        const _url = response.url();
         const resourceType = response.request().resourceType();
 
         resourceLoadOrder.push({
@@ -277,7 +277,7 @@ test.describe('Performance Tests', () => {
               size: body.length,
               type: contentType,
             });
-          } catch (e) {
+          } catch (_e) {
             // Ignore cross-origin images
           }
         }
@@ -401,7 +401,7 @@ test.describe('Performance Tests', () => {
 
       try {
         await session.send('HeapProfiler.enable');
-      } catch (e) {
+      } catch (_e) {
         console.warn('Heap profiler not available, skipping memory test');
 
         test.skip();
@@ -413,7 +413,7 @@ test.describe('Performance Tests', () => {
       await page.waitForLoadState('networkidle');
 
       // Take initial memory snapshot
-      const initialSnapshot = await session.send('HeapProfiler.takeHeapSnapshot');
+      const _initialSnapshot = await session.send('HeapProfiler.takeHeapSnapshot');
 
       // Perform some interactions
       await page.mouse.move(200, 200);
@@ -425,7 +425,7 @@ test.describe('Performance Tests', () => {
       await page.waitForTimeout(2000);
 
       // Take final memory snapshot
-      const finalSnapshot = await session.send('HeapProfiler.takeHeapSnapshot');
+      const _finalSnapshot = await session.send('HeapProfiler.takeHeapSnapshot');
 
       // Get memory usage
       const memoryUsage = await page.evaluate(() => {

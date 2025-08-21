@@ -23,6 +23,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Cache Prettier
+        uses: actions/cache@v4
+        with:
+          path: node_modules/.cache/prettier/.prettier-cache
+          key: prettier-cache-${{ runner.os }}-${{ hashFiles('**/package-lock.json', '.prettierrc*', 'prettier.config.*', '.prettierignore') }}
+          restore-keys: |
+            prettier-cache-${{ runner.os }}-
+
       - name: Cache ESLint
         uses: actions/cache@v4
         with:
@@ -31,21 +39,50 @@ jobs:
           restore-keys: |
             eslint-cache-${{ runner.os }}-
 
-      - name: Run ESLint
-        id: eslint
+      - name: Run code quality checks
+        id: code-quality
         run: |
           set +e  # Don't exit on error
-          npm run lint:ci
-          ESLINT_EXIT_CODE=$?
-          echo "exit-code=$ESLINT_EXIT_CODE" >> $GITHUB_OUTPUT
 
-          if [ $ESLINT_EXIT_CODE -eq 0 ]; then
-            echo "::notice title=ESLint::✅ ESLint passed with no errors"
-          elif [ $ESLINT_EXIT_CODE -eq 1 ]; then
-            echo "::warning title=ESLint::⚠️ ESLint found warnings but CI continues"
+          # Run Prettier and ESLint in parallel for better performance
+          echo "🎨 Checking code formatting with Prettier..."
+          npm run prettier &
+          PRETTIER_PID=$!
+
+          echo "🔍 Running ESLint code quality checks..."
+          npm run lint:ci &
+          ESLINT_PID=$!
+
+          # Wait for both processes and capture exit codes
+          wait $PRETTIER_PID
+          PRETTIER_EXIT_CODE=$?
+
+          wait $ESLINT_PID
+          ESLINT_EXIT_CODE=$?
+
+          # Store exit codes for summary
+          echo "prettier-exit-code=$PRETTIER_EXIT_CODE" >> $GITHUB_OUTPUT
+          echo "eslint-exit-code=$ESLINT_EXIT_CODE" >> $GITHUB_OUTPUT
+
+          # Handle Prettier results
+          if [ $PRETTIER_EXIT_CODE -eq 0 ]; then
+            echo "::notice title=Prettier::✅ Code formatting is correct"
           else
-            echo "::error title=ESLint::❌ ESLint encountered an error"
-            exit $ESLINT_EXIT_CODE
+            echo "::error title=Prettier::❌ Code formatting issues found. Run 'npm run prettier:fix' locally to fix."
+          fi
+
+          # Handle ESLint results
+          if [ $ESLINT_EXIT_CODE -eq 0 ]; then
+            echo "::notice title=ESLint::✅ Code quality checks passed with no errors"
+          elif [ $ESLINT_EXIT_CODE -eq 1 ]; then
+            echo "::warning title=ESLint::⚠️ Code quality warnings found but CI continues"
+          else
+            echo "::error title=ESLint::❌ Critical code quality issues found"
+          fi
+
+          # Exit with failure if formatting issues or critical ESLint errors
+          if [ $PRETTIER_EXIT_CODE -ne 0 ] || [ $ESLINT_EXIT_CODE -gt 1 ]; then
+            exit 1
           fi
 
       - name: Type checking
@@ -64,13 +101,20 @@ jobs:
           echo "| Check | Status | Details |" >> $GITHUB_STEP_SUMMARY
           echo "|-------|--------|---------|" >> $GITHUB_STEP_SUMMARY
 
-          # ESLint status
-          if [ "${{ steps.eslint.outputs.exit-code }}" = "0" ]; then
-            echo "| ESLint | ✅ Passed | No errors or warnings found |" >> $GITHUB_STEP_SUMMARY
-          elif [ "${{ steps.eslint.outputs.exit-code }}" = "1" ]; then
-            echo "| ESLint | ⚠️ Warnings | Found warnings but allowed in CI |" >> $GITHUB_STEP_SUMMARY
+          # Prettier status
+          if [ "${{ steps.code-quality.outputs.prettier-exit-code }}" = "0" ]; then
+            echo "| Prettier | ✅ Passed | Code formatting is consistent |" >> $GITHUB_STEP_SUMMARY
           else
-            echo "| ESLint | ❌ Failed | Critical errors found |" >> $GITHUB_STEP_SUMMARY
+            echo "| Prettier | ❌ Failed | Code formatting issues found |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # ESLint status
+          if [ "${{ steps.code-quality.outputs.eslint-exit-code }}" = "0" ]; then
+            echo "| ESLint | ✅ Passed | No code quality errors or warnings |" >> $GITHUB_STEP_SUMMARY
+          elif [ "${{ steps.code-quality.outputs.eslint-exit-code }}" = "1" ]; then
+            echo "| ESLint | ⚠️ Warnings | Code quality warnings found but allowed |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| ESLint | ❌ Failed | Critical code quality issues found |" >> $GITHUB_STEP_SUMMARY
           fi
 
           # Type checking status
@@ -79,7 +123,9 @@ jobs:
           echo "| Build | ✅ Success | Application built successfully |" >> $GITHUB_STEP_SUMMARY
 
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 📊 Pipeline Performance" >> $GITHUB_STEP_SUMMARY
-          echo "- ESLint caching enabled for faster runs" >> $GITHUB_STEP_SUMMARY
-          echo "- Warnings allowed but errors block deployment" >> $GITHUB_STEP_SUMMARY
-          echo "- GitHub annotations show inline feedback" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Pipeline Performance & Tools" >> $GITHUB_STEP_SUMMARY
+          echo "- **Prettier**: Handles CSS, JSON, HTML, Markdown formatting" >> $GITHUB_STEP_SUMMARY
+          echo "- **ESLint**: Manages JS/TS code quality + formatting (with Prettier integration)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Caching**: Both Prettier and ESLint results cached for faster runs" >> $GITHUB_STEP_SUMMARY
+          echo "- **Error Handling**: Formatting issues block deployment, warnings allowed" >> $GITHUB_STEP_SUMMARY
+          echo "- **Clear Separation**: Formatting vs code quality concerns distinguished" >> $GITHUB_STEP_SUMMARY

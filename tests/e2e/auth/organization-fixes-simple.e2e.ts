@@ -25,7 +25,7 @@ test.describe('Organization Fixes Validation - Public', () => {
     await page.goto('/sign-in');
 
     // Wait for page to fully load
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     console.log('📄 Current URL:', page.url());
 
@@ -132,7 +132,7 @@ test.describe('Organization Fixes Validation - Public', () => {
     await page.goto('/dashboard');
 
     // Wait for redirect or auth UI to load
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     const currentUrl = page.url();
     console.log('📄 After dashboard access URL:', currentUrl);
@@ -192,7 +192,7 @@ test.describe('Organization Fixes Validation - Public', () => {
 
       try {
         await page.goto(route.path);
-        await page.waitForLoadState('networkidle', { timeout: 15000 });
+        await page.waitForLoadState('domcontentloaded', { timeout: 15000 });
 
         // Verify page loads
         const bodyContent = page;
@@ -214,8 +214,8 @@ test.describe('Organization Fixes Validation - Public', () => {
       msg.type === 'error' && (
         msg.text.includes('OrganizationList')
         || msg.text.includes('organization selection')
-        || msg.text.toLowerCase().includes('organization')
-        && !msg.text.includes('organization-profile') // Profile page is expected
+        || (msg.text.toLowerCase().includes('organization')
+          && !msg.text.includes('organization-profile')) // Profile page is expected
       ),
     );
 
@@ -234,7 +234,7 @@ test.describe('Organization Fixes Validation - Public', () => {
     console.log('✅ Navigation flow completed without organization errors');
   });
 
-  test('Generate validation report', async ({ page }) => {
+  test('Generate validation report', async ({ page: _page }) => {
     console.log('\n🎯 ORGANIZATION FIXES VALIDATION REPORT');
     console.log('======================================');
 

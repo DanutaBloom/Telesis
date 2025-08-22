@@ -84,7 +84,7 @@ test.describe('API Security Validation', () => {
       const headers = response.headers();
 
       // Check for security headers (some may not be present in dev mode)
-      const hasSecurityHeaders
+      const _hasSecurityHeaders
         = headers['x-content-type-options'] === 'nosniff'
           || headers['x-frame-options']
           || headers['x-xss-protection']

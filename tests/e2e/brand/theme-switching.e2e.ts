@@ -419,7 +419,7 @@ test.describe('Theme Switching and Brand Consistency', () => {
 
       // Verify dark theme state
       await expect(page.locator('html')).toHaveClass(/dark/);
-      
+
       // Take dark theme screenshot
       await expect(page.locator('body')).toHaveScreenshot('theme-switching-dark.png', {
         fullPage: true,
@@ -698,7 +698,7 @@ test.describe('Theme Switching and Brand Consistency', () => {
 
       // Perform rapid theme switching test
       await page.locator('[data-testid="rapid-switch-btn"]').click();
-      
+
       // Wait for rapid switching to complete
       await page.waitForFunction(() => {
         const button = document.querySelector('[data-testid="rapid-switch-btn"]');
@@ -706,13 +706,13 @@ test.describe('Theme Switching and Brand Consistency', () => {
       }, { timeout: 10000 });
 
       // Verify brand elements are still intact after rapid switching
-      const finalSvgCount = await page.textContent('#svg-count-value');
-      const finalEllipseCount = await page.textContent('#ellipse-count-value');
-      const finalLogoCount = await page.textContent('#logo-count-value');
+      const finalSvgCount = page;
+      const finalEllipseCount = page;
+      const finalLogoCount = page;
 
-      expect(finalSvgCount).toBe(initialSvgCount);
-      expect(finalEllipseCount).toBe(initialEllipseCount);
-      expect(finalLogoCount).toBe(initialLogoCount);
+      await expect(finalSvgCount).toHaveText('#svg-count-value', initialSvgCount);
+      await expect(finalEllipseCount).toHaveText('#ellipse-count-value', initialEllipseCount);
+      await expect(finalLogoCount).toHaveText('#logo-count-value', initialLogoCount);
 
       // Verify all logos are still visible
       await expect(page.locator('[data-testid="consistency-logo"]')).toBeVisible();

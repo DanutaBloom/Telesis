@@ -10,6 +10,13 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
+  renderAndTestA11y,
+  runComprehensiveA11yTests,
+  testA11y,
+  testAriaCompliance,
+  testColorContrast,
+} from '@/../tests/helpers/accessibility';
+import {
   expectButtonToHaveModernSageVariant,
   expectElementToHaveModernSageFocus,
   expectElementToHaveModernSageTheme,
@@ -170,6 +177,47 @@ describe('Button Component', () => {
   });
 
   describe('Accessibility', () => {
+    it('meets WCAG 2.1 AA compliance', async () => {
+      await renderAndTestA11y(<Button>Accessible Button</Button>);
+    });
+
+    it('passes comprehensive accessibility tests for all variants', async () => {
+      const variants = ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'] as const;
+
+      for (const variant of variants) {
+        const { container } = render(
+          <Button variant={variant as any} data-testid={`button-${variant}`}>
+            {variant.charAt(0).toUpperCase() + variant.slice(1)}
+{' '}
+Button
+          </Button>
+        );
+
+        await runComprehensiveA11yTests(container, {
+          testColorContrast: true,
+          testKeyboard: true,
+          testAria: true,
+          testSemantics: false, // Skip landmark tests for component level
+        });
+      }
+    });
+
+    it('maintains color contrast compliance across all variants', async () => {
+      const variants = [
+        { variant: 'default' as const, name: 'Default Button' },
+        { variant: 'destructive' as const, name: 'Destructive Button' },
+        { variant: 'outline' as const, name: 'Outline Button' },
+        { variant: 'secondary' as const, name: 'Secondary Button' },
+        { variant: 'ghost' as const, name: 'Ghost Button' },
+        { variant: 'link' as const, name: 'Link Button' },
+      ];
+
+      for (const { variant, name } of variants) {
+        const { container } = render(<Button variant={variant}>{name}</Button>);
+        await testColorContrast(container);
+      }
+    });
+
     it('meets minimum tap target size requirements', () => {
       render(<Button data-testid="tap-target">Tap Target</Button>);
 
@@ -211,8 +259,8 @@ describe('Button Component', () => {
       expect(handleClick).toHaveBeenCalledTimes(2);
     });
 
-    it('has proper ARIA attributes', () => {
-      render(
+    it('has proper ARIA attributes and compliance', async () => {
+      const { container } = render(
         <Button
           aria-label="Custom label"
           aria-describedby="description"
@@ -226,15 +274,103 @@ describe('Button Component', () => {
 
       expect(button).toHaveAttribute('aria-label', 'Custom label');
       expect(button).toHaveAttribute('aria-describedby', 'description');
+
+      // Test ARIA compliance
+      await testAriaCompliance(container);
     });
 
-    it('announces loading state to screen readers', () => {
-      render(<Button loading aria-label="Submit form">Submit</Button>);
+    it('announces loading state to screen readers', async () => {
+      const { container } = render(<Button loading aria-label="Submit form">Submit</Button>);
 
       const button = screen.getByRole('button');
 
       expect(button).toHaveAttribute('aria-busy', 'true');
       expect(button).toBeDisabled();
+      expect(button).toHaveAttribute('aria-disabled', 'true');
+
+      // Test accessibility of loading state
+      await testA11y(container);
+    });
+
+    it('properly handles disabled state accessibility', async () => {
+      const { container } = render(<Button disabled>Disabled Button</Button>);
+
+      const button = screen.getByRole('button');
+
+      expect(button).toBeDisabled();
+      expect(button).toHaveAttribute('aria-disabled', 'true');
+
+      await testA11y(container);
+    });
+
+    it('maintains accessibility with custom ARIA attributes', async () => {
+      const { container } = render(
+        <div>
+          <Button
+            aria-labelledby="button-label"
+            aria-describedby="button-description"
+            aria-expanded="false"
+            role="button"
+          >
+            Custom ARIA Button
+          </Button>
+          <div id="button-label">Button Label</div>
+          <div id="button-description">This button has custom ARIA attributes</div>
+        </div>
+      );
+
+      await testA11y(container);
+    });
+
+    it('maintains accessibility when used as different elements', async () => {
+      const { container } = render(
+        <Button asChild>
+          <a href="/test" aria-label="Navigate to test page">
+            Link Button
+          </a>
+        </Button>,
+      );
+
+      const link = screen.getByRole('link', { name: /navigate to test page|link button/i });
+
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveAttribute('href', '/test');
+
+      await testA11y(container);
+    });
+
+    it('passes accessibility tests for icon-only buttons', async () => {
+      const { container } = render(
+        <Button size="icon" aria-label="Close dialog">
+          <span aria-hidden="true">×</span>
+        </Button>
+      );
+
+      const button = screen.getByRole('button', { name: /close dialog/i });
+
+      expect(button).toBeInTheDocument();
+
+      await testA11y(container);
+    });
+
+    it('maintains accessibility across all sizes', async () => {
+      const sizes = ['default', 'sm', 'lg', 'icon'] as const;
+
+      for (const size of sizes) {
+        const { container } = render(
+          <Button
+            size={size}
+            aria-label={size === 'icon' ? 'Icon button' : undefined}
+            data-testid={`button-${size}`}
+          >
+            {size === 'icon' ? '🔥' : `${size.charAt(0).toUpperCase() + size.slice(1)} Button`}
+          </Button>
+        );
+
+        await testA11y(container, {
+          disableRules: size === 'icon' ? [] : undefined, // Icon buttons might have different requirements
+        });
+      }
     });
   });
 

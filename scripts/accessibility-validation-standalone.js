@@ -2,13 +2,13 @@
 
 /**
  * Standalone Accessibility Validation for Telesis Brand System
- * 
+ *
  * Tests core accessibility features without running full test suites
  * that may have dependency issues.
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 
 console.log('🔍 Telesis Brand System - Accessibility Validation Report\n');
 console.log('='.repeat(70));
@@ -202,7 +202,7 @@ if (a11yHelper.success) {
 }
 
 // Generate Final Report
-console.log('\n' + '='.repeat(70));
+console.log(`\n${'='.repeat(70)}`);
 console.log('📊 ACCESSIBILITY VALIDATION SUMMARY');
 console.log('='.repeat(70));
 
@@ -213,7 +213,7 @@ const overallPercentage = Math.round((totalScore / totalPossible) * 100);
 console.log(`\n🎯 Overall Accessibility Score: ${overallPercentage}% (${totalScore}/${totalPossible})`);
 
 console.log('\n📋 Component Breakdown:');
-validationResults.forEach(result => {
+validationResults.forEach((result) => {
   const percentage = Math.round((result.score / result.total) * 100);
   const statusEmoji = result.status === 'PASS' ? '✅' : result.status === 'PARTIAL' ? '⚠️' : '❌';
   console.log(`${statusEmoji} ${result.component}: ${percentage}% (${result.score}/${result.total}) - ${result.status}`);
@@ -222,34 +222,34 @@ validationResults.forEach(result => {
 console.log('\n🏆 WCAG 2.1 AA Compliance Assessment:');
 
 const complianceAreas = [
-  { 
-    criterion: '1.1.1 Non-text Content', 
+  {
+    criterion: '1.1.1 Non-text Content',
     status: validationResults[0]?.status === 'PASS' ? '✅ PASS' : '❌ REVIEW',
     notes: 'Logo and brand elements provide proper alternative text'
   },
-  { 
-    criterion: '1.4.3 Contrast (Minimum)', 
+  {
+    criterion: '1.4.3 Contrast (Minimum)',
     status: validationResults[1]?.status === 'PASS' ? '✅ PASS' : '❌ REVIEW',
     notes: 'Color contrast testing infrastructure in place'
   },
-  { 
-    criterion: '2.1.1 Keyboard Navigation', 
+  {
+    criterion: '2.1.1 Keyboard Navigation',
     status: validationResults[2]?.status === 'PASS' ? '✅ PASS' : '❌ REVIEW',
     notes: 'Interactive elements support keyboard navigation'
   },
-  { 
-    criterion: '2.4.6 Headings and Labels', 
+  {
+    criterion: '2.4.6 Headings and Labels',
     status: validationResults[3]?.status === 'PASS' ? '✅ PASS' : '❌ REVIEW',
     notes: 'Typography system provides semantic heading structure'
   },
-  { 
-    criterion: '4.1.2 Name, Role, Value', 
+  {
+    criterion: '4.1.2 Name, Role, Value',
     status: validationResults[4]?.status === 'PASS' ? '✅ PASS' : '❌ REVIEW',
     notes: 'Accessibility testing infrastructure validates ARIA'
   }
 ];
 
-complianceAreas.forEach(area => {
+complianceAreas.forEach((area) => {
   console.log(`${area.status} ${area.criterion}`);
   console.log(`   ${area.notes}`);
 });
@@ -258,10 +258,10 @@ console.log('\n💡 RECOMMENDATIONS:');
 
 if (overallPercentage < 100) {
   console.log('\n🔧 Priority Improvements:');
-  
-  validationResults.forEach(result => {
+
+  validationResults.forEach((result) => {
     if (result.status !== 'PASS') {
-      console.log(`• Complete ${result.component} implementation (${Math.round((result.score/result.total)*100)}% done)`);
+      console.log(`• Complete ${result.component} implementation (${Math.round((result.score / result.total) * 100)}% done)`);
     }
   });
 
@@ -292,7 +292,7 @@ EXECUTIVE SUMMARY:
 Overall Accessibility Score: ${overallPercentage}% (${totalScore}/${totalPossible})
 
 COMPONENT ANALYSIS:
-${validationResults.map(result => {
+${validationResults.map((result) => {
   const percentage = Math.round((result.score / result.total) * 100);
   return `${result.component}: ${percentage}% (${result.score}/${result.total}) - ${result.status}`;
 }).join('\n')}

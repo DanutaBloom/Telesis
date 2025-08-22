@@ -2,9 +2,13 @@ import '@testing-library/jest-dom/vitest';
 import '@/styles/global.css';
 
 import { cleanup } from '@testing-library/react';
+import { toHaveNoViolations } from 'jest-axe';
 import React from 'react';
-import { afterEach, beforeAll, vi } from 'vitest';
+import { afterEach, beforeAll, expect, vi } from 'vitest';
 import failOnConsole from 'vitest-fail-on-console';
+
+// Extend Vitest's expect with jest-axe matchers
+expect.extend(toHaveNoViolations);
 
 // Console failure configuration - less strict for development
 failOnConsole({

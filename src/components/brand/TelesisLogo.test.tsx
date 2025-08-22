@@ -213,8 +213,8 @@ describe('TelesisLogo', () => {
       expect(svg).toBeInTheDocument();
 
       // Check that SVG has title and description for screen readers
-      const title = svg.querySelector('title');
-      const desc = svg.querySelector('desc');
+      const title = svg?.querySelector('title');
+      const desc = svg?.querySelector('desc');
 
       expect(title).toHaveTextContent('Telesis Logo');
       expect(desc).toHaveTextContent('Three olives representing the learning process: Ask, Think, Apply');
@@ -263,8 +263,8 @@ describe('TelesisLogomark', () => {
       const svg = container.querySelector('svg');
 
       // Check that SVG has title and description elements
-      const title = svg.querySelector('title');
-      const desc = svg.querySelector('desc');
+      const title = svg?.querySelector('title');
+      const desc = svg?.querySelector('desc');
 
       expect(title).toHaveTextContent('Telesis Logo');
       expect(desc).toHaveTextContent('Three olives representing the learning process: Ask, Think, Apply');
@@ -310,9 +310,9 @@ describe('TelesisLogomark', () => {
       expect(svg).toBeInTheDocument();
 
       // Check that the SVG contains the three olives with proper classes
-      expect(svg.querySelector('.olive-ask')).toBeInTheDocument();
-      expect(svg.querySelector('.olive-think')).toBeInTheDocument();
-      expect(svg.querySelector('.olive-apply')).toBeInTheDocument();
+      expect(svg?.querySelector('.olive-ask')).toBeInTheDocument();
+      expect(svg?.querySelector('.olive-think')).toBeInTheDocument();
+      expect(svg?.querySelector('.olive-apply')).toBeInTheDocument();
     });
 
     it('should render monochrome color scheme', () => {
@@ -337,7 +337,7 @@ describe('TelesisLogomark', () => {
       const { container } = render(<TelesisLogomark />);
 
       const svg = container.querySelector('svg');
-      const olives = svg.querySelectorAll('ellipse');
+      const olives = svg?.querySelectorAll('ellipse');
 
       expect(olives).toHaveLength(3);
     });
@@ -346,9 +346,9 @@ describe('TelesisLogomark', () => {
       const { container } = render(<TelesisLogomark />);
 
       const svg = container.querySelector('svg');
-      const askOlive = svg.querySelector('.olive-ask');
-      const thinkOlive = svg.querySelector('.olive-think');
-      const applyOlive = svg.querySelector('.olive-apply');
+      const askOlive = svg?.querySelector('.olive-ask');
+      const thinkOlive = svg?.querySelector('.olive-think');
+      const applyOlive = svg?.querySelector('.olive-apply');
 
       expect(askOlive).toHaveAttribute('cx', '8');
       expect(thinkOlive).toHaveAttribute('cx', '24');

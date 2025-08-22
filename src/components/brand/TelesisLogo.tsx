@@ -38,6 +38,7 @@ type TelesisLogoProps = {
   "showText"?: boolean;
   'aria-label'?: string;
   "onClick"?: () => void;
+  "tabIndex"?: number;
 } & VariantProps<typeof logoVariants>
 
 const TelesisLogomark = forwardRef<

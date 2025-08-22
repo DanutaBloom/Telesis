@@ -9,7 +9,7 @@ import { SecurityHelpers } from '../../helpers/playwrightHelpers';
  */
 test.describe('API Security Tests', () => {
   test.describe('@security API Authentication', () => {
-    test('should protect materials API endpoint', async ({ request, page }) => {
+    test('should protect materials API endpoint', async ({ request }) => {
       // Test materials API endpoint
       const response = await request.get('/api/materials');
 
@@ -58,7 +58,7 @@ test.describe('API Security Tests', () => {
   test.describe('@security Security Headers', () => {
     test('should include security headers in responses', async ({ page }) => {
       // Check security headers
-      const headers = await SecurityHelpers.checkSecurityHeaders(page, '/api/health');
+      const _headers = await SecurityHelpers.checkSecurityHeaders(page, '/api/health');
 
       // Verify response works
       const response = await page.goto('/api/health');

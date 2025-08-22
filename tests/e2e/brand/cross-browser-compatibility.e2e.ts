@@ -278,8 +278,15 @@ test.describe('Cross-Browser Brand Compatibility', () => {
 
     // Verify all logos are visible and properly rendered
     const testIds = [
-      'horizontal-logo', 'stacked-logo', 'logomark-only', 'dark-logo',
-      'logo-sm', 'logo-default', 'logo-lg', 'logo-xl', 'monochrome-logo'
+      'horizontal-logo',
+'stacked-logo',
+'logomark-only',
+'dark-logo',
+      'logo-sm',
+'logo-default',
+'logo-lg',
+'logo-xl',
+'monochrome-logo'
     ];
 
     for (const testId of testIds) {
@@ -289,12 +296,14 @@ test.describe('Cross-Browser Brand Compatibility', () => {
     // Verify SVG structure is consistent
     const svgs = page.locator('svg');
     const svgCount = await svgs.count();
+
     expect(svgCount).toBeGreaterThan(0);
 
     // Check that all SVGs have the expected ellipse elements (3 olives each)
     for (let i = 0; i < svgCount; i++) {
       const svg = svgs.nth(i);
       const ellipses = svg.locator('ellipse');
+
       await expect(ellipses).toHaveCount(3);
     }
 
@@ -424,7 +433,7 @@ test.describe('Cross-Browser Brand Compatibility', () => {
 
     // Verify typography elements are visible and correctly sized
     const typographyTestIds = ['typography-sm', 'typography-default', 'typography-lg', 'typography-xl'];
-    
+
     for (const testId of typographyTestIds) {
       await expect(page.locator(`[data-testid="${testId}"]`)).toBeVisible();
     }
@@ -538,9 +547,10 @@ test.describe('Cross-Browser Brand Compatibility', () => {
     // Verify SVG structure integrity
     const allSvgs = page.locator('svg');
     const svgCount = await allSvgs.count();
-    
+
     for (let i = 0; i < svgCount; i++) {
       const svg = allSvgs.nth(i);
+
       await expect(svg.locator('ellipse')).toHaveCount(3);
       await expect(svg).toHaveAttribute('viewBox', '0 0 48 18');
     }

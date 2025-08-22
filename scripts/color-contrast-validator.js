@@ -2,7 +2,7 @@
 
 /**
  * Modern Sage Color Contrast Validator
- * 
+ *
  * Tests actual color values from the Modern Sage palette
  * against WCAG 2.1 AA contrast requirements
  */
@@ -22,11 +22,13 @@ const WCAG_CONTRAST_RATIOS = {
 function parseRGB(rgb) {
   // Handle rgb(r, g, b) and rgba(r, g, b, a)
   const match = rgb.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
-  if (!match) return null;
+  if (!match) {
+ return null;
+}
   return {
-    r: parseInt(match[1], 10),
-    g: parseInt(match[2], 10),
-    b: parseInt(match[3], 10),
+    r: Number.parseInt(match[1], 10),
+    g: Number.parseInt(match[2], 10),
+    b: Number.parseInt(match[3], 10),
   };
 }
 
@@ -35,11 +37,13 @@ function parseRGB(rgb) {
  */
 function hexToRgb(hex) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
-  } : null;
+  return result
+? {
+    r: Number.parseInt(result[1], 16),
+    g: Number.parseInt(result[2], 16),
+    b: Number.parseInt(result[3], 16)
+  }
+: null;
 }
 
 /**
@@ -51,19 +55,19 @@ function hslToRgb(h, s, l) {
   const c = (1 - Math.abs(2 * l - 1)) * s;
   const x = c * (1 - Math.abs((h / 60) % 2 - 1));
   const m = l - c / 2;
-  let r = 0, g = 0, b = 0;
+  let r = 0; let g = 0; let b = 0;
 
-  if (0 <= h && h < 60) {
+  if (h >= 0 && h < 60) {
     r = c; g = x; b = 0;
-  } else if (60 <= h && h < 120) {
+  } else if (h >= 60 && h < 120) {
     r = x; g = c; b = 0;
-  } else if (120 <= h && h < 180) {
+  } else if (h >= 120 && h < 180) {
     r = 0; g = c; b = x;
-  } else if (180 <= h && h < 240) {
+  } else if (h >= 180 && h < 240) {
     r = 0; g = x; b = c;
-  } else if (240 <= h && h < 300) {
+  } else if (h >= 240 && h < 300) {
     r = x; g = 0; b = c;
-  } else if (300 <= h && h < 360) {
+  } else if (h >= 300 && h < 360) {
     r = c; g = 0; b = x;
   }
 
@@ -82,9 +86,9 @@ function getRelativeLuminance(r, g, b) {
   const gs = g / 255;
   const bs = b / 255;
 
-  const rLinear = rs <= 0.03928 ? rs / 12.92 : Math.pow((rs + 0.055) / 1.055, 2.4);
-  const gLinear = gs <= 0.03928 ? gs / 12.92 : Math.pow((gs + 0.055) / 1.055, 2.4);
-  const bLinear = bs <= 0.03928 ? bs / 12.92 : Math.pow((bs + 0.055) / 1.055, 2.4);
+  const rLinear = rs <= 0.03928 ? rs / 12.92 : ((rs + 0.055) / 1.055) ** 2.4;
+  const gLinear = gs <= 0.03928 ? gs / 12.92 : ((gs + 0.055) / 1.055) ** 2.4;
+  const bLinear = bs <= 0.03928 ? bs / 12.92 : ((bs + 0.055) / 1.055) ** 2.4;
 
   return 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear;
 }
@@ -95,7 +99,7 @@ function getRelativeLuminance(r, g, b) {
 function calculateContrastRatio(color1, color2) {
   // Parse colors
   let rgb1, rgb2;
-  
+
   if (color1.startsWith('#')) {
     rgb1 = hexToRgb(color1);
   } else if (color1.startsWith('rgb')) {
@@ -104,10 +108,10 @@ function calculateContrastRatio(color1, color2) {
     // Parse HSL
     const hslMatch = color1.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
     if (hslMatch) {
-      rgb1 = hslToRgb(parseInt(hslMatch[1]), parseInt(hslMatch[2]), parseInt(hslMatch[3]));
+      rgb1 = hslToRgb(Number.parseInt(hslMatch[1]), Number.parseInt(hslMatch[2]), Number.parseInt(hslMatch[3]));
     }
   }
-  
+
   if (color2.startsWith('#')) {
     rgb2 = hexToRgb(color2);
   } else if (color2.startsWith('rgb')) {
@@ -116,7 +120,7 @@ function calculateContrastRatio(color1, color2) {
     // Parse HSL
     const hslMatch = color2.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
     if (hslMatch) {
-      rgb2 = hslToRgb(parseInt(hslMatch[1]), parseInt(hslMatch[2]), parseInt(hslMatch[3]));
+      rgb2 = hslToRgb(Number.parseInt(hslMatch[1]), Number.parseInt(hslMatch[2]), Number.parseInt(hslMatch[3]));
     }
   }
 
@@ -139,7 +143,7 @@ const MODERN_SAGE_COLORS = {
   // Sage colors (from HSL values in logo component)
   'sage-quietude': 'hsl(171, 19%, 41%)', // From logo component
   'sage-growth': 'hsl(102, 58%, 38%)', // From logo component
-  
+
   // Standard colors for comparison
   'white': '#ffffff',
   'black': '#000000',
@@ -147,7 +151,7 @@ const MODERN_SAGE_COLORS = {
   'slate-50': '#f8fafc',
   'slate-500': '#64748b',
   'slate-400': '#94a3b8',
-  
+
   // Green variants (potential button colors)
   'green-500': '#22c55e',
   'green-600': '#16a34a',
@@ -160,70 +164,70 @@ const COLOR_COMBINATIONS_TO_TEST = [
   // Primary button combinations (the failing test case)
   {
     name: 'Primary Button - White on Green-500',
-    foreground: MODERN_SAGE_COLORS['white'],
+    foreground: MODERN_SAGE_COLORS.white,
     background: MODERN_SAGE_COLORS['green-500'],
     context: 'Primary CTA buttons',
     expected: 'Should meet AA standard (4.5:1)'
   },
   {
-    name: 'Primary Button - White on Green-600', 
-    foreground: MODERN_SAGE_COLORS['white'],
-    background: MODERN_SAGE_COLORS['green-600'], 
+    name: 'Primary Button - White on Green-600',
+    foreground: MODERN_SAGE_COLORS.white,
+    background: MODERN_SAGE_COLORS['green-600'],
     context: 'Primary CTA buttons (darker)',
     expected: 'Should meet AA standard (4.5:1)'
   },
   {
     name: 'Primary Button - White on Green-700',
-    foreground: MODERN_SAGE_COLORS['white'],
+    foreground: MODERN_SAGE_COLORS.white,
     background: MODERN_SAGE_COLORS['green-700'],
     context: 'Primary CTA buttons (darkest)',
     expected: 'Should meet AA standard (4.5:1)'
   },
-  
+
   // Secondary button combinations
   {
     name: 'Secondary Button - Green-500 on White',
-    foreground: MODERN_SAGE_COLORS['green-500'], 
-    background: MODERN_SAGE_COLORS['white'],
+    foreground: MODERN_SAGE_COLORS['green-500'],
+    background: MODERN_SAGE_COLORS.white,
     context: 'Secondary buttons with border',
     expected: 'Should meet AA standard (4.5:1)'
   },
   {
     name: 'Secondary Button - Green-600 on White',
     foreground: MODERN_SAGE_COLORS['green-600'],
-    background: MODERN_SAGE_COLORS['white'],
+    background: MODERN_SAGE_COLORS.white,
     context: 'Secondary buttons with border (darker)',
     expected: 'Should meet AA standard (4.5:1)'
   },
-  
-  // Brand color combinations  
+
+  // Brand color combinations
   {
     name: 'Sage Quietude on White',
     foreground: MODERN_SAGE_COLORS['sage-quietude'],
-    background: MODERN_SAGE_COLORS['white'], 
+    background: MODERN_SAGE_COLORS.white,
     context: 'Brand primary text',
     expected: 'Should meet AA standard (4.5:1)'
   },
   {
     name: 'Sage Growth on White',
     foreground: MODERN_SAGE_COLORS['sage-growth'],
-    background: MODERN_SAGE_COLORS['white'],
+    background: MODERN_SAGE_COLORS.white,
     context: 'Brand accent text',
     expected: 'Should meet AA standard (4.5:1)'
   },
-  
+
   // Body text combinations
   {
     name: 'Body Text - Slate-900 on White',
     foreground: MODERN_SAGE_COLORS['slate-900'],
-    background: MODERN_SAGE_COLORS['white'],
+    background: MODERN_SAGE_COLORS.white,
     context: 'Main body text',
     expected: 'Should exceed AA standard'
   },
   {
     name: 'Muted Text - Slate-500 on White',
     foreground: MODERN_SAGE_COLORS['slate-500'],
-    background: MODERN_SAGE_COLORS['white'],
+    background: MODERN_SAGE_COLORS.white,
     context: 'Secondary/muted text',
     expected: 'Should meet AA standard (4.5:1)'
   },
@@ -234,16 +238,16 @@ console.log('='.repeat(70));
 console.log('Testing color combinations against WCAG 2.1 AA standards (4.5:1 ratio)\n');
 
 let passCount = 0;
-let totalCount = COLOR_COMBINATIONS_TO_TEST.length;
+const totalCount = COLOR_COMBINATIONS_TO_TEST.length;
 const failures = [];
 
 COLOR_COMBINATIONS_TO_TEST.forEach((combo, index) => {
   const ratio = calculateContrastRatio(combo.foreground, combo.background);
   const meetsAA = ratio >= WCAG_CONTRAST_RATIOS.NORMAL_TEXT_AA;
   const meetsAAA = ratio >= WCAG_CONTRAST_RATIOS.NORMAL_TEXT_AAA;
-  
+
   const status = meetsAAA ? 'AAA ✨' : meetsAA ? 'AA ✅' : 'FAIL ❌';
-  
+
   console.log(`${index + 1}. ${combo.name}`);
   console.log(`   Foreground: ${combo.foreground}`);
   console.log(`   Background: ${combo.background}`);
@@ -252,7 +256,7 @@ COLOR_COMBINATIONS_TO_TEST.forEach((combo, index) => {
   console.log(`   Context: ${combo.context}`);
   console.log(`   Expected: ${combo.expected}`);
   console.log('');
-  
+
   if (meetsAA) {
     passCount++;
   } else {
@@ -276,22 +280,22 @@ console.log(`\n🎯 Overall Results: ${passCount}/${totalCount} combinations pas
 if (failures.length > 0) {
   console.log(`\n❌ Failed Combinations (${failures.length}):`);
   console.log('-'.repeat(50));
-  
+
   failures.forEach((failure, index) => {
     console.log(`${index + 1}. ${failure.name}`);
     console.log(`   Current Ratio: ${failure.ratio}:1`);
     console.log(`   Required Ratio: ${failure.required}:1`);
-    console.log(`   Gap: ${(failure.required - parseFloat(failure.ratio)).toFixed(2)}`);
+    console.log(`   Gap: ${(failure.required - Number.parseFloat(failure.ratio)).toFixed(2)}`);
     console.log('');
   });
-  
+
   console.log('🔧 RECOMMENDED FIXES:');
-  
-  failures.forEach(failure => {
+
+  failures.forEach((failure) => {
     if (failure.name.includes('Primary Button')) {
       console.log(`• For "${failure.name}": Use a darker green (green-600 or green-700) instead of green-500`);
     } else if (failure.name.includes('Secondary Button')) {
-      console.log(`• For "${failure.name}": Use a darker green for better contrast`);  
+      console.log(`• For "${failure.name}": Use a darker green for better contrast`);
     } else {
       console.log(`• For "${failure.name}": Adjust colors to achieve ${failure.required}:1 minimum ratio`);
     }
@@ -303,7 +307,7 @@ console.log('\n💡 MODERN SAGE PALETTE RECOMMENDATIONS:');
 
 console.log('\n🟢 Primary Button Colors:');
 const whiteonGreen500 = calculateContrastRatio('#ffffff', '#22c55e');
-const whiteonGreen600 = calculateContrastRatio('#ffffff', '#16a34a');  
+const whiteonGreen600 = calculateContrastRatio('#ffffff', '#16a34a');
 const whiteonGreen700 = calculateContrastRatio('#ffffff', '#15803d');
 
 console.log(`   • Green-500 (#22c55e): ${whiteonGreen500.toFixed(2)}:1 ${whiteonGreen500 >= 4.5 ? '✅' : '❌'}`);
@@ -320,7 +324,7 @@ console.log(`   • Sage Growth: ${sageGrowthRatio.toFixed(2)}:1 ${sageGrowthRat
 console.log('\n📋 ACTION ITEMS:');
 if (passPercentage < 100) {
   console.log('1. Update button component to use green-600 instead of green-500 for primary buttons');
-  console.log('2. Test all color combinations in actual components');  
+  console.log('2. Test all color combinations in actual components');
   console.log('3. Update colorContrastUtils.ts with corrected color values');
   console.log('4. Re-run accessibility tests to verify improvements');
   console.log('5. Consider AAA compliance (7:1 ratio) for enhanced accessibility');
@@ -329,7 +333,8 @@ if (passPercentage < 100) {
 console.log('\n✨ VALIDATION COMPLETE');
 
 // Generate recommendations file
-const fs = require('fs');
+const fs = require('node:fs');
+
 const recommendations = `
 MODERN SAGE COLOR CONTRAST RECOMMENDATIONS
 Generated: ${new Date().toLocaleString()}

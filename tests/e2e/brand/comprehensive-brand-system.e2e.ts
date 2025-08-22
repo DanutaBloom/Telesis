@@ -376,10 +376,10 @@ test.describe('Brand System - TelesisLogo Component Tests', () => {
       // Check role and aria-label
       await expect(logo).toHaveAttribute('role', 'img');
       await expect(logo).toHaveAttribute('aria-label', 'Telesis - Ask, Think, Apply');
-      
+
       // Check SVG accessibility
       await expect(svg).toHaveAttribute('aria-hidden', 'true');
-      
+
       // Check for title and desc elements
       await expect(page.locator('title')).toHaveText('Telesis Logo');
       await expect(page.locator('desc')).toHaveText('Three olives representing the learning process: Ask, Think, Apply');
@@ -433,6 +433,7 @@ test.describe('Brand System - TelesisLogo Component Tests', () => {
 
       // Focus the logo using keyboard
       await page.keyboard.press('Tab');
+
       await expect(page.locator('[data-testid="focusable-logo"]')).toBeFocused();
 
       // Take screenshot of focus state
@@ -460,6 +461,7 @@ test.describe('Brand Consistency Across Pages', () => {
 
       if (await logos.count() > 0) {
         const firstLogo = logos.first();
+
         await expect(firstLogo).toBeVisible();
 
         // Check for consistent color usage
@@ -467,7 +469,7 @@ test.describe('Brand Consistency Across Pages', () => {
         if (await svg.count() > 0) {
           // Verify SVG has the expected structure
           await expect(svg.locator('ellipse')).toHaveCount(3); // Three olives
-          
+
           // Take screenshot for visual consistency check
           await expect(firstLogo).toHaveScreenshot(`brand-consistency-${name.toLowerCase().replace(/\s+/g, '-')}.png`);
         }
@@ -493,7 +495,7 @@ test.describe('Responsive Logo Behavior', () => {
   for (const { width, height, name } of viewports) {
     test(`should display correctly on ${name} (${width}x${height})`, async ({ page }) => {
       await page.setViewportSize({ width, height });
-      
+
       // Create a responsive test page
       await page.setContent(`
         <!DOCTYPE html>
@@ -546,17 +548,17 @@ test.describe('Responsive Logo Behavior', () => {
 
       await page.evaluate(({ logoSize, logoVariant, width }) => {
         const sizeMap = {
-          'sm': { width: 32, height: 12, textClass: 'text-sm' },
-          'default': { width: 48, height: 18, textClass: 'text-base' },
-          'lg': { width: 64, height: 24, textClass: 'text-lg' },
+          sm: { width: 32, height: 12, textClass: 'text-sm' },
+          default: { width: 48, height: 18, textClass: 'text-base' },
+          lg: { width: 64, height: 24, textClass: 'text-lg' },
         };
 
         const { width: svgWidth, height: svgHeight, textClass } = sizeMap[logoSize] || sizeMap.default;
-        
+
         const navLogo = document.querySelector('[data-testid="responsive-logo"]');
         const contentLogo = document.querySelector('[data-testid="content-logo"]');
 
-        const logoHTML = logoVariant === 'logomark' 
+        const logoHTML = logoVariant === 'logomark'
           ? `
             <svg width="${svgWidth}" height="${svgHeight}" viewBox="0 0 48 18" aria-hidden="true" class="shrink-0" role="img" aria-label="Telesis">
               <title>Telesis Logo</title>
@@ -583,7 +585,9 @@ test.describe('Responsive Logo Behavior', () => {
             </div>
           `;
 
-        if (navLogo) navLogo.innerHTML = logoHTML;
+        if (navLogo) {
+ navLogo.innerHTML = logoHTML;
+}
         if (contentLogo) {
           contentLogo.innerHTML = `
             <div class="inline-flex flex-col gap-y-1 text-xl items-center" role="img" aria-label="Telesis - Ask, Think, Apply">

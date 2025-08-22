@@ -479,7 +479,7 @@ describe('TelesisLogo Accessibility Tests (WCAG 2.1 AA)', () => {
       );
 
       const results = await axe(container, {
-        tags: ['wcag2a', 'wcag2aa'],
+        runOnly: ['wcag2a', 'wcag2aa'],
         rules: {
           // Disable color-contrast that requires canvas in jsdom
           'color-contrast': { enabled: false },

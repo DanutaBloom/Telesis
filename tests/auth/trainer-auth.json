@@ -1,12 +1,24 @@
 {
   "cookies": [
     {
+      "name": "NEXT_LOCALE",
+      "value": "en",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1787336348.99342,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
       "name": "__session",
       "value": "mock-trainer-session-token",
       "domain": "localhost",
       "path": "/",
+      "expires": -1,
       "httpOnly": true,
-      "secure": false
+      "secure": false,
+      "sameSite": "Lax"
     }
   ],
   "origins": [
@@ -14,12 +26,12 @@
       "origin": "http://localhost:3001",
       "localStorage": [
         {
-          "name": "auth-user",
-          "value": "{\"email\":\"trainer@telesis-test.com\",\"password\":\"TestPassword123!\",\"firstName\":\"Trainer\",\"lastName\":\"User\",\"role\":\"trainer\"}"
+          "name": "auth-role",
+          "value": "admin"
         },
         {
-          "name": "auth-role",
-          "value": "trainer"
+          "name": "auth-user",
+          "value": "{\"email\":\"admin@telesis-test.com\",\"password\":\"TestPassword123!\",\"firstName\":\"Admin\",\"lastName\":\"User\",\"role\":\"admin\"}"
         }
       ]
     }

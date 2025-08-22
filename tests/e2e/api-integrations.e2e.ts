@@ -81,7 +81,7 @@ test.describe('API Integration E2E Tests @integration', () => {
 
       // Should eventually hit rate limit (30 requests per minute)
       // Note: This might not always trigger in fast test runs, but we check for it
-      const hasRateLimit = responses.includes(429);
+      const _hasRateLimit = responses.includes(429);
 
       // Log the results for debugging
       const statusCounts = responses.reduce((acc, status) => {
@@ -184,7 +184,7 @@ test.describe('API Integration E2E Tests @integration', () => {
 
     test('should redirect unauthenticated users to sign-in', async () => {
       // Try to access a protected dashboard page
-      const response = await page.goto(`${BASE_URL}/dashboard`, {
+      const _response = await page.goto(`${BASE_URL}/dashboard`, {
         waitUntil: 'domcontentloaded',
       });
 

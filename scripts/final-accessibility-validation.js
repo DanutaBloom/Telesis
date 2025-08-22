@@ -2,7 +2,7 @@
 
 /**
  * Final Comprehensive Accessibility Validation
- * 
+ *
  * Complete validation suite for Telesis brand system
  * Tests all components, colors, and interactions for WCAG 2.1 AA compliance
  */
@@ -14,7 +14,7 @@ console.log('Testing complete brand implementation against WCAG 2.1 AA standards
 const results = {
   logoSystem: { tests: 6, passed: 6, issues: [] },
   colorContrast: { tests: 9, passed: 4, issues: [] },
-  buttonComponents: { tests: 6, passed: 5, issues: [] }, 
+  buttonComponents: { tests: 6, passed: 5, issues: [] },
   typographySystem: { tests: 6, passed: 3, issues: [] },
   testingInfrastructure: { tests: 6, passed: 6, issues: [] },
   overallCompliance: { score: 0, status: '', recommendations: [] }
@@ -52,7 +52,7 @@ const colorIssues = [
   { name: 'Muted Text (Slate-500)', ratio: '4.76:1', status: '✅ PASS', required: '4.5:1' }
 ];
 
-colorIssues.forEach(issue => {
+colorIssues.forEach((issue) => {
   console.log(`${issue.status} ${issue.name}: ${issue.ratio} (req: ${issue.required})`);
   if (issue.status.includes('❌')) {
     results.colorContrast.issues.push(issue.name);
@@ -68,7 +68,7 @@ console.log('-'.repeat(50));
 
 const buttonFeatures = [
   '✅ TypeScript variant system with proper types',
-  '✅ Ref forwarding for composition patterns', 
+  '✅ Ref forwarding for composition patterns',
   '✅ AsChild prop for flexible element rendering',
   '✅ Disabled state handling with aria-disabled',
   '✅ ARIA attribute support (labels, descriptions)',
@@ -79,7 +79,7 @@ buttonFeatures.forEach(feature => console.log(feature));
 results.buttonComponents.issues.push('Missing focus indicators');
 console.log(`📊 Button Components: ${results.buttonComponents.passed}/${results.buttonComponents.tests} tests passing (83%)\n`);
 
-// Typography System Analysis  
+// Typography System Analysis
 console.log('📝 TYPOGRAPHY SYSTEM ACCESSIBILITY');
 console.log('-'.repeat(50));
 
@@ -117,34 +117,34 @@ console.log('🏆 WCAG 2.1 AA COMPLIANCE ASSESSMENT');
 console.log('='.repeat(80));
 
 const wcagCriteria = [
-  { 
+  {
     criterion: '1.1.1 Non-text Content',
     status: results.logoSystem.passed === results.logoSystem.tests ? 'PASS' : 'FAIL',
     score: 100,
     notes: 'Logo system provides excellent alternative text implementation'
   },
-  { 
+  {
     criterion: '1.4.3 Contrast (Minimum)',
     status: results.colorContrast.issues.length === 0 ? 'PASS' : 'FAIL',
     score: 44,
     notes: 'CRITICAL: Multiple color combinations fail 4.5:1 requirement'
   },
-  { 
-    criterion: '2.1.1 Keyboard Navigation', 
+  {
+    criterion: '2.1.1 Keyboard Navigation',
     status: results.buttonComponents.issues.length === 0 ? 'PASS' : 'PARTIAL',
     score: 83,
     notes: 'Button components need visible focus indicators'
   },
-  { 
+  {
     criterion: '2.4.6 Headings and Labels',
-    status: results.typographySystem.passed === results.typographySystem.tests ? 'PASS' : 'PARTIAL', 
+    status: results.typographySystem.passed === results.typographySystem.tests ? 'PASS' : 'PARTIAL',
     score: 50,
     notes: 'Typography system needs responsive and ARIA enhancements'
   },
-  { 
+  {
     criterion: '4.1.2 Name, Role, Value',
     status: results.testingInfrastructure.passed === results.testingInfrastructure.tests ? 'PASS' : 'FAIL',
-    score: 100, 
+    score: 100,
     notes: 'Comprehensive ARIA testing infrastructure implemented'
   }
 ];
@@ -153,7 +153,7 @@ console.log('┌─────────────────────�
 console.log('│ WCAG 2.1 AA Success Criterion          │ Status │ Score │ Notes           │');
 console.log('├─────────────────────────────────────────┼────────┼───────────────────────┤');
 
-wcagCriteria.forEach(criterion => {
+wcagCriteria.forEach((criterion) => {
   const statusIcon = criterion.status === 'PASS' ? '✅' : criterion.status === 'PARTIAL' ? '⚠️' : '❌';
   const paddedCriterion = criterion.criterion.padEnd(39);
   const paddedStatus = `${statusIcon} ${criterion.status}`.padEnd(6);
@@ -193,7 +193,7 @@ console.log('-'.repeat(60));
 
 const criticalIssues = [
   '1. PRIMARY BUTTON COLOR CONTRAST: White text on green-500 only achieves 2.28:1 ratio',
-  '2. SECONDARY BUTTON CONTRAST: Green text on white fails 4.5:1 requirement', 
+  '2. SECONDARY BUTTON CONTRAST: Green text on white fails 4.5:1 requirement',
   '3. SAGE GROWTH BRAND COLOR: Only achieves 3.57:1 contrast ratio',
   '4. MISSING FOCUS INDICATORS: Interactive elements lack visible focus styles',
   '5. TYPOGRAPHY GAPS: Limited responsive classes and ARIA support'
@@ -222,7 +222,7 @@ console.log('-'.repeat(60));
 
 const strengths = [
   '✨ Excellent logo system with comprehensive alternative text',
-  '✨ Robust testing infrastructure with automated WCAG validation',  
+  '✨ Robust testing infrastructure with automated WCAG validation',
   '✨ Well-structured component architecture supporting accessibility',
   '✨ ARIA-compliant form components with proper labeling',
   '✨ Semantic HTML usage throughout component system',
@@ -250,7 +250,7 @@ console.log('   • Establish accessibility review process for all new component
 console.log('   • Create accessibility design guidelines for team');
 console.log('   • Set up automated accessibility testing in CI/CD pipeline');
 
-console.log('\n' + '='.repeat(80));
+console.log(`\n${'='.repeat(80)}`);
 console.log('📊 VALIDATION COMPLETE - Telesis Brand System Accessibility Assessment');
 console.log('='.repeat(80));
 
@@ -260,7 +260,7 @@ console.log(`📈 Recommendation: ${overallScore < 85 ? 'COMPLETE FIXES BEFORE P
 
 console.log('\n🔗 Generated Reports:');
 console.log('   • accessibility-compliance-report.txt');
-console.log('   • accessibility-validation-report.txt'); 
+console.log('   • accessibility-validation-report.txt');
 console.log('   • color-contrast-recommendations.txt');
 console.log('   • ACCESSIBILITY_COMPLIANCE_REPORT.md');
 

@@ -27,4 +27,20 @@ module.exports = {
       return 'npm run check-types';
     }
   ],
+  
+  // Run accessibility tests for component files
+  'src/components/**/*.{tsx,ts}': [
+    () => {
+      console.log('♿ Running accessibility tests for components...');
+      return 'npm run test:accessibility';
+    }
+  ],
+  
+  // Run accessibility tests for pattern files
+  'src/components/patterns/**/*.{tsx,ts}': [
+    () => {
+      console.log('♿ Running accessibility tests for patterns...');
+      return 'npm run test:accessibility';
+    }
+  ],
 };

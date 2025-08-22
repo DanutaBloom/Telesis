@@ -1,0 +1,1406 @@
+
+TELESIS ACCESSIBILITY COMPLIANCE REPORT - WCAG 2.1 AA
+Generated: August 22, 2025 at 09:30 AM
+
+EXECUTIVE SUMMARY:
+Overall Compliance Score: 17% (1/6 test suites passing)
+
+DETAILED RESULTS:
+unitTests: PENDING
+
+
+logoTests: PASSED
+  - Three Olives Logo Accessibility: PASS
+    Notes: All logo variants meet WCAG AA standards
+
+buttonTests: FAILED
+  - Button Variants Accessibility: FAIL
+    Notes: Command failed: npm test -- --run src/components/ui/Button.test.tsx
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/ui/Button.test.tsx > Button Component > Accessibility > passes comprehensive accessibility tests for all variants
+Error: unknown rule `keyboard` in options.rules
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:28418:23
+ ❯ Audit.normalizeOptions node_modules/jest-axe/node_modules/axe-core/axe.js:28416:40
+ ❯ Audit.run node_modules/jest-axe/node_modules/axe-core/axe.js:28276:16
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:28652:15
+ ❯ pop node_modules/jest-axe/node_modules/axe-core/axe.js:8169:18
+ ❯ Object.defer node_modules/jest-axe/node_modules/axe-core/axe.js:8191:11
+ ❯ Object.runRules [as _runRules] node_modules/jest-axe/node_modules/axe-core/axe.js:28651:9
+ ❯ Object.run4 [as run] node_modules/jest-axe/node_modules/axe-core/axe.js:28902:11
+ ❯ node_modules/jest-axe/index.js:79:15
+     77| 
+     78|     return new Promise((resolve, reject) => {
+     79|       axeCore.run(element, options, (err, results) => {
+       |               ^
+     80|         restore();
+     81|         if (err) reject(err);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/components/ui/Button.test.tsx > Button Component > Accessibility > passes comprehensive accessibility tests for all variants
+Error: vitest-fail-on-console > Expected test not to call console.error().
+    If the error is expected, test for it explicitly by mocking it out using: 
+    vi.spyOn(console, 'error').mockImplementation(() => {}) 
+    and test that the warning occurs.
+
+Error: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35)
+    at Rule.colorContrastMatches [as matches] (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27277:12) undefined
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at VirtualConsole.<anonymous> (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+    at VirtualConsole.emit (node:events:507:28)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ hasRealTextChildren node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ VirtualConsole.<anonymous> node_modules/jsdom/lib/jsdom/virtual-console.js:29:45
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ flushUnexpectedConsoleCalls node_modules/vitest-fail-on-console/src/index.ts:70:19
+ ❯ node_modules/vitest-fail-on-console/src/index.ts:139:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/components/ui/Button.test.tsx > Button Component > Accessibility > maintains color contrast compliance across all variants
+Error: vitest-fail-on-console > Expected test not to call console.error().
+    If the error is expected, test for it explicitly by mocking it out using: 
+    vi.spyOn(console, 'error').mockImplementation(() => {}) 
+    and test that the warning occurs.
+
+Error: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35)
+    at Rule.colorContrastMatches [as matches] (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27277:12) undefined
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at VirtualConsole.<anonymous> (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+    at VirtualConsole.emit (node:events:507:28)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+
+Error: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35)
+    at Rule.colorContrastMatches [as matches] (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27277:12) undefined
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at VirtualConsole.<anonymous> (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+    at VirtualConsole.emit (node:events:507:28)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+
+Error: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35)
+    at Rule.colorContrastMatches [as matches] (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27277:12) undefined
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at VirtualConsole.<anonymous> (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+    at VirtualConsole.emit (node:events:507:28)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+
+Error: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35)
+    at Rule.colorContrastMatches [as matches] (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27277:12) undefined
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at VirtualConsole.<anonymous> (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+    at VirtualConsole.emit (node:events:507:28)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+
+Error: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35)
+    at Rule.colorContrastMatches [as matches] (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27277:12) undefined
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at VirtualConsole.<anonymous> (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+    at VirtualConsole.emit (node:events:507:28)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+
+Error: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35)
+    at Rule.colorContrastMatches [as matches] (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27277:12) undefined
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at VirtualConsole.<anonymous> (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+    at VirtualConsole.emit (node:events:507:28)
+    at module.exports (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26)
+    at HTMLCanvasElementImpl.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+    at Object.get (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23)
+    at _isIconLigature (/Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41)
+    at /Users/philipgedrojc/Projects/telesis/node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ hasRealTextChildren node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ VirtualConsole.<anonymous> node_modules/jsdom/lib/jsdom/virtual-console.js:29:45
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ hasRealTextChildren node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ VirtualConsole.<anonymous> node_modules/jsdom/lib/jsdom/virtual-console.js:29:45
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ hasRealTextChildren node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ VirtualConsole.<anonymous> node_modules/jsdom/lib/jsdom/virtual-console.js:29:45
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ hasRealTextChildren node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ VirtualConsole.<anonymous> node_modules/jsdom/lib/jsdom/virtual-console.js:29:45
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ hasRealTextChildren node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ VirtualConsole.<anonymous> node_modules/jsdom/lib/jsdom/virtual-console.js:29:45
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ hasRealTextChildren node_modules/jest-axe/node_modules/axe-core/axe.js:27312:35
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ VirtualConsole.<anonymous> node_modules/jsdom/lib/jsdom/virtual-console.js:29:45
+ ❯ module.exports node_modules/jsdom/lib/jsdom/browser/not-implemented.js:12:26
+ ❯ HTMLCanvasElementImpl.getContext node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5
+ ❯ HTMLCanvasElement.getContext node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:13407:49
+ ❯ Object.get node_modules/jest-axe/node_modules/axe-core/axe.js:7719:23
+ ❯ _isIconLigature node_modules/jest-axe/node_modules/axe-core/axe.js:13406:41
+ ❯ node_modules/jest-axe/node_modules/axe-core/axe.js:27313:54
+ ❯ flushUnexpectedConsoleCalls node_modules/vitest-fail-on-console/src/index.ts:70:19
+ ❯ node_modules/vitest-fail-on-console/src/index.ts:139:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/components/ui/Button.test.tsx > Button Component > Accessibility > announces loading state to screen readers
+Error: [2mexpect([22m[31melement[39m[2m).toHaveAttribute([22m[32m[32m"aria-disabled"[32m[39m[2m, [22m[32m[32m"true"[32m[39m[2m) // element.getAttribute("aria-disabled") === "true"[22m
+
+Expected the element to have attribute:
+[32m  aria-disabled="true"[39m
+Received:
+[31m  null[39m
+ ❯ src/components/ui/Button.test.tsx:289:22
+    287|       expect(button).toHaveAttribute('aria-busy', 'true');
+    288|       expect(button).toBeDisabled();
+    289|       expect(button).toHaveAttribute('aria-disabled', 'true');
+       |                      ^
+    290| 
+    291|       // Test accessibility of loading state
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/components/ui/Button.test.tsx > Button Component > Accessibility > properly handles disabled state accessibility
+Error: [2mexpect([22m[31melement[39m[2m).toHaveAttribute([22m[32m[32m"aria-disabled"[32m[39m[2m, [22m[32m[32m"true"[32m[39m[2m) // element.getAttribute("aria-disabled") === "true"[22m
+
+Expected the element to have attribute:
+[32m  aria-disabled="true"[39m
+Received:
+[31m  null[39m
+ ❯ src/components/ui/Button.test.tsx:301:22
+    299| 
+    300|       expect(button).toBeDisabled();
+    301|       expect(button).toHaveAttribute('aria-disabled', 'true');
+       |                      ^
+    302| 
+    303|       await testA11y(container);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+
+typographyTests: FAILED
+  - Responsive Typography Accessibility: FAIL
+    Notes: Command failed: npm test -- --run src/components/ui/Typography.test.tsx
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Basic Rendering > applies default body variant with responsive classes
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-body-responsive [&:not(:first-child)]:mt-6"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-body-responsive [&:not(:first-child)]:mt-6[39m
+Received:
+[31m  [&:not(:first-child)]:mt-6 text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:39:23
+     37|       const element = screen.getByTestId('default-text');
+     38| 
+     39|       expect(element).toHaveClass('text-body-responsive', '[&:not(:fir…
+       |                       ^
+     40|     });
+     41| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Responsive Heading Variants > renders h1 variant with correct element and responsive classes
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-h1 scroll-m-20 font-bold"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-h1 scroll-m-20 font-bold[39m
+Received:
+[31m  scroll-m-20 font-bold text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:57:23
+     55| 
+     56|       expect(heading).toBeInTheDocument();
+     57|       expect(heading).toHaveClass(
+       |                       ^
+     58|         'text-h1', // Custom responsive class: 32px/40px mobile → 48px…
+     59|         'scroll-m-20',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Responsive Heading Variants > renders h2 variant with responsive classes
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-h2 scroll-m-20 font-semibold [&:not(:first-child)]:mt-8"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-h2 scroll-m-20 font-semibold [&:not(:first-child)]:mt-8[39m
+Received:
+[31m  scroll-m-20 font-semibold [&:not(:first-child)]:mt-8 text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:69:23
+     67|       const heading = screen.getByRole('heading', { level: 2 });
+     68| 
+     69|       expect(heading).toHaveClass(
+       |                       ^
+     70|         'text-h2', // Custom responsive class: 28px/36px mobile → 40px…
+     71|         'scroll-m-20',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Responsive Heading Variants > renders h3 through h6 variants correctly with responsive classes
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-h3 scroll-m-20 font-semibold"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-h3 scroll-m-20 font-semibold[39m
+Received:
+[31m  scroll-m-20 font-semibold [&:not(:first-child)]:mt-6 text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:93:18
+     91| 
+     92|       // Test responsive classes
+     93|       expect(h3).toHaveClass('text-h3', 'scroll-m-20', 'font-semibold'…
+       |                  ^
+     94|       expect(h4).toHaveClass('text-h4', 'scroll-m-20', 'font-semibold'…
+     95|       expect(h5).toHaveClass('text-h5', 'scroll-m-20', 'font-medium');…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Responsive Body Text Variants > renders body variant correctly with responsive classes
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-body-responsive [&:not(:first-child)]:mt-6"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-body-responsive [&:not(:first-child)]:mt-6[39m
+Received:
+[31m  [&:not(:first-child)]:mt-6 text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:107:20
+    105| 
+    106|       expect(text.tagName).toBe('P');
+    107|       expect(text).toHaveClass(
+       |                    ^
+    108|         'text-body-responsive', // 14px/20px mobile (WCAG minimum) → 1…
+    109|         '[&:not(:first-child)]:mt-6'
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Responsive Body Text Variants > renders body-sm variant with responsive small text
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-body-sm-responsive [&:not(:first-child)]:mt-4"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-body-sm-responsive [&:not(:first-child)]:mt-4[39m
+Received:
+[31m  [&:not(:first-child)]:mt-4 text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:118:20
+    116|       const text = screen.getByText('Small body text');
+    117| 
+    118|       expect(text).toHaveClass(
+       |                    ^
+    119|         'text-body-sm-responsive', // 14px/20px minimum maintained acr…
+    120|         '[&:not(:first-child)]:mt-4'
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Responsive Body Text Variants > renders body-lg variant with responsive large text
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-body-lg-responsive [&:not(:first-child)]:mt-6"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-body-lg-responsive [&:not(:first-child)]:mt-6[39m
+Received:
+[31m  [&:not(:first-child)]:mt-6 text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:129:20
+    127|       const text = screen.getByText('Large body text');
+    128| 
+    129|       expect(text).toHaveClass(
+       |                    ^
+    130|         'text-body-lg-responsive', // 16px/24px mobile → 18px/28px tab…
+    131|         '[&:not(:first-child)]:mt-6'
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Responsive Body Text Variants > renders lead variant for responsive introductory text
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-lead-responsive font-normal"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-lead-responsive font-normal[39m
+Received:
+[31m  font-normal text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:140:20
+    138|       const text = screen.getByText('Lead paragraph text');
+    139| 
+    140|       expect(text).toHaveClass(
+       |                    ^
+    141|         'text-lead-responsive', // 18px/28px mobile → 20px/30px tablet+
+    142|         'font-normal'
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Responsive UI Text Variants > renders text-button variant correctly with responsive classes
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-button-responsive font-medium"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-button-responsive font-medium[39m
+Received:
+[31m  font-medium text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:153:20
+    151|       const text = screen.getByText('Button Text');
+    152| 
+    153|       expect(text).toHaveClass(
+       |                    ^
+    154|         'text-button-responsive', // 14px/20px, weight 500
+    155|         'font-medium'
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Responsive UI Text Variants > renders text-caption variant correctly with responsive classes
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-caption-responsive font-normal"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-caption-responsive font-normal[39m
+Received:
+[31m  font-normal text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:164:20
+    162|       const text = screen.getByText('Caption Text');
+    163| 
+    164|       expect(text).toHaveClass(
+       |                    ^
+    165|         'text-caption-responsive', // 12px/16px mobile → 14px/20px tab…
+    166|         'font-normal'
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Modern Sage Responsive Variants > renders sage-hero variant with responsive h1 sizing
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-h1 font-bold tracking-tight"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-h1 font-bold tracking-tight[39m
+Received:
+[31m  font-bold tracking-tight text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:191:20
+    189|       const text = screen.getByText('Hero Headline');
+    190| 
+    191|       expect(text).toHaveClass(
+       |                    ^
+    192|         'text-h1', // Uses responsive h1 sizing
+    193|         'font-bold',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Modern Sage Responsive Variants > renders sage-subtitle variant with responsive body-lg sizing
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-body-lg-responsive font-medium"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-body-lg-responsive font-medium[39m
+Received:
+[31m  font-medium text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:218:20
+    216|       const text = screen.getByText('Subtitle Text');
+    217| 
+    218|       expect(text).toHaveClass(
+       |                    ^
+    219|         'text-body-lg-responsive', // Uses responsive body-lg sizing
+    220|         'font-medium'
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Modern Sage Responsive Variants > renders sage-caption variant with responsive caption sizing
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-caption-responsive font-normal"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-caption-responsive font-normal[39m
+Received:
+[31m  font-normal text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:229:20
+    227|       const text = screen.getByText('Caption Text');
+    228| 
+    229|       expect(text).toHaveClass(
+       |                    ^
+    230|         'text-caption-responsive', // Uses responsive caption sizing
+    231|         'font-normal'
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Element Customization > renders with asChild prop for composition
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-h2 scroll-m-20 font-semibold"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-h2 scroll-m-20 font-semibold[39m
+Received:
+[31m  scroll-m-20 font-semibold [&:not(:first-child)]:mt-8 text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:380:22
+    378| 
+    379|       expect(button.tagName).toBe('BUTTON');
+    380|       expect(button).toHaveClass('text-h2', 'scroll-m-20', 'font-semib…
+       |                      ^
+    381|     });
+    382|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Responsive Behavior Validation > applies responsive size utilities correctly
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-h1"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-h1[39m
+Received:
+[31m  [&:not(:first-child)]:mt-6 text-foreground[39m
+ ❯ src/components/ui/Typography.test.tsx:433:20
+    431|       const text = screen.getByText('Responsive sized text');
+    432| 
+    433|       expect(text).toHaveClass('text-h1'); // Should use the responsiv…
+       |                    ^
+    434|     });
+    435| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/16]⎯
+
+ FAIL  src/components/ui/Typography.test.tsx > Responsive Typography Component > Responsive Behavior Validation > combines responsive variants with other props
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"text-h2 text-sage-quietude text-center font-bold"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  text-h2 text-sage-quietude text-center font-bold[39m
+Received:
+[31m  scroll-m-20 [&:not(:first-child)]:mt-8 font-bold text-center text-sage-quietude[39m
+ ❯ src/components/ui/Typography.test.tsx:450:20
+    448|       const text = screen.getByText('Combined responsive text');
+    449| 
+    450|       expect(text).toHaveClass(
+       |                    ^
+    451|         'text-h2', // Responsive sizing
+    452|         'text-sage-quietude', // Brand color
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/16]⎯
+
+
+
+colorContrast: FAILED
+  - Modern Sage Color Contrast: FAIL
+    Notes: Some color combinations need adjustment
+
+brandComponents: FAILED
+  - Brand System Integration: FAIL
+    Notes: Command failed: npm test -- --run src/components/brand/
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 54 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Hero Component Accessibility > should not have accessibility violations
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Hero Component Accessibility > should have proper heading hierarchy
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Hero Component Accessibility > should have accessible buttons with descriptive text
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Hero Component Accessibility > should have readable text contrast and descriptive content
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Features Component Accessibility > should not have accessibility violations
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Features Component Accessibility > should have proper heading structure for features
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Features Component Accessibility > should have descriptive content for each feature
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > FAQ Component Accessibility > should not have accessibility violations
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > FAQ Component Accessibility > should have accessible FAQ structure
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > FAQ Component Accessibility > should have informative answers for accessibility
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > CTA Component Accessibility > should not have accessibility violations
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > CTA Component Accessibility > should have accessible call-to-action
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Navigation Component Accessibility > should not have accessibility violations
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Navigation Component Accessibility > should have accessible navigation structure
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Footer Component Accessibility > should not have accessibility violations
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Footer Component Accessibility > should have accessible footer structure
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Screen Reader Compatibility > should have meaningful content for screen readers in hero section
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Screen Reader Compatibility > should have descriptive button text throughout
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Screen Reader Compatibility > should have proper content structure for screen readers
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Color Contrast and Visual Accessibility > should have readable text content throughout components
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Color Contrast and Visual Accessibility > should not rely solely on color for information
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Keyboard Navigation > should have focusable interactive elements
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Content Clarity and Readability > should use clear, jargon-free language where possible
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Content Clarity and Readability > should provide context for technical terms
+Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi[33m.[39m[34mmock[39m([35mimport[39m([32m"next-intl"[39m)[33m,[39m [35masync[39m (importOriginal) [33m=>[39m {
+  [35mconst[39m actual [33m=[39m [35mawait[39m [34mimportOriginal[39m()
+  [35mreturn[39m {
+    [33m...[39mactual[33m,[39m
+    [90m// your mocked methods[39m
+  }
+})
+
+ ❯ TestWrapper src/components/brand/TelesisAccessibility.test.tsx:162:4
+    160| 
+    161| const TestWrapper = ({ children }: { children: React.ReactNode }) => (
+    162|   <IntlProvider locale="en" messages={messages}>
+       |    ^
+    163|     {children}
+    164|   </IntlProvider>
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:15486:18
+ ❯ mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:20103:13
+ ❯ beginWork node_modules/react-dom/cjs/react-dom.development.js:21626:16
+ ❯ beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:27465:14
+ ❯ performUnitOfWork node_modules/react-dom/cjs/react-dom.development.js:26599:12
+ ❯ workLoopSync node_modules/react-dom/cjs/react-dom.development.js:26505:5
+ ❯ renderRootSync node_modules/react-dom/cjs/react-dom.development.js:26473:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/108]⎯
+
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Hero Component Accessibility > should not have accessibility violations
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Hero Component Accessibility > should have proper heading hierarchy
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Hero Component Accessibility > should have accessible buttons with descriptive text
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Hero Component Accessibility > should have readable text contrast and descriptive content
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Features Component Accessibility > should not have accessibility violations
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Features Component Accessibility > should have proper heading structure for features
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Features Component Accessibility > should have descriptive content for each feature
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > FAQ Component Accessibility > should not have accessibility violations
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > FAQ Component Accessibility > should have accessible FAQ structure
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > FAQ Component Accessibility > should have informative answers for accessibility
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > CTA Component Accessibility > should not have accessibility violations
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > CTA Component Accessibility > should have accessible call-to-action
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Navigation Component Accessibility > should not have accessibility violations
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Navigation Component Accessibility > should have accessible navigation structure
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Footer Component Accessibility > should not have accessibility violations
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Footer Component Accessibility > should have accessible footer structure
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Screen Reader Compatibility > should have meaningful content for screen readers in hero section
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Screen Reader Compatibility > should have descriptive button text throughout
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Screen Reader Compatibility > should have proper content structure for screen readers
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Color Contrast and Visual Accessibility > should have readable text content throughout components
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Color Contrast and Visual Accessibility > should not rely solely on color for information
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Keyboard Navigation > should have focusable interactive elements
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Content Clarity and Readability > should use clear, jargon-free language where possible
+ FAIL  src/components/brand/TelesisAccessibility.test.tsx > Telesis Accessibility Tests > Content Clarity and Readability > should provide context for technical terms
+Error: vitest-fail-on-console > Expected test not to call console.error().
+    If the error is expected, test for it explicitly by mocking it out using: 
+    vi.spyOn(console, 'error').mockImplementation(() => {}) 
+    and test that the warning occurs.
+
+Error: Uncaught [Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+]
+    at reportException (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:284:17)
+    at Object.get (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:330:16)
+    at TestWrapper (/Users/philipgedrojc/Projects/telesis/src/components/brand/TelesisAccessibility.test.tsx:162:4)
+    at renderWithHooks (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3) {
+  codeFrame: 'vi\x1B[33m.\x1B[39m\x1B[34mmock\x1B[39m(\x1B[35mimport\x1B[39m(\x1B[32m"next-intl"\x1B[39m)\x1B[33m,\x1B[39m \x1B[35masync\x1B[39m (importOriginal) \x1B[33m=>\x1B[39m {\n' +
+    '  \x1B[35mconst\x1B[39m actual \x1B[33m=\x1B[39m \x1B[35mawait\x1B[39m \x1B[34mimportOriginal\x1B[39m()\n' +
+    '  \x1B[35mreturn\x1B[39m {\n' +
+    '    \x1B[33m...\x1B[39mactual\x1B[33m,\x1B[39m\n' +
+    '    \x1B[90m// your mocked methods\x1B[39m\n' +
+    '  }\n' +
+    '})'
+}
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at VirtualConsole.<anonymous> (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+    at VirtualConsole.emit (node:events:507:28)
+    at reportException (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+
+Error: Uncaught [Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+]
+    at reportException (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:284:17)
+    at Object.get (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:330:16)
+    at TestWrapper (/Users/philipgedrojc/Projects/telesis/src/components/brand/TelesisAccessibility.test.tsx:162:4)
+    at renderWithHooks (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3) {
+  codeFrame: 'vi\x1B[33m.\x1B[39m\x1B[34mmock\x1B[39m(\x1B[35mimport\x1B[39m(\x1B[32m"next-intl"\x1B[39m)\x1B[33m,\x1B[39m \x1B[35masync\x1B[39m (importOriginal) \x1B[33m=>\x1B[39m {\n' +
+    '  \x1B[35mconst\x1B[39m actual \x1B[33m=\x1B[39m \x1B[35mawait\x1B[39m \x1B[34mimportOriginal\x1B[39m()\n' +
+    '  \x1B[35mreturn\x1B[39m {\n' +
+    '    \x1B[33m...\x1B[39mactual\x1B[33m,\x1B[39m\n' +
+    '    \x1B[90m// your mocked methods\x1B[39m\n' +
+    '  }\n' +
+    '})'
+}
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at VirtualConsole.<anonymous> (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+    at VirtualConsole.emit (node:events:507:28)
+    at reportException (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+
+The above error occurred in the <TestWrapper> component:
+
+    at TestWrapper (/Users/philipgedrojc/Projects/telesis/src/components/brand/TelesisAccessibility.test.tsx:166:24)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at logCapturedError (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:18704:23)
+    at update.callback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:18737:5)
+    at callCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:15036:12)
+    at commitUpdateQueue (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:15057:9)
+    at commitLayoutEffectOnFiber (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:23430:13)
+    at commitLayoutMountEffects_complete (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:24727:9)
+    at commitLayoutEffects_begin (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:24713:7)
+    at commitLayoutEffects (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:24651:3)
+    at commitRootImpl (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:26862:5)
+ ❯ reportException node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9
+ ❯ invokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3
+ ❯ HTMLUnknownElementImpl._dispatch node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9
+ ❯ HTMLUnknownElementImpl.dispatchEvent node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17
+ ❯ HTMLUnknownElement.dispatchEvent node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34
+ ❯ Object.invokeGuardedCallbackDev node_modules/react-dom/cjs/react-dom.development.js:4213:16
+ ❯ invokeGuardedCallback node_modules/react-dom/cjs/react-dom.development.js:4277:31
+ ❯ beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:27490:7
+ ❯ TestWrapper src/components/brand/TelesisAccessibility.test.tsx:162:4
+    160| 
+    161| const TestWrapper = ({ children }: { children: React.ReactNode }) => (
+    162|   <IntlProvider locale="en" messages={messages}>
+       |    ^
+    163|     {children}
+    164|   </IntlProvider>
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:15486:18
+ ❯ mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:20103:13
+ ❯ beginWork node_modules/react-dom/cjs/react-dom.development.js:21626:16
+ ❯ HTMLUnknownElement.callCallback node_modules/react-dom/cjs/react-dom.development.js:4164:14
+ ❯ HTMLUnknownElement.callTheUserObjectsOperation node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ VirtualConsole.<anonymous> node_modules/jsdom/lib/jsdom/virtual-console.js:29:45
+ ❯ reportException node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9
+ ❯ invokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3
+ ❯ HTMLUnknownElementImpl._dispatch node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9
+ ❯ HTMLUnknownElementImpl.dispatchEvent node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17
+ ❯ HTMLUnknownElement.dispatchEvent node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34
+ ❯ Object.invokeGuardedCallbackDev node_modules/react-dom/cjs/react-dom.development.js:4213:16
+ ❯ reportException node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9
+ ❯ invokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3
+ ❯ HTMLUnknownElementImpl._dispatch node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9
+ ❯ HTMLUnknownElementImpl.dispatchEvent node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17
+ ❯ HTMLUnknownElement.dispatchEvent node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34
+ ❯ Object.invokeGuardedCallbackDev node_modules/react-dom/cjs/react-dom.development.js:4213:16
+ ❯ invokeGuardedCallback node_modules/react-dom/cjs/react-dom.development.js:4277:31
+ ❯ beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:27490:7
+ ❯ TestWrapper src/components/brand/TelesisAccessibility.test.tsx:162:4
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:15486:18
+ ❯ mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:20103:13
+ ❯ beginWork node_modules/react-dom/cjs/react-dom.development.js:21626:16
+ ❯ HTMLUnknownElement.callCallback node_modules/react-dom/cjs/react-dom.development.js:4164:14
+ ❯ HTMLUnknownElement.callTheUserObjectsOperation node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ VirtualConsole.<anonymous> node_modules/jsdom/lib/jsdom/virtual-console.js:29:45
+ ❯ reportException node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9
+ ❯ invokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3
+ ❯ HTMLUnknownElementImpl._dispatch node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9
+ ❯ HTMLUnknownElementImpl.dispatchEvent node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17
+ ❯ HTMLUnknownElement.dispatchEvent node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34
+ ❯ Object.invokeGuardedCallbackDev node_modules/react-dom/cjs/react-dom.development.js:4213:16
+ ❯ TestWrapper src/components/brand/TelesisAccessibility.test.tsx:166:24
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ logCapturedError node_modules/react-dom/cjs/react-dom.development.js:18704:23
+ ❯ update.callback node_modules/react-dom/cjs/react-dom.development.js:18737:5
+ ❯ callCallback node_modules/react-dom/cjs/react-dom.development.js:15036:12
+ ❯ commitUpdateQueue node_modules/react-dom/cjs/react-dom.development.js:15057:9
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom.development.js:23430:13
+ ❯ commitLayoutMountEffects_complete node_modules/react-dom/cjs/react-dom.development.js:24727:9
+ ❯ commitLayoutEffects_begin node_modules/react-dom/cjs/react-dom.development.js:24713:7
+ ❯ commitLayoutEffects node_modules/react-dom/cjs/react-dom.development.js:24651:3
+ ❯ commitRootImpl node_modules/react-dom/cjs/react-dom.development.js:26862:5
+ ❯ flushUnexpectedConsoleCalls node_modules/vitest-fail-on-console/src/index.ts:70:19
+ ❯ node_modules/vitest-fail-on-console/src/index.ts:139:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/108]⎯
+
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Hero Component Branding > should display correct Telesis hero messaging
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Hero Component Branding > should not contain any SaaS boilerplate references
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Features Component Branding > should display Telesis-specific features
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Features Component Branding > should not contain generic SaaS features
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > FAQ Component Branding > should display Telesis-specific FAQ content
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > CTA Component Branding > should display Telesis-specific call to action
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Navigation Component Branding > should display correct navigation items
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Footer Component Branding > should display correct footer links
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Dashboard Component Branding > should display Telesis dashboard branding
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Dashboard Component Branding > should display correct message state for new users
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Content Validation - No Old Branding > should not contain old branding in Hero component
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Content Validation - No Old Branding > should not contain old branding in Features component
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Content Validation - No Old Branding > should not contain old branding in FAQ component
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Content Validation - No Old Branding > should not contain old branding in CTA component
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Content Validation - No Old Branding > should not contain old branding in Footer component
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Content Validation - No Old Branding > should not contain old branding in Navbar component
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Brand Consistency > should use consistent Telesis tagline across components
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Brand Consistency > should use consistent micro-learning messaging
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Brand Consistency > should use consistent AI-powered messaging
+Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi[33m.[39m[34mmock[39m([35mimport[39m([32m"next-intl"[39m)[33m,[39m [35masync[39m (importOriginal) [33m=>[39m {
+  [35mconst[39m actual [33m=[39m [35mawait[39m [34mimportOriginal[39m()
+  [35mreturn[39m {
+    [33m...[39mactual[33m,[39m
+    [90m// your mocked methods[39m
+  }
+})
+
+ ❯ TestWrapper src/components/brand/TelesisBrandValidation.test.tsx:121:4
+    119| 
+    120| const TestWrapper = ({ children }: { children: React.ReactNode }) => (
+    121|   <IntlProvider locale="en" messages={messages}>
+       |    ^
+    122|     {children}
+    123|   </IntlProvider>
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:15486:18
+ ❯ mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:20103:13
+ ❯ beginWork node_modules/react-dom/cjs/react-dom.development.js:21626:16
+ ❯ beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:27465:14
+ ❯ performUnitOfWork node_modules/react-dom/cjs/react-dom.development.js:26599:12
+ ❯ workLoopSync node_modules/react-dom/cjs/react-dom.development.js:26505:5
+ ❯ renderRootSync node_modules/react-dom/cjs/react-dom.development.js:26473:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/108]⎯
+
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Hero Component Branding > should display correct Telesis hero messaging
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Hero Component Branding > should not contain any SaaS boilerplate references
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Features Component Branding > should display Telesis-specific features
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Features Component Branding > should not contain generic SaaS features
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > FAQ Component Branding > should display Telesis-specific FAQ content
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > CTA Component Branding > should display Telesis-specific call to action
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Navigation Component Branding > should display correct navigation items
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Footer Component Branding > should display correct footer links
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Dashboard Component Branding > should display Telesis dashboard branding
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Dashboard Component Branding > should display correct message state for new users
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Content Validation - No Old Branding > should not contain old branding in Hero component
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Content Validation - No Old Branding > should not contain old branding in Features component
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Content Validation - No Old Branding > should not contain old branding in FAQ component
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Content Validation - No Old Branding > should not contain old branding in CTA component
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Content Validation - No Old Branding > should not contain old branding in Footer component
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Content Validation - No Old Branding > should not contain old branding in Navbar component
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Brand Consistency > should use consistent Telesis tagline across components
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Brand Consistency > should use consistent micro-learning messaging
+ FAIL  src/components/brand/TelesisBrandValidation.test.tsx > Telesis Brand Validation Tests > Brand Consistency > should use consistent AI-powered messaging
+Error: vitest-fail-on-console > Expected test not to call console.error().
+    If the error is expected, test for it explicitly by mocking it out using: 
+    vi.spyOn(console, 'error').mockImplementation(() => {}) 
+    and test that the warning occurs.
+
+Error: Uncaught [Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+]
+    at reportException (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:284:17)
+    at Object.get (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:330:16)
+    at TestWrapper (/Users/philipgedrojc/Projects/telesis/src/components/brand/TelesisBrandValidation.test.tsx:121:4)
+    at renderWithHooks (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3) {
+  codeFrame: 'vi\x1B[33m.\x1B[39m\x1B[34mmock\x1B[39m(\x1B[35mimport\x1B[39m(\x1B[32m"next-intl"\x1B[39m)\x1B[33m,\x1B[39m \x1B[35masync\x1B[39m (importOriginal) \x1B[33m=>\x1B[39m {\n' +
+    '  \x1B[35mconst\x1B[39m actual \x1B[33m=\x1B[39m \x1B[35mawait\x1B[39m \x1B[34mimportOriginal\x1B[39m()\n' +
+    '  \x1B[35mreturn\x1B[39m {\n' +
+    '    \x1B[33m...\x1B[39mactual\x1B[33m,\x1B[39m\n' +
+    '    \x1B[90m// your mocked methods\x1B[39m\n' +
+    '  }\n' +
+    '})'
+}
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at VirtualConsole.<anonymous> (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+    at VirtualConsole.emit (node:events:507:28)
+    at reportException (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+
+Error: Uncaught [Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+]
+    at reportException (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:284:17)
+    at Object.get (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:330:16)
+    at TestWrapper (/Users/philipgedrojc/Projects/telesis/src/components/brand/TelesisBrandValidation.test.tsx:121:4)
+    at renderWithHooks (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3) {
+  codeFrame: 'vi\x1B[33m.\x1B[39m\x1B[34mmock\x1B[39m(\x1B[35mimport\x1B[39m(\x1B[32m"next-intl"\x1B[39m)\x1B[33m,\x1B[39m \x1B[35masync\x1B[39m (importOriginal) \x1B[33m=>\x1B[39m {\n' +
+    '  \x1B[35mconst\x1B[39m actual \x1B[33m=\x1B[39m \x1B[35mawait\x1B[39m \x1B[34mimportOriginal\x1B[39m()\n' +
+    '  \x1B[35mreturn\x1B[39m {\n' +
+    '    \x1B[33m...\x1B[39mactual\x1B[33m,\x1B[39m\n' +
+    '    \x1B[90m// your mocked methods\x1B[39m\n' +
+    '  }\n' +
+    '})'
+}
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at VirtualConsole.<anonymous> (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+    at VirtualConsole.emit (node:events:507:28)
+    at reportException (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+
+The above error occurred in the <TestWrapper> component:
+
+    at TestWrapper (/Users/philipgedrojc/Projects/telesis/src/components/brand/TelesisBrandValidation.test.tsx:128:24)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at logCapturedError (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:18704:23)
+    at update.callback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:18737:5)
+    at callCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:15036:12)
+    at commitUpdateQueue (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:15057:9)
+    at commitLayoutEffectOnFiber (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:23430:13)
+    at commitLayoutMountEffects_complete (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:24727:9)
+    at commitLayoutEffects_begin (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:24713:7)
+    at commitLayoutEffects (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:24651:3)
+    at commitRootImpl (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:26862:5)
+ ❯ reportException node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9
+ ❯ invokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3
+ ❯ HTMLUnknownElementImpl._dispatch node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9
+ ❯ HTMLUnknownElementImpl.dispatchEvent node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17
+ ❯ HTMLUnknownElement.dispatchEvent node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34
+ ❯ Object.invokeGuardedCallbackDev node_modules/react-dom/cjs/react-dom.development.js:4213:16
+ ❯ invokeGuardedCallback node_modules/react-dom/cjs/react-dom.development.js:4277:31
+ ❯ beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:27490:7
+ ❯ TestWrapper src/components/brand/TelesisBrandValidation.test.tsx:121:4
+    119| 
+    120| const TestWrapper = ({ children }: { children: React.ReactNode }) => (
+    121|   <IntlProvider locale="en" messages={messages}>
+       |    ^
+    122|     {children}
+    123|   </IntlProvider>
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:15486:18
+ ❯ mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:20103:13
+ ❯ beginWork node_modules/react-dom/cjs/react-dom.development.js:21626:16
+ ❯ HTMLUnknownElement.callCallback node_modules/react-dom/cjs/react-dom.development.js:4164:14
+ ❯ HTMLUnknownElement.callTheUserObjectsOperation node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ VirtualConsole.<anonymous> node_modules/jsdom/lib/jsdom/virtual-console.js:29:45
+ ❯ reportException node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9
+ ❯ invokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3
+ ❯ HTMLUnknownElementImpl._dispatch node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9
+ ❯ HTMLUnknownElementImpl.dispatchEvent node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17
+ ❯ HTMLUnknownElement.dispatchEvent node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34
+ ❯ Object.invokeGuardedCallbackDev node_modules/react-dom/cjs/react-dom.development.js:4213:16
+ ❯ reportException node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9
+ ❯ invokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3
+ ❯ HTMLUnknownElementImpl._dispatch node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9
+ ❯ HTMLUnknownElementImpl.dispatchEvent node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17
+ ❯ HTMLUnknownElement.dispatchEvent node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34
+ ❯ Object.invokeGuardedCallbackDev node_modules/react-dom/cjs/react-dom.development.js:4213:16
+ ❯ invokeGuardedCallback node_modules/react-dom/cjs/react-dom.development.js:4277:31
+ ❯ beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:27490:7
+ ❯ TestWrapper src/components/brand/TelesisBrandValidation.test.tsx:121:4
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:15486:18
+ ❯ mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:20103:13
+ ❯ beginWork node_modules/react-dom/cjs/react-dom.development.js:21626:16
+ ❯ HTMLUnknownElement.callCallback node_modules/react-dom/cjs/react-dom.development.js:4164:14
+ ❯ HTMLUnknownElement.callTheUserObjectsOperation node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ VirtualConsole.<anonymous> node_modules/jsdom/lib/jsdom/virtual-console.js:29:45
+ ❯ reportException node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9
+ ❯ invokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3
+ ❯ HTMLUnknownElementImpl._dispatch node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9
+ ❯ HTMLUnknownElementImpl.dispatchEvent node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17
+ ❯ HTMLUnknownElement.dispatchEvent node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34
+ ❯ Object.invokeGuardedCallbackDev node_modules/react-dom/cjs/react-dom.development.js:4213:16
+ ❯ TestWrapper src/components/brand/TelesisBrandValidation.test.tsx:128:24
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ logCapturedError node_modules/react-dom/cjs/react-dom.development.js:18704:23
+ ❯ update.callback node_modules/react-dom/cjs/react-dom.development.js:18737:5
+ ❯ callCallback node_modules/react-dom/cjs/react-dom.development.js:15036:12
+ ❯ commitUpdateQueue node_modules/react-dom/cjs/react-dom.development.js:15057:9
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom.development.js:23430:13
+ ❯ commitLayoutMountEffects_complete node_modules/react-dom/cjs/react-dom.development.js:24727:9
+ ❯ commitLayoutEffects_begin node_modules/react-dom/cjs/react-dom.development.js:24713:7
+ ❯ commitLayoutEffects node_modules/react-dom/cjs/react-dom.development.js:24651:3
+ ❯ commitRootImpl node_modules/react-dom/cjs/react-dom.development.js:26862:5
+ ❯ flushUnexpectedConsoleCalls node_modules/vitest-fail-on-console/src/index.ts:70:19
+ ❯ node_modules/vitest-fail-on-console/src/index.ts:139:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/108]⎯
+
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Landing Page Integration > should render complete landing page with Telesis branding
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Landing Page Integration > should have consistent call-to-action buttons throughout the page
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Landing Page Integration > should maintain brand consistency across all sections
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Dashboard Page Integration > should render complete dashboard with Telesis branding
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Dashboard Page Integration > should display appropriate onboarding content for new users
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Navigation Integration > should render navigation with correct Telesis links
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Footer Integration > should render footer with correct Telesis structure
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Cross-Section Content Validation > should not contain any legacy SaaS boilerplate content
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Cross-Section Content Validation > should maintain consistent theming and messaging across sections
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Authenticated vs Unauthenticated Experience > should show consistent branding for unauthenticated users
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Authenticated vs Unauthenticated Experience > should show consistent branding for authenticated users
+Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi[33m.[39m[34mmock[39m([35mimport[39m([32m"next-intl"[39m)[33m,[39m [35masync[39m (importOriginal) [33m=>[39m {
+  [35mconst[39m actual [33m=[39m [35mawait[39m [34mimportOriginal[39m()
+  [35mreturn[39m {
+    [33m...[39mactual[33m,[39m
+    [90m// your mocked methods[39m
+  }
+})
+
+ ❯ TestWrapper src/components/brand/TelesisIntegration.test.tsx:161:4
+    159| 
+    160| const TestWrapper = ({ children }: { children: React.ReactNode }) => (
+    161|   <IntlProvider locale="en" messages={messages}>
+       |    ^
+    162|     {children}
+    163|   </IntlProvider>
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:15486:18
+ ❯ mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:20103:13
+ ❯ beginWork node_modules/react-dom/cjs/react-dom.development.js:21626:16
+ ❯ beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:27465:14
+ ❯ performUnitOfWork node_modules/react-dom/cjs/react-dom.development.js:26599:12
+ ❯ workLoopSync node_modules/react-dom/cjs/react-dom.development.js:26505:5
+ ❯ renderRootSync node_modules/react-dom/cjs/react-dom.development.js:26473:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/108]⎯
+
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Landing Page Integration > should render complete landing page with Telesis branding
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Landing Page Integration > should have consistent call-to-action buttons throughout the page
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Landing Page Integration > should maintain brand consistency across all sections
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Dashboard Page Integration > should render complete dashboard with Telesis branding
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Dashboard Page Integration > should display appropriate onboarding content for new users
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Navigation Integration > should render navigation with correct Telesis links
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Footer Integration > should render footer with correct Telesis structure
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Cross-Section Content Validation > should not contain any legacy SaaS boilerplate content
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Cross-Section Content Validation > should maintain consistent theming and messaging across sections
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Authenticated vs Unauthenticated Experience > should show consistent branding for unauthenticated users
+ FAIL  src/components/brand/TelesisIntegration.test.tsx > Telesis Integration Tests - Full Page Rendering > Authenticated vs Unauthenticated Experience > should show consistent branding for authenticated users
+Error: vitest-fail-on-console > Expected test not to call console.error().
+    If the error is expected, test for it explicitly by mocking it out using: 
+    vi.spyOn(console, 'error').mockImplementation(() => {}) 
+    and test that the warning occurs.
+
+Error: Uncaught [Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+]
+    at reportException (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:284:17)
+    at Object.get (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:330:16)
+    at TestWrapper (/Users/philipgedrojc/Projects/telesis/src/components/brand/TelesisIntegration.test.tsx:161:4)
+    at renderWithHooks (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3) {
+  codeFrame: 'vi\x1B[33m.\x1B[39m\x1B[34mmock\x1B[39m(\x1B[35mimport\x1B[39m(\x1B[32m"next-intl"\x1B[39m)\x1B[33m,\x1B[39m \x1B[35masync\x1B[39m (importOriginal) \x1B[33m=>\x1B[39m {\n' +
+    '  \x1B[35mconst\x1B[39m actual \x1B[33m=\x1B[39m \x1B[35mawait\x1B[39m \x1B[34mimportOriginal\x1B[39m()\n' +
+    '  \x1B[35mreturn\x1B[39m {\n' +
+    '    \x1B[33m...\x1B[39mactual\x1B[33m,\x1B[39m\n' +
+    '    \x1B[90m// your mocked methods\x1B[39m\n' +
+    '  }\n' +
+    '})'
+}
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at VirtualConsole.<anonymous> (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+    at VirtualConsole.emit (node:events:507:28)
+    at reportException (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+
+Error: Uncaught [Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+]
+    at reportException (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: [vitest] No "IntlProvider" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:284:17)
+    at Object.get (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:330:16)
+    at TestWrapper (/Users/philipgedrojc/Projects/telesis/src/components/brand/TelesisIntegration.test.tsx:161:4)
+    at renderWithHooks (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3) {
+  codeFrame: 'vi\x1B[33m.\x1B[39m\x1B[34mmock\x1B[39m(\x1B[35mimport\x1B[39m(\x1B[32m"next-intl"\x1B[39m)\x1B[33m,\x1B[39m \x1B[35masync\x1B[39m (importOriginal) \x1B[33m=>\x1B[39m {\n' +
+    '  \x1B[35mconst\x1B[39m actual \x1B[33m=\x1B[39m \x1B[35mawait\x1B[39m \x1B[34mimportOriginal\x1B[39m()\n' +
+    '  \x1B[35mreturn\x1B[39m {\n' +
+    '    \x1B[33m...\x1B[39mactual\x1B[33m,\x1B[39m\n' +
+    '    \x1B[90m// your mocked methods\x1B[39m\n' +
+    '  }\n' +
+    '})'
+}
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at VirtualConsole.<anonymous> (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+    at VirtualConsole.emit (node:events:507:28)
+    at reportException (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28)
+    at innerInvokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/philipgedrojc/Projects/telesis/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+
+The above error occurred in the <TestWrapper> component:
+
+    at TestWrapper (/Users/philipgedrojc/Projects/telesis/src/components/brand/TelesisIntegration.test.tsx:157:24)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+    at Console.l [as error] (file:///Users/philipgedrojc/Projects/telesis/node_modules/vitest-fail-on-console/src/index.ts:90:31)
+    at logCapturedError (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:18704:23)
+    at update.callback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:18737:5)
+    at callCallback (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:15036:12)
+    at commitUpdateQueue (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:15057:9)
+    at commitLayoutEffectOnFiber (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:23430:13)
+    at commitLayoutMountEffects_complete (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:24727:9)
+    at commitLayoutEffects_begin (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:24713:7)
+    at commitLayoutEffects (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:24651:3)
+    at commitRootImpl (/Users/philipgedrojc/Projects/telesis/node_modules/react-dom/cjs/react-dom.development.js:26862:5)
+ ❯ reportException node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9
+ ❯ invokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3
+ ❯ HTMLUnknownElementImpl._dispatch node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9
+ ❯ HTMLUnknownElementImpl.dispatchEvent node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17
+ ❯ HTMLUnknownElement.dispatchEvent node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34
+ ❯ Object.invokeGuardedCallbackDev node_modules/react-dom/cjs/react-dom.development.js:4213:16
+ ❯ invokeGuardedCallback node_modules/react-dom/cjs/react-dom.development.js:4277:31
+ ❯ beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:27490:7
+ ❯ TestWrapper src/components/brand/TelesisIntegration.test.tsx:161:4
+    159| 
+    160| const TestWrapper = ({ children }: { children: React.ReactNode }) => (
+    161|   <IntlProvider locale="en" messages={messages}>
+       |    ^
+    162|     {children}
+    163|   </IntlProvider>
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:15486:18
+ ❯ mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:20103:13
+ ❯ beginWork node_modules/react-dom/cjs/react-dom.development.js:21626:16
+ ❯ HTMLUnknownElement.callCallback node_modules/react-dom/cjs/react-dom.development.js:4164:14
+ ❯ HTMLUnknownElement.callTheUserObjectsOperation node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ VirtualConsole.<anonymous> node_modules/jsdom/lib/jsdom/virtual-console.js:29:45
+ ❯ reportException node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9
+ ❯ invokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3
+ ❯ HTMLUnknownElementImpl._dispatch node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9
+ ❯ HTMLUnknownElementImpl.dispatchEvent node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17
+ ❯ HTMLUnknownElement.dispatchEvent node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34
+ ❯ Object.invokeGuardedCallbackDev node_modules/react-dom/cjs/react-dom.development.js:4213:16
+ ❯ reportException node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9
+ ❯ invokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3
+ ❯ HTMLUnknownElementImpl._dispatch node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9
+ ❯ HTMLUnknownElementImpl.dispatchEvent node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17
+ ❯ HTMLUnknownElement.dispatchEvent node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34
+ ❯ Object.invokeGuardedCallbackDev node_modules/react-dom/cjs/react-dom.development.js:4213:16
+ ❯ invokeGuardedCallback node_modules/react-dom/cjs/react-dom.development.js:4277:31
+ ❯ beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:27490:7
+ ❯ TestWrapper src/components/brand/TelesisIntegration.test.tsx:161:4
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:15486:18
+ ❯ mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:20103:13
+ ❯ beginWork node_modules/react-dom/cjs/react-dom.development.js:21626:16
+ ❯ HTMLUnknownElement.callCallback node_modules/react-dom/cjs/react-dom.development.js:4164:14
+ ❯ HTMLUnknownElement.callTheUserObjectsOperation node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ VirtualConsole.<anonymous> node_modules/jsdom/lib/jsdom/virtual-console.js:29:45
+ ❯ reportException node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28
+ ❯ innerInvokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9
+ ❯ invokeEventListeners node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3
+ ❯ HTMLUnknownElementImpl._dispatch node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9
+ ❯ HTMLUnknownElementImpl.dispatchEvent node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17
+ ❯ HTMLUnknownElement.dispatchEvent node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34
+ ❯ Object.invokeGuardedCallbackDev node_modules/react-dom/cjs/react-dom.development.js:4213:16
+ ❯ TestWrapper src/components/brand/TelesisIntegration.test.tsx:157:24
+ ❯ Console.l [as error] node_modules/vitest-fail-on-console/src/index.ts:90:31
+ ❯ logCapturedError node_modules/react-dom/cjs/react-dom.development.js:18704:23
+ ❯ update.callback node_modules/react-dom/cjs/react-dom.development.js:18737:5
+ ❯ callCallback node_modules/react-dom/cjs/react-dom.development.js:15036:12
+ ❯ commitUpdateQueue node_modules/react-dom/cjs/react-dom.development.js:15057:9
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom.development.js:23430:13
+ ❯ commitLayoutMountEffects_complete node_modules/react-dom/cjs/react-dom.development.js:24727:9
+ ❯ commitLayoutEffects_begin node_modules/react-dom/cjs/react-dom.development.js:24713:7
+ ❯ commitLayoutEffects node_modules/react-dom/cjs/react-dom.development.js:24651:3
+ ❯ commitRootImpl node_modules/react-dom/cjs/react-dom.development.js:26862:5
+ ❯ flushUnexpectedConsoleCalls node_modules/vitest-fail-on-console/src/index.ts:70:19
+ ❯ node_modules/vitest-fail-on-console/src/index.ts:139:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/108]⎯
+
+
+
+FOCUS AREAS TESTED:
+Logo & Brand Identity: PASSED (HIGH PRIORITY)
+Button Components & CTAs: FAILED (HIGH PRIORITY)
+Typography & Text Hierarchy: FAILED (HIGH PRIORITY)
+Color Contrast (WCAG AA): FAILED (CRITICAL PRIORITY)
+Brand System Integration: FAILED (MEDIUM PRIORITY)
+
+This report validates the Telesis brand system implementation against WCAG 2.1 AA accessibility standards.
+All components should be regularly tested to maintain compliance as the system evolves.

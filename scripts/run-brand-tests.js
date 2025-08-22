@@ -2,27 +2,27 @@
 
 /**
  * Brand System E2E Test Runner
- * 
+ *
  * This script provides a convenient way to run all brand-related E2E tests
  * with proper configuration and reporting.
  */
 
-const { spawn } = require('child_process');
-const path = require('path');
-const fs = require('fs');
+const { spawn } = require('node:child_process');
+const path = require('node:path');
+const fs = require('node:fs');
 
 // ANSI color codes for console output
 const colors = {
-  reset: '\x1b[0m',
-  bright: '\x1b[1m',
-  dim: '\x1b[2m',
-  red: '\x1b[31m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  magenta: '\x1b[35m',
-  cyan: '\x1b[36m',
-  white: '\x1b[37m'
+  reset: '\x1B[0m',
+  bright: '\x1B[1m',
+  dim: '\x1B[2m',
+  red: '\x1B[31m',
+  green: '\x1B[32m',
+  yellow: '\x1B[33m',
+  blue: '\x1B[34m',
+  magenta: '\x1B[35m',
+  cyan: '\x1B[36m',
+  white: '\x1B[37m'
 };
 
 // Test configurations
@@ -84,12 +84,12 @@ function showHelp() {
   console.log(`${colors.bright}${colors.cyan}🧪 Telesis Brand System E2E Test Runner${colors.reset}\n`);
   console.log(`${colors.bright}Usage:${colors.reset} npm run brand:test [suite] [options]\n`);
   console.log(`${colors.bright}Available Test Suites:${colors.reset}`);
-  
+
   Object.entries(testSuites).forEach(([key, suite]) => {
     console.log(`  ${colors.yellow}${key.padEnd(12)}${colors.reset} ${suite.name}`);
     console.log(`  ${colors.dim}${''.padEnd(12)} ${suite.description}${colors.reset}`);
   });
-  
+
   console.log(`\n${colors.bright}Examples:${colors.reset}`);
   console.log(`  npm run brand:test                    # Run all brand tests`);
   console.log(`  npm run brand:test core               # Run core brand system tests`);
@@ -97,7 +97,7 @@ function showHelp() {
   console.log(`  npm run brand:test accessibility      # Run accessibility tests`);
   console.log(`  npm run brand:test --headed           # Run with visible browser`);
   console.log(`  npm run brand:test --debug            # Run with debug output`);
-  
+
   console.log(`\n${colors.bright}Additional Playwright Options:${colors.reset}`);
   console.log(`  --headed          Run tests in headed mode (visible browser)`);
   console.log(`  --debug           Run tests in debug mode`);
@@ -158,20 +158,20 @@ async function runTests() {
       console.log(`\n${colors.bright}Test Report:${colors.reset}`);
       console.log(`  HTML Report: ${colors.cyan}npx playwright show-report${colors.reset}`);
       console.log(`  Results: ./test-results/playwright-report/index.html`);
-      
+
       // Show additional information for specific suites
       if (suiteArg === 'visual') {
         console.log(`\n${colors.bright}Visual Regression:${colors.reset}`);
         console.log(`  Screenshots saved to: ./test-results/`);
         console.log(`  Compare actual vs expected images in HTML report`);
       }
-      
+
       if (suiteArg === 'accessibility') {
         console.log(`\n${colors.bright}Accessibility Report:${colors.reset}`);
         console.log(`  WCAG compliance results available in HTML report`);
         console.log(`  Check console output for detailed accessibility violations`);
       }
-      
+
       if (suiteArg === 'performance') {
         console.log(`\n${colors.bright}Performance Metrics:${colors.reset}`);
         console.log(`  Performance data available in HTML report`);
@@ -185,7 +185,7 @@ async function runTests() {
       console.log(`  3. Run with --headed flag to see browser interactions`);
       console.log(`  4. Use --debug flag for step-by-step debugging`);
     }
-    
+
     process.exit(code);
   });
 

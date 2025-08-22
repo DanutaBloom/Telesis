@@ -148,10 +148,10 @@ test.describe('Responsive Typography and Brand Elements', () => {
         };
 
         const sizeMap = {
-          'sm': { width: 32, height: 12, textClass: 'text-sm' },
-          'default': { width: 48, height: 18, textClass: 'text-base' },
-          'lg': { width: 64, height: 24, textClass: 'text-lg' },
-          'xl': { width: 80, height: 30, textClass: 'text-xl' },
+          sm: { width: 32, height: 12, textClass: 'text-sm' },
+          default: { width: 48, height: 18, textClass: 'text-base' },
+          lg: { width: 64, height: 24, textClass: 'text-lg' },
+          xl: { width: 80, height: 30, textClass: 'text-xl' },
         };
 
         const { width: svgWidth, height: svgHeight, textClass } = sizeMap[logoConfig.size];
@@ -161,7 +161,7 @@ test.describe('Responsive Typography and Brand Elements', () => {
           const responsiveLogo = document.querySelector('[data-testid="responsive-logo"]');
           const brandTypographyLogo = document.querySelector('[data-testid="brand-typography-logo"]');
 
-          const logoHTML = logoConfig.variant === 'logomark' 
+          const logoHTML = logoConfig.variant === 'logomark'
             ? `
               <svg width="${svgWidth}" height="${svgHeight}" viewBox="0 0 48 18" aria-hidden="true" role="img" aria-label="Telesis">
                 <title>Telesis Logo</title>
@@ -188,7 +188,9 @@ test.describe('Responsive Typography and Brand Elements', () => {
               </div>
             `;
 
-          if (responsiveLogo) responsiveLogo.innerHTML = logoHTML;
+          if (responsiveLogo) {
+ responsiveLogo.innerHTML = logoHTML;
+}
           if (brandTypographyLogo) {
             brandTypographyLogo.innerHTML = `
               <div class="inline-flex items-center gap-x-2 text-sm" role="img" aria-label="Telesis - Ask, Think, Apply">
@@ -438,8 +440,13 @@ test.describe('Responsive Typography and Brand Elements', () => {
 
       // Verify all adaptive logos are visible
       const logoTestIds = [
-        'adaptive-nav-logo', 'constrained-logo', 'flexible-logo', 'sidebar-logo',
-        'hero-logo', 'header-logo', 'compact-logo'
+        'adaptive-nav-logo',
+'constrained-logo',
+'flexible-logo',
+'sidebar-logo',
+        'hero-logo',
+'header-logo',
+'compact-logo'
       ];
 
       for (const testId of logoTestIds) {
@@ -755,10 +762,10 @@ test.describe('Responsive Typography and Brand Elements', () => {
         ];
 
         const sizeMap = {
-          'sm': { width: 32, height: 12, textClass: 'text-sm' },
-          'default': { width: 48, height: 18, textClass: 'text-base' },
-          'lg': { width: 64, height: 24, textClass: 'text-lg' },
-          'xl': { width: 80, height: 30, textClass: 'text-xl' },
+          sm: { width: 32, height: 12, textClass: 'text-sm' },
+          default: { width: 48, height: 18, textClass: 'text-base' },
+          lg: { width: 64, height: 24, textClass: 'text-lg' },
+          xl: { width: 80, height: 30, textClass: 'text-xl' },
         };
 
         logos.forEach(({ selector, size, variant, monochrome }) => {
@@ -766,7 +773,7 @@ test.describe('Responsive Typography and Brand Elements', () => {
           const { width: svgWidth, height: svgHeight, textClass } = sizeMap[size];
 
           if (element) {
-            const colors = monochrome 
+            const colors = monochrome
               ? {
                   ask: 'currentColor',
                   think: 'currentColor',
@@ -836,9 +843,20 @@ test.describe('Responsive Typography and Brand Elements', () => {
 
       // Verify all typography and logo elements are visible
       const testElements = [
-        'integration-logo', 'quietude-logo', 'growth-logo', 'neutral-logo', 'hierarchy-logo',
-        'quietude-heading', 'quietude-text', 'growth-heading', 'growth-text',
-        'h1-brand', 'h2-brand', 'h3-brand', 'body-paragraph', 'blockquote'
+        'integration-logo',
+'quietude-logo',
+'growth-logo',
+'neutral-logo',
+'hierarchy-logo',
+        'quietude-heading',
+'quietude-text',
+'growth-heading',
+'growth-text',
+        'h1-brand',
+'h2-brand',
+'h3-brand',
+'body-paragraph',
+'blockquote'
       ];
 
       for (const testId of testElements) {

@@ -2,14 +2,14 @@
 
 /**
  * Comprehensive Accessibility Testing Runner
- * 
+ *
  * Executes all accessibility tests and generates a detailed compliance report
  * for the Telesis brand system implementation.
  */
 
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+const { execSync } = require('node:child_process');
+const fs = require('node:fs');
+const path = require('node:path');
 
 console.log('🔍 Starting Comprehensive WCAG 2.1 AA Accessibility Testing...\n');
 
@@ -26,8 +26,8 @@ const testResults = {
 function runCommand(command, description) {
   console.log(`\n📋 ${description}...`);
   try {
-    const output = execSync(command, { 
-      encoding: 'utf-8', 
+    const output = execSync(command, {
+      encoding: 'utf-8',
       cwd: process.cwd(),
       stdio: ['pipe', 'pipe', 'pipe']
     });
@@ -66,7 +66,7 @@ testResults.buttonTests.details.push({
   notes: buttonTest.success ? 'All button variants meet accessibility standards' : buttonTest.error
 });
 
-// Test 3: Typography System Tests  
+// Test 3: Typography System Tests
 console.log('\n=== TYPOGRAPHY SYSTEM ACCESSIBILITY TESTS ===');
 const typographyTest = runCommand(
   'npm test -- --run src/components/ui/Typography.test.tsx',
@@ -106,13 +106,13 @@ testResults.brandComponents.details.push({
 });
 
 // Generate Comprehensive Report
-console.log('\n\n' + '='.repeat(80));
+console.log(`\n\n${'='.repeat(80)}`);
 console.log('📊 TELESIS ACCESSIBILITY COMPLIANCE REPORT - WCAG 2.1 AA');
 console.log('='.repeat(80));
 
 const currentDate = new Date().toLocaleDateString('en-US', {
   year: 'numeric',
-  month: 'long', 
+  month: 'long',
   day: 'numeric',
   hour: '2-digit',
   minute: '2-digit'
@@ -134,10 +134,10 @@ console.log('🔍 DETAILED TEST RESULTS:\n');
 Object.entries(testResults).forEach(([category, result]) => {
   const statusIcon = result.status === 'passed' ? '✅' : result.status === 'failed' ? '❌' : '⏳';
   const statusText = result.status.toUpperCase();
-  
+
   console.log(`${statusIcon} ${category.replace(/([A-Z])/g, ' $1').toUpperCase()}: ${statusText}`);
-  
-  result.details.forEach(detail => {
+
+  result.details.forEach((detail) => {
     console.log(`   • ${detail.test}: ${detail.result}`);
     if (detail.notes) {
       console.log(`     Notes: ${detail.notes}`);
@@ -157,7 +157,7 @@ const focusAreas = [
   { area: 'Brand System Integration', status: testResults.brandComponents.status, priority: 'MEDIUM' }
 ];
 
-focusAreas.forEach(area => {
+focusAreas.forEach((area) => {
   const statusIcon = area.status === 'passed' ? '✅' : area.status === 'failed' ? '❌' : '⏳';
   const priorityColor = area.priority === 'CRITICAL' ? '🔴' : area.priority === 'HIGH' ? '🟡' : '🟢';
   console.log(`${statusIcon} ${area.area} ${priorityColor} (${area.priority} PRIORITY)`);
@@ -212,7 +212,7 @@ console.log('3. Conduct manual testing with screen readers');
 console.log('4. Validate accessibility with real users who use assistive technology');
 console.log('5. Set up automated accessibility testing in CI/CD pipeline');
 
-console.log('\n' + '='.repeat(80));
+console.log(`\n${'='.repeat(80)}`);
 console.log('📄 Report saved to: accessibility-compliance-report.txt');
 
 // Save report to file
@@ -224,14 +224,14 @@ EXECUTIVE SUMMARY:
 Overall Compliance Score: ${overallScore}% (${passedTests}/${totalTests} test suites passing)
 
 DETAILED RESULTS:
-${Object.entries(testResults).map(([category, result]) => 
-  `${category}: ${result.status.toUpperCase()}\n${result.details.map(detail => 
+${Object.entries(testResults).map(([category, result]) =>
+  `${category}: ${result.status.toUpperCase()}\n${result.details.map(detail =>
     `  - ${detail.test}: ${detail.result}\n    Notes: ${detail.notes || 'N/A'}`
   ).join('\n')}`
 ).join('\n\n')}
 
 FOCUS AREAS TESTED:
-${focusAreas.map(area => 
+${focusAreas.map(area =>
   `${area.area}: ${area.status.toUpperCase()} (${area.priority} PRIORITY)`
 ).join('\n')}
 

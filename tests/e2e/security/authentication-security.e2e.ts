@@ -56,13 +56,13 @@ test.describe('Authentication Security', () => {
 
   test.describe('@security CSRF Protection', () => {
     test('should include CSRF protection headers', async ({ page }) => {
-      let hasCSRFHeader = false;
+      let _hasCSRFHeader = false;
 
       // Monitor requests for CSRF protection
       page.on('request', (request) => {
         const headers = request.headers();
         if (headers['x-csrf-token'] || headers['csrf-token']) {
-          hasCSRFHeader = true;
+          _hasCSRFHeader = true;
         }
       });
 

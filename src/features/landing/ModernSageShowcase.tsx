@@ -1,6 +1,8 @@
+import { ThreeOlivesLogo, ThreeOlivesLogomark } from '@/components/brand';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Typography } from '@/components/ui/typography';
 
 /**
  * Modern Sage Theme Showcase Component
@@ -12,13 +14,142 @@ export const ModernSageShowcase = () => {
   return (
     <div className="space-y-8 p-8">
       {/* Header */}
-      <div className="space-y-4 text-center">
-        <h1 className="sage-text-gradient text-4xl font-bold">
+      <div className="spacing-responsive text-center">
+        <Typography variant="sage-display" className="sage-text-gradient">
           Modern Sage Theme Showcase
-        </h1>
-        <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+        </Typography>
+        <Typography variant="lead" className="mx-auto max-w-2xl text-muted-foreground">
           Comprehensive demonstration of Modern Sage color palette, components, and accessibility features
-        </p>
+        </Typography>
+      </div>
+
+      {/* Three Olives Logo Showcase */}
+      <div className="space-y-6">
+        <div className="spacing-responsive-sm text-center">
+          <Typography variant="h2" color="sage-primary">Three Olives Logo System</Typography>
+          <Typography variant="body" className="mx-auto max-w-2xl text-muted-foreground">
+            Ancient Greek symbolism representing "Ask, Think, Apply" - the three pillars of philosophical learning
+          </Typography>
+        </div>
+
+        {/* Logo Variants */}
+        <div className="space-y-4">
+          <Typography variant="h3" color="sage-accent">Logo Variants</Typography>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="sage-card spacing-responsive-sm p-6 text-center">
+              <Typography variant="h4">Horizontal Layout</Typography>
+              <div className="flex justify-center">
+                <ThreeOlivesLogo variant="horizontal" size="lg" />
+              </div>
+              <Typography variant="body-sm" className="text-muted-foreground">Primary logo for headers and navigation</Typography>
+            </div>
+
+            <div className="sage-card space-y-4 p-6 text-center">
+              <h4 className="font-medium">Stacked Layout</h4>
+              <div className="flex justify-center">
+                <ThreeOlivesLogo variant="stacked" size="lg" />
+              </div>
+              <p className="text-sm text-muted-foreground">Compact layout with tagline for hero sections</p>
+            </div>
+
+            <div className="sage-card space-y-4 p-6 text-center">
+              <h4 className="font-medium">Logomark Only</h4>
+              <div className="flex justify-center">
+                <ThreeOlivesLogomark size="xl" />
+              </div>
+              <p className="text-sm text-muted-foreground">Icon-only version for favicons and small spaces</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Color Variations */}
+        <div className="space-y-4">
+          <h3 className="sage-text-accent text-lg font-medium">Color Variations</h3>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div className="sage-card space-y-4 p-6 text-center">
+              <h4 className="font-medium">Full Color (Default)</h4>
+              <div className="flex justify-center">
+                <ThreeOlivesLogo variant="horizontal" size="lg" colorScheme="default" />
+              </div>
+              <p className="text-sm text-muted-foreground">Primary version with Modern Sage colors</p>
+            </div>
+
+            <div className="sage-card space-y-4 p-6 text-center">
+              <h4 className="font-medium">Monochrome</h4>
+              <div className="flex justify-center text-sage-stone">
+                <ThreeOlivesLogo variant="horizontal" size="lg" colorScheme="monochrome" />
+              </div>
+              <p className="text-sm text-muted-foreground">Single color version for print or constraints</p>
+            </div>
+
+            <div className="sage-gradient-primary space-y-4 rounded-lg p-6 text-center">
+              <h4 className="font-medium text-white">Reverse (Dark Backgrounds)</h4>
+              <div className="flex justify-center">
+                <ThreeOlivesLogo variant="horizontal" size="lg" colorScheme="reverse" />
+              </div>
+              <p className="text-sm text-white/80">White version for dark backgrounds</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Size Demonstration */}
+        <div className="space-y-4">
+          <h3 className="sage-text-accent text-lg font-medium">Scalability Test</h3>
+          <div className="sage-card p-6">
+            <div className="flex flex-wrap items-center justify-center gap-8">
+              <div className="space-y-2 text-center">
+                <ThreeOlivesLogo variant="horizontal" size="sm" />
+                <p className="text-xs text-muted-foreground">Small (32px)</p>
+              </div>
+              <div className="space-y-2 text-center">
+                <ThreeOlivesLogo variant="horizontal" size="default" />
+                <p className="text-xs text-muted-foreground">Default (48px)</p>
+              </div>
+              <div className="space-y-2 text-center">
+                <ThreeOlivesLogo variant="horizontal" size="lg" />
+                <p className="text-xs text-muted-foreground">Large (64px)</p>
+              </div>
+              <div className="space-y-2 text-center">
+                <ThreeOlivesLogo variant="horizontal" size="xl" />
+                <p className="text-xs text-muted-foreground">Extra Large (80px)</p>
+              </div>
+              <div className="space-y-2 text-center">
+                <ThreeOlivesLogo variant="horizontal" size="2xl" />
+                <p className="text-xs text-muted-foreground">2X Large (96px)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Philosophical Meaning */}
+        <div className="sage-gradient-hero rounded-lg p-6">
+          <div className="mx-auto max-w-4xl space-y-4 text-center">
+            <h3 className="sage-text-primary text-lg font-semibold">Ancient Greek Philosophy</h3>
+            <div className="grid grid-cols-1 gap-4 text-sm md:grid-cols-3">
+              <div className="space-y-2">
+                <div className="flex justify-center">
+                  <ThreeOlivesLogomark size="default" className="opacity-60" />
+                </div>
+                <h4 className="sage-text-accent font-medium">Ask (Socrates)</h4>
+                <p className="text-muted-foreground">The outlined olive represents inquiry and potential. Every learning journey begins with a question.</p>
+              </div>
+              <div className="space-y-2">
+                <div className="flex justify-center">
+                  <ThreeOlivesLogomark size="default" className="opacity-60" />
+                </div>
+                <h4 className="sage-text-accent font-medium">Think (Plato)</h4>
+                <p className="text-muted-foreground">The solid sage olive embodies contemplation and deep reasoning - the processing of knowledge.</p>
+              </div>
+              <div className="space-y-2">
+                <div className="flex justify-center">
+                  <ThreeOlivesLogomark size="default" className="opacity-60" />
+                </div>
+                <h4 className="sage-text-accent font-medium">Apply (Aristotle)</h4>
+                <p className="text-muted-foreground">The vibrant green olive represents successful application - wisdom transformed into action.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Button Variants */}

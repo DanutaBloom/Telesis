@@ -2,11 +2,19 @@ import '@/styles/global.css';
 
 import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 
-import { DemoBadge } from '@/components/DemoBadge';
 import { AllLocales } from '@/utils/AppConfig';
+
+// Configure Inter font with optimal settings for the design system
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+  preload: true,
+});
 
 export const metadata: Metadata = {
   icons: [
@@ -53,7 +61,7 @@ export default function RootLayout(props: {
   // which dynamically adds a `style` attribute to the body tag.
   return (
     <ClerkProvider>
-      <html lang={props.params.locale} suppressHydrationWarning>
+      <html lang={props.params.locale} className={`${inter.variable} font-sans`} suppressHydrationWarning>
         <body className="bg-background text-foreground antialiased" suppressHydrationWarning>
           {/* PRO: Dark mode support for Shadcn UI */}
           <NextIntlClientProvider
@@ -61,8 +69,6 @@ export default function RootLayout(props: {
             messages={messages}
           >
             {props.children}
-
-            <DemoBadge />
           </NextIntlClientProvider>
         </body>
       </html>

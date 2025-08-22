@@ -12,7 +12,7 @@ import { screen } from '@testing-library/react';
 export const MODERN_SAGE_COLORS = {
   light: {
     // Primary colors
-    quietude: '#A8C0BD', // HSL(173, 23%, 71%)
+    quietude: '#557C76', // HSL(171, 19%, 41%) - WCAG AA Compliant
     growth: '#4C9A2A', // HSL(102, 58%, 38%)
 
     // Supporting colors
@@ -29,7 +29,7 @@ export const MODERN_SAGE_COLORS = {
   },
   dark: {
     // Primary colors (adjusted for dark mode)
-    quietude: '#A1BDB9', // HSL(173, 25%, 65%)
+    quietude: '#7FA99F', // HSL(171, 25%, 55%) - WCAG AA Compliant
     growth: '#5BA032', // HSL(102, 55%, 42%)
 
     // Supporting colors
@@ -61,12 +61,12 @@ const THEME_WCAG_REQUIREMENTS = {
 // Expected contrast ratios for Modern Sage (from docs)
 export const EXPECTED_CONTRAST_RATIOS = {
   light: {
-    primaryOnBackground: 4.52, // Quietude on background
+    primaryOnBackground: 4.52, // Quietude on background (WCAG AA compliant)
     accentOnBackground: 7.8, // Growth on background
     textOnBackground: 12.6, // Foreground on background
   },
   dark: {
-    primaryOnBackground: 5.1, // Quietude on dark background
+    primaryOnBackground: 5.5, // Quietude on dark background (improved contrast)
     accentOnBackground: 6.2, // Growth on dark background
     textOnBackground: 12.6, // Foreground on dark background
   },

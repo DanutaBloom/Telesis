@@ -14,9 +14,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 13% 20%;
 
-    /* Primary: Quietude (#A8C0BD) - HSL(173, 23%, 71%) */
-    --primary: 173 23% 71%;
+    /* Primary: Quietude (#557C76) - HSL(171, 19%, 41%) - WCAG AA Compliant */
+    --primary: 171 19% 41%;
     --primary-foreground: 0 0% 99%;
+    --primary-hover: 171 19% 35%; /* #487068 - 5.44:1 contrast with white */
 
     /* Secondary: Soft Grey */
     --secondary: 220 10% 95%;
@@ -26,8 +27,8 @@
     --muted: 220 10% 95%;
     --muted-foreground: 220 8% 46%;
 
-    /* Accent: Growth Green (#4C9A2A) - HSL(102, 58%, 38%) */
-    --accent: 102 58% 38%;
+    /* Accent: Growth Green - Darkened for WCAG AA compliance */
+    --accent: 102 58% 32%; /* #3F8123 - 4.82:1 contrast with white */
     --accent-foreground: 0 0% 99%;
 
     --destructive: 0 84% 60%;
@@ -36,15 +37,16 @@
     /* Neutral borders and inputs */
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 173 23% 71%;
+    --ring: 171 19% 41%;
 
     --radius: 0.5rem;
 
     /* Modern Sage Brand Colors */
-    --sage-quietude: 173 23% 71%;
-    --sage-growth: 102 58% 38%;
+    --sage-quietude: 171 19% 41%;
+    --sage-growth: 102 58% 32%; /* Darkened for WCAG AA compliance */
     --sage-mist: 173 15% 85%;
     --sage-stone: 220 8% 60%;
+    --sage-stone-accessible: 220 13% 20%; /* WCAG compliant text on light backgrounds */
   }
 
   .dark {
@@ -58,9 +60,10 @@
     --popover: 220 13% 12%;
     --popover-foreground: 0 0% 95%;
 
-    /* Primary: Darker Quietude for better contrast */
-    --primary: 173 25% 65%;
+    /* Primary: Accessible Quietude - lighter for dark mode contrast */
+    --primary: 171 25% 55%;
     --primary-foreground: 220 13% 9%;
+    --primary-hover: 171 25% 60%; /* Lighter hover for dark mode */
 
     /* Secondary: Dark Grey */
     --secondary: 220 10% 18%;
@@ -70,8 +73,8 @@
     --muted: 220 10% 18%;
     --muted-foreground: 220 8% 65%;
 
-    /* Accent: Brighter Growth Green for dark mode */
-    --accent: 102 55% 42%;
+    /* Accent: Adjusted Growth Green for dark mode contrast */
+    --accent: 102 55% 45%; /* Slightly lighter for better contrast on dark */
     --accent-foreground: 220 13% 9%;
 
     --destructive: 0 75% 55%;
@@ -80,13 +83,14 @@
     /* Dark neutral borders and inputs */
     --border: 220 13% 25%;
     --input: 220 13% 25%;
-    --ring: 173 25% 65%;
+    --ring: 171 25% 55%;
 
     /* Modern Sage Dark Brand Colors */
-    --sage-quietude: 173 25% 65%;
-    --sage-growth: 102 55% 42%;
+    --sage-quietude: 171 25% 55%;
+    --sage-growth: 102 55% 45%; /* Adjusted for better dark mode contrast */
     --sage-mist: 173 15% 25%;
     --sage-stone: 220 8% 50%;
+    --sage-stone-accessible: 0 0% 95%; /* Light text for dark backgrounds */
   }
 }
 
@@ -94,9 +98,57 @@
   * {
     @apply border-border;
   }
+
+  /* Typography base styles */
+  html {
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Focus styles for accessibility */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Typography hierarchy for better semantic structure */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+
+  /* Ensure proper line heights for readability */
+  p,
+  li {
+    line-height: 1.6;
+  }
+
+  /* Code typography */
+  code,
+  pre {
+    font-family: var(--font-mono, 'SF Mono', ui-monospace, Consolas, 'Liberation Mono', Menlo, monospace);
+    font-variant-ligatures: none;
+  }
+
+  /* Selection styles */
+  ::selection {
+    background-color: hsl(var(--primary) / 0.3);
+    color: hsl(var(--primary-foreground));
+  }
 }
 
-@layer components {
+@layer utilities {
   /* Modern Sage Gradient Utilities */
   .sage-gradient-primary {
     @apply bg-gradient-to-r from-sage-quietude via-primary to-sage-growth;
@@ -178,5 +230,256 @@
   /* Modern Sage Button Reset */
   .sage-button-reset {
     @apply m-0 cursor-pointer border-0 bg-transparent p-0 text-inherit;
+  }
+
+  /* Typography Utilities */
+  .font-mono {
+    font-family: var(--font-mono, 'SF Mono', ui-monospace, Consolas, 'Liberation Mono', Menlo, monospace);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Typography spacing utilities for consistent rhythm */
+  .typography-spacing > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .typography-spacing-sm > * + * {
+    margin-top: 1rem;
+  }
+
+  .typography-spacing-lg > * + * {
+    margin-top: 2rem;
+  }
+
+  /* WCAG compliant focus indicators */
+  .focus-sage {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-quietude focus-visible:ring-offset-2;
+  }
+
+  /* Reading experience utilities */
+  .prose-readable {
+    max-width: 65ch;
+    line-height: 1.6;
+  }
+
+  .prose-readable-sm {
+    max-width: 55ch;
+    line-height: 1.5;
+  }
+
+  .prose-readable-lg {
+    max-width: 75ch;
+    line-height: 1.7;
+  }
+
+  /* Responsive Typography System - Mobile-first approach following PRD */
+  /* Mobile (max-width: 640px) - Smaller heading sizes for readability */
+  .text-h1 {
+    font-size: 2rem; /* 32px */
+    line-height: 2.5rem; /* 40px */
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  .text-h2 {
+    font-size: 1.75rem; /* 28px */
+    line-height: 2.25rem; /* 36px */
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .text-h3 {
+    font-size: 1.5rem; /* 24px */
+    line-height: 2rem; /* 32px */
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .text-h4 {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.75rem; /* 28px */
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .text-h5 {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.5rem; /* 24px */
+    font-weight: 500;
+    letter-spacing: -0.025em;
+  }
+
+  .text-h6 {
+    font-size: 1rem; /* 16px */
+    line-height: 1.5rem; /* 24px */
+    font-weight: 500;
+    letter-spacing: -0.025em;
+  }
+
+  /* Tablet and up (768px+) - PRD standard sizes */
+  @media (min-width: 768px) {
+    .text-h1 {
+      font-size: 3rem; /* 48px */
+      line-height: 3.5rem; /* 56px */
+    }
+
+    .text-h2 {
+      font-size: 2.5rem; /* 40px */
+      line-height: 3rem; /* 48px */
+    }
+
+    .text-h3 {
+      font-size: 2rem; /* 32px */
+      line-height: 2.5rem; /* 40px */
+    }
+
+    .text-h4 {
+      font-size: 1.5rem; /* 24px */
+      line-height: 2rem; /* 32px */
+    }
+
+    .text-h5 {
+      font-size: 1.25rem; /* 20px */
+      line-height: 1.75rem; /* 28px */
+    }
+
+    .text-h6 {
+      font-size: 1.125rem; /* 18px */
+      line-height: 1.5rem; /* 24px */
+    }
+  }
+
+  /* Desktop (1024px+) - Enhanced PRD specifications */
+  @media (min-width: 1024px) {
+    .text-h1 {
+      font-size: 3.75rem; /* 60px */
+      line-height: 4rem; /* 64px */
+    }
+
+    .text-h2 {
+      font-size: 3rem; /* 48px */
+      line-height: 3.5rem; /* 56px */
+    }
+  }
+
+  /* Responsive body text utilities - maintain minimum 14px */
+  .text-body-responsive {
+    font-size: 0.875rem; /* 14px mobile minimum */
+    line-height: 1.25rem; /* 20px */
+    font-weight: 400;
+  }
+
+  @media (min-width: 768px) {
+    .text-body-responsive {
+      font-size: 1rem; /* 16px */
+      line-height: 1.5rem; /* 24px */
+    }
+  }
+
+  .text-body-lg-responsive {
+    font-size: 1rem; /* 16px mobile */
+    line-height: 1.5rem; /* 24px */
+    font-weight: 400;
+  }
+
+  @media (min-width: 768px) {
+    .text-body-lg-responsive {
+      font-size: 1.125rem; /* 18px */
+      line-height: 1.75rem; /* 28px */
+    }
+  }
+
+  .text-body-sm-responsive {
+    font-size: 0.875rem; /* 14px minimum maintained */
+    line-height: 1.25rem; /* 20px */
+    font-weight: 400;
+  }
+
+  /* Responsive lead text */
+  .text-lead-responsive {
+    font-size: 1.125rem; /* 18px mobile */
+    line-height: 1.75rem; /* 28px */
+    font-weight: 400;
+  }
+
+  @media (min-width: 768px) {
+    .text-lead-responsive {
+      font-size: 1.25rem; /* 20px */
+      line-height: 1.875rem; /* 30px */
+    }
+  }
+
+  /* Responsive caption and UI text */
+  .text-caption-responsive {
+    font-size: 0.75rem; /* 12px */
+    line-height: 1rem; /* 16px */
+    font-weight: 400;
+  }
+
+  @media (min-width: 768px) {
+    .text-caption-responsive {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.25rem; /* 20px */
+    }
+  }
+
+  .text-button-responsive {
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.25rem; /* 20px */
+    font-weight: 500;
+  }
+
+  /* Ensure all responsive typography maintains 8px grid alignment */
+  .text-h1,
+  .text-h2,
+  .text-h3,
+  .text-h4,
+  .text-h5,
+  .text-h6,
+  .text-body-responsive,
+  .text-body-lg-responsive,
+  .text-body-sm-responsive,
+  .text-lead-responsive,
+  .text-caption-responsive,
+  .text-button-responsive {
+    scroll-margin-top: 5rem; /* For anchor links with fixed headers */
+  }
+
+  /* Responsive spacing utilities that respect the 8px grid */
+  .spacing-responsive-sm > * + * {
+    margin-top: 0.75rem; /* 12px mobile */
+  }
+
+  @media (min-width: 768px) {
+    .spacing-responsive-sm > * + * {
+      margin-top: 1rem; /* 16px tablet+ */
+    }
+  }
+
+  .spacing-responsive > * + * {
+    margin-top: 1rem; /* 16px mobile */
+  }
+
+  @media (min-width: 768px) {
+    .spacing-responsive > * + * {
+      margin-top: 1.5rem; /* 24px tablet+ */
+    }
+  }
+
+  .spacing-responsive-lg > * + * {
+    margin-top: 1.5rem; /* 24px mobile */
+  }
+
+  @media (min-width: 768px) {
+    .spacing-responsive-lg > * + * {
+      margin-top: 2rem; /* 32px tablet+ */
+    }
   }
 }

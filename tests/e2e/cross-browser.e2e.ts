@@ -197,7 +197,8 @@ test.describe('Cross-Browser Compatibility', () => {
           arrow: (() => true)(),
           destructuring: (() => {
  try {
- const { a } = { a: 1 }; return a === 1;
+ const { a } = { a: 1 };
+return a === 1;
 } catch {
  return false;
 }
@@ -213,7 +214,8 @@ test.describe('Cross-Browser Compatibility', () => {
           promise: typeof Promise === 'function',
           classes: (() => {
  try {
- class Test {} return true;
+ class _Test {}
+return true;
 } catch {
  return false;
 }
@@ -221,14 +223,16 @@ test.describe('Cross-Browser Compatibility', () => {
           modules: 'import' in window,
           const: (() => {
  try {
- const a = 1; return true;
+ const _a = 1;
+return true;
 } catch {
  return false;
 }
 })(),
           let: (() => {
  try {
- const a = 1; return true;
+ const _a = 1;
+return true;
 } catch {
  return false;
 }
@@ -378,7 +382,7 @@ test.describe('Cross-Browser Compatibility', () => {
 async function checkSafariSpecificFeatures(page: any) {
   // Check Safari-specific behaviors
   const safariFeatures = await page.evaluate(() => {
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    const isSafari = /^(?:(?!chrome|android).)*safari/i.test(navigator.userAgent);
     return {
       isSafari,
       webkitPrefixes: 'webkitRequestAnimationFrame' in window,

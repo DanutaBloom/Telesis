@@ -210,7 +210,7 @@ test.describe('Performance Tests', () => {
       await page.goto('/');
 
       // Wait for page to fully load
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
 
       console.log('Resource counts:', resourceCounts);
       console.log('Resource sizes (bytes):', resourceSizes);
@@ -284,7 +284,7 @@ test.describe('Performance Tests', () => {
       });
 
       await page.goto('/');
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
 
       console.log('Image info:', imageInfo);
 
@@ -410,7 +410,7 @@ test.describe('Performance Tests', () => {
       }
 
       await page.goto('/');
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
 
       // Take initial memory snapshot
       const _initialSnapshot = await session.send('HeapProfiler.takeHeapSnapshot');

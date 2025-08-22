@@ -13,26 +13,31 @@
     "company": "Entreprise"
   },
   "Hero": {
-    "follow_twitter": "Suivez les actualités Telesis",
+    "follow_twitter": "Rejoignez la Révolution de l'Apprentissage",
     "title": "Transformez la formation en <important>micro-apprentissage</important> avec l'IA en quelques secondes.",
-    "description": "Téléchargez des PDFs, vidéos et présentations. Notre IA crée des résumés personnalisés, briefings audio, cartes visuelles et cartes de révision qui respectent votre temps et style d'apprentissage.",
-    "primary_button": "Commencer l'Apprentissage",
-    "secondary_button": "Voir Comment Ça Marche"
+    "description": "Téléchargez des PDFs, vidéos et présentations. Notre IA crée des résumés personnalisés, briefings audio, cartes visuelles et cartes de révision qui respectent votre temps et style d'apprentissage. Demandez. Réfléchissez. Appliquez.",
+    "primary_button": "Commencer l'Apprentissage Gratuit",
+    "secondary_button": "Voir la Démo"
   },
   "Sponsors": {
     "title": "Sponsorisé par"
   },
   "Features": {
-    "section_subtitle": "Fonctionnalités",
-    "section_title": "Débloquer le plein potentiel du SaaS Template",
-    "section_description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS.",
-    "feature1_title": "Node.js",
-    "feature2_title": "React",
-    "feature3_title": "Tailwind CSS",
-    "feature4_title": "TypeScript",
-    "feature5_title": "Shadcn UI",
-    "feature6_title": "ESLint",
-    "feature_description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS."
+    "section_subtitle": "Fonctionnalités de la Plateforme",
+    "section_title": "Apprentissage IA qui s'Adapte à Vous",
+    "section_description": "Telesis transforme le contenu de formation traditionnel en expériences de micro-apprentissage engageantes utilisant l'IA avancée, rendant l'acquisition de connaissances efficace et mémorable.",
+    "feature1_title": "Téléchargement Intelligent",
+    "feature1_description": "Téléchargez tout matériel de formation - PDFs, vidéos, présentations, documents. Notre IA analyse instantanément et prépare le contenu pour la transformation.",
+    "feature2_title": "Micro-Modules IA",
+    "feature2_description": "Décomposez le contenu complexe en modules d'apprentissage digestibles qui s'adaptent à votre emploi du temps et préférences de charge cognitive.",
+    "feature3_title": "Briefings Audio",
+    "feature3_description": "Convertissez le contenu écrit en résumés audio professionnels parfaits pour les trajets, l'exercice ou le multitâche.",
+    "feature4_title": "Cartes d'Apprentissage Visuelles",
+    "feature4_description": "Générez des cartes mentales interactives et des représentations visuelles qui vous aident à comprendre les relations et concepts clés.",
+    "feature5_title": "Cartes de Révision",
+    "feature5_description": "Cartes mémoire et questions de pratique générées par IA qui renforcent l'apprentissage par répétition espacée et rappel actif.",
+    "feature6_title": "Style d'Apprentissage Personnel",
+    "feature6_description": "Algorithmes adaptatifs qui apprennent vos préférences et optimisent la livraison de contenu pour une rétention et engagement maximum."
   },
   "Pricing": {
     "section_subtitle": "Tarification",
@@ -57,13 +62,24 @@
     "next_renew_date": "Votre abonnement sera renouvelé le {date}"
   },
   "FAQ": {
-    "question": "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
-    "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam enim dui, id consequat turpis ullamcorper ac. Mauris id quam dolor. Nullam eu egestas turpis. Proin risus elit, sollicitudin in mi a, accumsan euismod turpis. In euismod mi sed diam tristique hendrerit."
+    "section_subtitle": "Questions Fréquemment Posées",
+    "section_title": "Tout ce que Vous Devez Savoir sur Telesis",
+    "section_description": "Obtenez des réponses aux questions courantes sur notre plateforme de micro-apprentissage alimentée par l'IA.",
+    "question1": "Quels types de contenu puis-je télécharger sur Telesis ?",
+    "answer1": "Telesis prend en charge les PDFs, vidéos (MP4, MOV), présentations (PowerPoint, Google Slides), documents Word et fichiers texte. Notre IA peut traiter les manuels de formation, matériels de cours, documents d'entreprise, articles de recherche et contenu éducatif.",
+    "question2": "Comment l'IA crée-t-elle des expériences d'apprentissage personnalisées ?",
+    "answer2": "Notre IA analyse votre contenu téléchargé, identifie les concepts clés et génère plusieurs formats d'apprentissage incluant résumés, briefings audio, cartes visuelles et cartes de révision. Elle s'adapte à vos préférences d'apprentissage et progrès au fil du temps.",
+    "question3": "Combien de temps faut-il pour transformer mon contenu ?",
+    "answer3": "La plupart du contenu est traité en 2-5 minutes. Les documents complexes ou vidéos peuvent prendre jusqu'à 15 minutes. Vous recevrez des mises à jour en temps réel sur l'état du traitement et pouvez accéder aux sections terminées immédiatement.",
+    "question4": "Mon contenu téléchargé est-il sécurisé et privé ?",
+    "answer4": "Absolument. Tout contenu est chiffré en transit et au repos. Nous utilisons des mesures de sécurité de niveau entreprise et ne partageons jamais votre contenu avec des tiers. Vous maintenez la propriété complète et le contrôle de vos matériaux.",
+    "question5": "Les équipes peuvent-elles collaborer sur le contenu d'apprentissage ?",
+    "answer5": "Oui ! Telesis prend en charge les espaces de travail d'équipe où vous pouvez partager des modules d'apprentissage, suivre les progrès de l'équipe et collaborer sur la création de contenu. Parfait pour la formation d'entreprise et les institutions éducatives."
   },
   "CTA": {
-    "title": "Vous êtes prêt?",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "button_text": "Mettez une étoile sur GitHub"
+    "title": "Prêt à Transformer Votre Apprentissage ?",
+    "description": "Rejoignez des milliers d'apprenants et d'organisations qui ont accéléré leur acquisition de connaissances avec le micro-apprentissage alimenté par l'IA.",
+    "button_text": "Commencer l'Essai Gratuit"
   },
   "Footer": {
     "product": "Produit",
@@ -94,16 +110,16 @@
     "settings": "Réglages"
   },
   "Dashboard": {
-    "meta_title": "Tableau de bord du SaaS Template",
-    "meta_description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec Next.js, TypeScript, Shadcn UI et Tailwind CSS."
+    "meta_title": "Tableau de Bord d'Apprentissage Telesis",
+    "meta_description": "Accédez à vos modules de micro-apprentissage alimentés par l'IA, suivez vos progrès et gérez votre expérience d'apprentissage personnalisée avec Telesis."
   },
   "DashboardIndex": {
-    "title_bar": "Tableau de bord",
-    "title_bar_description": "Bienvenue sur votre tableau de bord",
-    "message_state_title": "C'est parti",
-    "message_state_description": "Vous pouvez personnaliser cette page en modifiant le fichier dans <code>dashboard/page.tsx</code>",
-    "message_state_button": "Mettez une étoile sur GitHub",
-    "message_state_alternative": "Vous voulez plus de fonctionnalités en utilisant la même stack ? Essayez <url></url>."
+    "title_bar": "Tableau de Bord d'Apprentissage",
+    "title_bar_description": "Bienvenue dans votre espace de travail d'apprentissage personnalisé",
+    "message_state_title": "Prêt à Demander, Réfléchir et Appliquer ?",
+    "message_state_description": "Téléchargez votre premier matériel de formation pour commencer votre parcours de micro-apprentissage alimenté par l'IA. Transformez n'importe quel contenu en expériences d'apprentissage engageantes et digestibles.",
+    "message_state_button": "Télécharger du Contenu",
+    "message_state_alternative": "Nouveau dans le micro-apprentissage ? <url>Regardez notre guide de démarrage rapide</url> pour tirer le meilleur parti de Telesis."
   },
   "UserProfile": {
     "title_bar": "Profil utilisateur",

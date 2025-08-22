@@ -52,7 +52,11 @@ const FormLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      className={cn(error && 'text-destructive', className)}
+      className={cn(
+        error && 'text-destructive',
+        'transition-colors duration-200',
+        className
+      )}
       htmlFor={formItemId}
       {...props}
     />
@@ -93,7 +97,7 @@ const FormDescription = React.forwardRef<
     <p
       ref={ref}
       id={formDescriptionId}
-      className={cn('text-sm text-muted-foreground', className)}
+      className={cn('text-sm text-sage-stone', className)}
       {...props}
     />
   );
@@ -102,8 +106,10 @@ FormDescription.displayName = 'FormDescription';
 
 const FormMessage = React.forwardRef<
   HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, children, ...props }, ref) => {
+  React.HTMLAttributes<HTMLParagraphElement> & {
+    variant?: 'error' | 'success' | 'info';
+  }
+>(({ className, children, variant, ...props }, ref) => {
   const { error, formMessageId } = useFormField();
   const body = error ? String(error?.message) : children;
 
@@ -111,11 +117,22 @@ const FormMessage = React.forwardRef<
     return null;
   }
 
+  const messageVariant = variant || (error ? 'error' : 'info');
+  const variantStyles = {
+    error: 'text-destructive',
+    success: 'text-sage-growth',
+    info: 'text-sage-stone',
+  };
+
   return (
     <p
       ref={ref}
       id={formMessageId}
-      className={cn('text-sm font-medium text-destructive', className)}
+      className={cn(
+        'text-sm font-medium transition-colors duration-200',
+        variantStyles[messageVariant],
+        className
+      )}
       {...props}
     >
       {body}
@@ -123,6 +140,27 @@ const FormMessage = React.forwardRef<
   );
 });
 FormMessage.displayName = 'FormMessage';
+
+// Enhanced form components with Modern Sage theming
+const FormSuccess = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => {
+  const { formMessageId } = useFormField();
+
+  return (
+    <p
+      ref={ref}
+      id={`${formMessageId}-success`}
+      className={cn(
+        'text-sm font-medium text-sage-growth flex items-center gap-2',
+        className
+      )}
+      {...props}
+    />
+  );
+});
+FormSuccess.displayName = 'FormSuccess';
 
 export {
   Form,
@@ -132,4 +170,5 @@ export {
   FormItem,
   FormLabel,
   FormMessage,
+  FormSuccess,
 };

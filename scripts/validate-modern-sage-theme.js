@@ -40,16 +40,16 @@ const logError = message => log(`✗ ${message}`, 'red');
 const logWarning = message => log(`⚠ ${message}`, 'yellow');
 const logInfo = message => log(`ℹ ${message}`, 'blue');
 
-// Modern Sage color constants from theme
+// Modern Sage color constants from theme - WCAG AA Compliant
 const _MODERN_SAGE_COLORS = {
   light: {
-    quietude: 'hsl(173, 23%, 71%)', // #A8C0BD
+    quietude: 'hsl(171, 19%, 41%)', // #557C76 - WCAG AA Compliant
     growth: 'hsl(102, 58%, 38%)', // #4C9A2A
     mist: 'hsl(173, 15%, 85%)', // #B8CCC9
     stone: 'hsl(220, 8%, 60%)', // #8A9499
   },
   dark: {
-    quietude: 'hsl(173, 25%, 65%)', // #A1BDB9
+    quietude: 'hsl(171, 25%, 55%)', // #7FA99F - WCAG AA Compliant
     growth: 'hsl(102, 55%, 42%)', // #5BA032
     mist: 'hsl(173, 15%, 25%)', // #2D4340
     stone: 'hsl(220, 8%, 50%)', // #7A8085

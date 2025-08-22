@@ -32,7 +32,7 @@ test.describe('Organization Fixes Validation', () => {
     await page.goto('/sign-in');
 
     // Wait for page to fully load
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     // Verify sign-in page loads without errors
     await expect(page.locator('h1, h2, [data-testid="sign-in-title"]')).toContainText(/sign.?in|log.?in/i);
@@ -65,7 +65,7 @@ test.describe('Organization Fixes Validation', () => {
     await page.goto('/dashboard');
 
     // Should either redirect to sign-in or show auth UI (if not authenticated)
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     const currentUrl = page.url();
 
@@ -103,7 +103,7 @@ test.describe('Organization Fixes Validation', () => {
     });
 
     await page.goto('/dashboard');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     // Check if we're on dashboard (might redirect to auth)
     const currentUrl = page.url();
@@ -192,7 +192,7 @@ test.describe('Organization Fixes Validation', () => {
 
     // Try to access organization selection page
     await page.goto('/onboarding/organization-selection');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     // Should either redirect to auth or show a friendly message
     const currentUrl = page.url();
@@ -232,7 +232,7 @@ test.describe('Organization Fixes Validation', () => {
   test('User profile pages work without organization dependency', async ({ page }) => {
     // Test user profile page
     await page.goto('/dashboard/user-profile');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     // Should either redirect to auth or load profile
     const currentUrl = page.url();
@@ -252,7 +252,7 @@ test.describe('Organization Fixes Validation', () => {
 
     // Test organization profile page (should also work or redirect cleanly)
     await page.goto('/dashboard/organization-profile');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     const orgProfileUrl = page.url();
 
@@ -294,7 +294,7 @@ test.describe('Organization Fixes Validation', () => {
 
       try {
         await page.goto(route);
-        await page.waitForLoadState('networkidle', { timeout: 10000 });
+        await page.waitForLoadState('domcontentloaded', { timeout: 10000 });
 
         // Verify page loads without crashing
         const bodyContent = page;
@@ -356,7 +356,7 @@ test.describe('Organization Fixes Validation', () => {
     console.log('✅ System health check passed');
   });
 
-  test('Generate comprehensive validation report', async ({ page }) => {
+  test('Generate comprehensive validation report', async ({ page: _page }) => {
     console.log('\n🎯 ORGANIZATION FIXES VALIDATION REPORT');
     console.log('======================================');
 

@@ -5,7 +5,7 @@
 
 import { expect, test } from '@playwright/test';
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+const _BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
 test.describe('Basic Authentication Validation', () => {
   test('Landing page loads successfully', async ({ page }) => {
@@ -242,7 +242,7 @@ test.describe('Basic Authentication Validation', () => {
 
         routeResults.push({ ...route, status, result });
         console.log(`  ${route.name}: ${result} (${status})`);
-      } catch (error) {
+      } catch (_error) {
         routeResults.push({ ...route, status: 'Error', result: '❌ Error' });
         console.log(`  ${route.name}: ❌ Error`);
       }

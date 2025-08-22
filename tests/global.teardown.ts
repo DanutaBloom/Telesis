@@ -6,7 +6,7 @@ import type { FullConfig } from '@playwright/test';
  * Global teardown function for Playwright tests
  * This runs once after all test files have completed
  */
-async function globalTeardown(config: FullConfig) {
+async function globalTeardown(_config: FullConfig) {
   console.log('🧹 Running global teardown...');
 
   try {
@@ -26,7 +26,7 @@ async function globalTeardown(config: FullConfig) {
           await fs.access(authFile);
           console.log(`🗑️  Cleaning up ${authFile}`);
           await fs.unlink(authFile);
-        } catch (error) {
+        } catch (_error) {
           // File doesn't exist, which is fine
         }
       }
@@ -42,7 +42,7 @@ async function globalTeardown(config: FullConfig) {
       try {
         await fs.rmdir(dir, { recursive: true });
         console.log(`🗑️  Cleaned up temporary directory: ${dir}`);
-      } catch (error) {
+      } catch (_error) {
         // Directory doesn't exist, which is fine
       }
     }

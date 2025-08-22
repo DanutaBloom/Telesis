@@ -1,0 +1,34 @@
+<svg width="16" height="16" viewBox="0 0 16 16" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Telesis Favicon</title>
+  <desc>Three olives simplified for favicon use</desc>
+  
+  <g id="three-olives-favicon">
+    <!-- Olive 1: Ask - Outlined circle for clarity at small size -->
+    <circle
+      cx="3"
+      cy="8"
+      r="2.5"
+      fill="transparent"
+      stroke="hsl(173, 23%, 71%)"
+      stroke-width="1"
+    />
+    
+    <!-- Olive 2: Think - Solid circle -->
+    <circle
+      cx="8"
+      cy="8"
+      r="2.5"
+      fill="hsl(173, 23%, 71%)"
+      stroke="none"
+    />
+    
+    <!-- Olive 3: Apply - Solid circle in growth color -->
+    <circle
+      cx="13"
+      cy="8"
+      r="2.5"
+      fill="hsl(102, 58%, 38%)"
+      stroke="none"
+    />
+  </g>
+</svg>

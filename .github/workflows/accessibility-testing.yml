@@ -1,0 +1,328 @@
+name: Accessibility Testing
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run weekly accessibility audits on Sundays at 2 AM UTC
+    - cron: '0 2 * * 0'
+
+env:
+  NODE_VERSION: 20.18.0
+
+jobs:
+  accessibility-tests:
+    name: WCAG 2.1 AA Compliance Testing
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    strategy:
+      matrix:
+        browser: [chromium, firefox, webkit]
+        test-type: [unit, e2e]
+        include:
+          - test-type: unit
+            test-command: npm run test:a11y:unit
+          - test-type: e2e
+            test-command: npm run test:accessibility
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        if: matrix.test-type == 'e2e'
+        run: npx playwright install --with-deps
+
+      - name: Build application
+        run: npm run build
+        env:
+          NODE_ENV: production
+          # Mock environment variables for build
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_mock' }}
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY || 'sk_test_mock' }}
+          DATABASE_URL: 'postgresql://test:test@localhost:5432/test_db'
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: pk_test_mock
+
+      - name: Run Unit Accessibility Tests
+        if: matrix.test-type == 'unit'
+        run: ${{ matrix.test-command }}
+        env:
+          CI: true
+
+      - name: Start application (E2E)
+        if: matrix.test-type == 'e2e'
+        run: npm run start &
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_mock
+          CLERK_SECRET_KEY: sk_test_mock
+          DATABASE_URL: 'postgresql://test:test@localhost:5432/test_db'
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: pk_test_mock
+
+      - name: Wait for application to start (E2E)
+        if: matrix.test-type == 'e2e'
+        run: npx wait-on http://localhost:3000 --timeout 60000
+
+      - name: Run E2E Accessibility Tests
+        if: matrix.test-type == 'e2e'
+        run: ${{ matrix.test-command }} --project=${{ matrix.browser }}
+        env:
+          CI: true
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-results-${{ matrix.test-type }}-${{ matrix.browser }}
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 30
+
+  accessibility-coverage:
+    name: Generate Accessibility Coverage Report
+    runs-on: ubuntu-latest
+    needs: accessibility-tests
+    if: always()
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate accessibility coverage report
+        run: npm run test:a11y:coverage
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-coverage-report
+          path: test-results/accessibility-coverage.*
+          retention-days: 90
+
+      - name: Add coverage comment to PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = './test-results/accessibility-coverage.json';
+
+            if (fs.existsSync(path)) {
+              const coverage = JSON.parse(fs.readFileSync(path, 'utf8'));
+
+              const comment = `## ♿ Accessibility Testing Results
+
+              **WCAG 2.1 AA Compliance Status:**
+              - 🧪 Unit Test Coverage: **${coverage.summary.unitTestCoverage}%**
+              - 🌐 E2E Test Coverage: **${coverage.summary.e2eTestCoverage}%**
+              - 🎯 Component Coverage: **${coverage.summary.componentCoverage}%**
+              - ✅ WCAG Criteria: **${coverage.summary.wcagCriteriaCount}/${coverage.summary.totalWcagCriteria}** automated criteria
+
+              **Compliance Checks:**
+              - ${coverage.compliance.colorContrast ? '✅' : '❌'} Color Contrast (WCAG 2.1 AA)
+              - ${coverage.compliance.keyboardNavigation ? '✅' : '❌'} Keyboard Navigation
+              - ${coverage.compliance.screenReader ? '✅' : '❌'} Screen Reader Support
+              - ${coverage.compliance.wcag21AA ? '✅' : '❌'} Overall WCAG 2.1 AA Compliance
+
+              ${coverage.recommendations.length > 0 ? `
+              **Recommendations:**
+              ${coverage.recommendations.map(rec => `- ${rec}`).join('\n')}
+              ` : '🎉 **All accessibility requirements met!**'}
+
+              [View detailed report](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`;
+
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            }
+
+  accessibility-audit:
+    name: Weekly Accessibility Audit
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Build application
+        run: npm run build
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_mock
+          CLERK_SECRET_KEY: sk_test_mock
+          DATABASE_URL: 'postgresql://test:test@localhost:5432/test_db'
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: pk_test_mock
+
+      - name: Start application
+        run: npm run start &
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_mock
+          CLERK_SECRET_KEY: sk_test_mock
+          DATABASE_URL: 'postgresql://test:test@localhost:5432/test_db'
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: pk_test_mock
+
+      - name: Wait for application
+        run: npx wait-on http://localhost:3000 --timeout 60000
+
+      - name: Run comprehensive accessibility audit
+        run: |
+          npm run test:a11y:unit
+          npm run test:accessibility
+          npm run test:a11y:coverage
+
+      - name: Create accessibility audit issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = './test-results/accessibility-coverage.json';
+
+            if (fs.existsSync(path)) {
+              const coverage = JSON.parse(fs.readFileSync(path, 'utf8'));
+              const date = new Date().toISOString().split('T')[0];
+
+              // Only create issue if there are problems
+              if (!coverage.compliance.wcag21AA || coverage.recommendations.length > 0) {
+                github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: `♿ Weekly Accessibility Audit - ${date}`,
+                  body: `## Weekly Accessibility Audit Report
+
+                  **Generated:** ${coverage.generated}
+
+                  **Current Status:**
+                  - Unit Test Coverage: ${coverage.summary.unitTestCoverage}%
+                  - E2E Test Coverage: ${coverage.summary.e2eTestCoverage}%
+                  - Component Coverage: ${coverage.summary.componentCoverage}%
+                  - WCAG 2.1 AA Compliance: ${coverage.compliance.wcag21AA ? 'PASS' : 'FAIL'}
+
+                  **Issues Found:**
+                  ${coverage.recommendations.map(rec => `- ${rec}`).join('\n')}
+
+                  **Action Required:**
+                  Please review the accessibility test coverage and implement the recommended improvements to maintain WCAG 2.1 AA compliance.
+
+                  **Resources:**
+                  - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/?versions=2.1&levels=aa)
+                  - [axe-core Rules](https://dequeuniversity.com/rules/axe/)
+                  - [WebAIM Color Contrast Checker](https://webaim.org/resources/contrastchecker/)`,
+                  labels: ['accessibility', 'audit', 'wcag']
+                });
+              }
+            }
+
+      - name: Upload audit results
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-accessibility-audit
+          path: test-results/
+          retention-days: 365 # Keep audit results for a year
+
+  accessibility-gate:
+    name: Accessibility Gate
+    runs-on: ubuntu-latest
+    needs: [accessibility-tests, accessibility-coverage]
+    if: always() && (github.event_name == 'pull_request' || github.ref == 'refs/heads/main')
+
+    steps:
+      - name: Download coverage report
+        uses: actions/download-artifact@v4
+        with:
+          name: accessibility-coverage-report
+          path: coverage-report/
+
+      - name: Check accessibility compliance
+        run: |
+          if [ -f "coverage-report/accessibility-coverage.json" ]; then
+            COMPLIANCE=$(cat coverage-report/accessibility-coverage.json | jq -r '.compliance.wcag21AA')
+            UNIT_COVERAGE=$(cat coverage-report/accessibility-coverage.json | jq -r '.summary.unitTestCoverage')
+            COMPONENT_COVERAGE=$(cat coverage-report/accessibility-coverage.json | jq -r '.summary.componentCoverage')
+
+            echo "WCAG 2.1 AA Compliance: $COMPLIANCE"
+            echo "Unit Test Coverage: ${UNIT_COVERAGE}%"
+            echo "Component Coverage: ${COMPONENT_COVERAGE}%"
+
+            # Fail if compliance is false or coverage is below 80%
+            if [ "$COMPLIANCE" = "false" ]; then
+              echo "❌ WCAG 2.1 AA compliance check failed"
+              exit 1
+            fi
+
+            if [ $(echo "$UNIT_COVERAGE < 80" | bc -l) = 1 ]; then
+              echo "❌ Unit test coverage below 80%"
+              exit 1
+            fi
+
+            if [ $(echo "$COMPONENT_COVERAGE < 80" | bc -l) = 1 ]; then
+              echo "❌ Component coverage below 80%"
+              exit 1
+            fi
+
+            echo "✅ All accessibility gates passed!"
+          else
+            echo "❌ Coverage report not found"
+            exit 1
+          fi
+
+      - name: Comment on PR (Success)
+        if: success() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ **Accessibility Gate Passed!** All WCAG 2.1 AA compliance checks are successful.'
+            });
+
+      - name: Comment on PR (Failure)
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ **Accessibility Gate Failed!** This PR does not meet WCAG 2.1 AA compliance requirements. Please review the accessibility test results and fix the issues before merging.'
+            });

@@ -13,26 +13,31 @@
     "company": "Company"
   },
   "Hero": {
-    "follow_twitter": "Follow Telesis Updates",
+    "follow_twitter": "Join the Learning Revolution",
     "title": "Transform training into <important>micro-learning</important> with AI in seconds.",
-    "description": "Upload PDFs, videos, and presentations. Our AI creates personalized summaries, audio briefs, visual maps, and practice cards that respect your time and learning style.",
-    "primary_button": "Start Learning",
-    "secondary_button": "See How It Works"
+    "description": "Upload PDFs, videos, and presentations. Our AI creates personalized summaries, audio briefs, visual maps, and practice cards that respect your time and learning style. Ask. Think. Apply.",
+    "primary_button": "Start Learning Free",
+    "secondary_button": "Watch Demo"
   },
   "Sponsors": {
     "title": "Sponsored by"
   },
   "Features": {
-    "section_subtitle": "Features",
-    "section_title": "Unlock the Full Potential of the SaaS Template",
-    "section_description": "A free and open-source landing page template for your SaaS business, built with React, TypeScript, Shadcn UI, and Tailwind CSS.",
-    "feature1_title": "Node.js",
-    "feature2_title": "React",
-    "feature3_title": "Tailwind CSS",
-    "feature4_title": "TypeScript",
-    "feature5_title": "Shadcn UI",
-    "feature6_title": "ESLint",
-    "feature_description": "A free and open-source landing page template for your SaaS business, built with React, TypeScript, Shadcn UI, and Tailwind CSS."
+    "section_subtitle": "Platform Features",
+    "section_title": "AI-Powered Learning That Adapts to You",
+    "section_description": "Telesis transforms traditional training content into engaging micro-learning experiences using advanced AI, making knowledge acquisition efficient and memorable.",
+    "feature1_title": "Smart Upload",
+    "feature1_description": "Upload any training material - PDFs, videos, presentations, documents. Our AI instantly analyzes and prepares content for transformation.",
+    "feature2_title": "AI Micro-Modules",
+    "feature2_description": "Break down complex content into bite-sized learning modules that fit your schedule and cognitive load preferences.",
+    "feature3_title": "Audio Briefs",
+    "feature3_description": "Convert written content into professional audio summaries perfect for commuting, exercising, or multitasking.",
+    "feature4_title": "Visual Learning Maps",
+    "feature4_description": "Generate interactive mind maps and visual representations that help you understand relationships and key concepts.",
+    "feature5_title": "Practice Cards",
+    "feature5_description": "AI-generated flashcards and practice questions that reinforce learning through spaced repetition and active recall.",
+    "feature6_title": "Personal Learning Style",
+    "feature6_description": "Adaptive algorithms learn your preferences and optimize content delivery for maximum retention and engagement."
   },
   "Pricing": {
     "section_subtitle": "Pricing",
@@ -57,13 +62,24 @@
     "next_renew_date": "Your subscription renews on {date}"
   },
   "FAQ": {
-    "question": "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
-    "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam enim dui, id consequat turpis ullamcorper ac. Mauris id quam dolor. Nullam eu egestas turpis. Proin risus elit, sollicitudin in mi a, accumsan euismod turpis. In euismod mi sed diam tristique hendrerit."
+    "section_subtitle": "Frequently Asked Questions",
+    "section_title": "Everything You Need to Know About Telesis",
+    "section_description": "Get answers to common questions about our AI-powered micro-learning platform.",
+    "question1": "What types of content can I upload to Telesis?",
+    "answer1": "Telesis supports PDFs, videos (MP4, MOV), presentations (PowerPoint, Google Slides), Word documents, and text files. Our AI can process training manuals, course materials, corporate documents, research papers, and educational content.",
+    "question2": "How does the AI create personalized learning experiences?",
+    "answer2": "Our AI analyzes your uploaded content, identifies key concepts, and generates multiple learning formats including summaries, audio briefs, visual maps, and practice cards. It adapts to your learning preferences and progress over time.",
+    "question3": "How long does it take to transform my content?",
+    "answer3": "Most content is processed within 2-5 minutes. Complex documents or videos may take up to 15 minutes. You'll receive real-time updates on processing status and can access completed sections immediately.",
+    "question4": "Is my uploaded content secure and private?",
+    "answer4": "Absolutely. All content is encrypted in transit and at rest. We use enterprise-grade security measures and never share your content with third parties. You maintain full ownership and control of your materials.",
+    "question5": "Can teams collaborate on learning content?",
+    "answer5": "Yes! Telesis supports team workspaces where you can share learning modules, track team progress, and collaborate on content creation. Perfect for corporate training and educational institutions."
   },
   "CTA": {
-    "title": "You are ready?",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "button_text": "Star on GitHub"
+    "title": "Ready to Transform Your Learning?",
+    "description": "Join thousands of learners and organizations who've accelerated their knowledge acquisition with AI-powered micro-learning.",
+    "button_text": "Start Free Trial"
   },
   "Footer": {
     "product": "Product",
@@ -94,16 +110,16 @@
     "settings": "Settings"
   },
   "Dashboard": {
-    "meta_title": "SaaS Template Dashboard",
-    "meta_description": "A free and open-source landing page template for your SaaS business, built with Next.js, TypeScript, Shadcn UI, and Tailwind CSS."
+    "meta_title": "Telesis Learning Dashboard",
+    "meta_description": "Access your AI-powered micro-learning modules, track progress, and manage your personalized learning experience with Telesis."
   },
   "DashboardIndex": {
-    "title_bar": "Dashboard",
-    "title_bar_description": "Welcome to your dashboard",
-    "message_state_title": "Let's get started",
-    "message_state_description": "You can customize this page by editing the file at <code>dashboard/page.tsx</code>",
-    "message_state_button": "Star on GitHub",
-    "message_state_alternative": "Want more features using the same stack? Try <url></url>."
+    "title_bar": "Learning Dashboard",
+    "title_bar_description": "Welcome to your personalized learning workspace",
+    "message_state_title": "Ready to Ask, Think, and Apply?",
+    "message_state_description": "Upload your first training material to begin your AI-powered micro-learning journey. Transform any content into engaging, bite-sized learning experiences.",
+    "message_state_button": "Upload Content",
+    "message_state_alternative": "New to micro-learning? <url>Watch our quick start guide</url> to get the most out of Telesis."
   },
   "UserProfile": {
     "title_bar": "User Profile",

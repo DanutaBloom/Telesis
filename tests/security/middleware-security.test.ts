@@ -58,7 +58,7 @@ describe('Middleware Security - API Route Protection', () => {
     // Mock route matcher to identify this as an API route
     mockCreateRouteMatcher.mockReturnValue(() => true);
 
-    const response = await middleware(request, event);
+    const _response = await middleware(request, event);
 
     // Verify that Clerk middleware was called for API routes
     expect(mockClerkMiddleware).toHaveBeenCalled();
@@ -75,7 +75,7 @@ describe('Middleware Security - API Route Protection', () => {
     // Mock route matcher to identify this as an API route
     mockCreateRouteMatcher.mockReturnValue(() => true);
 
-    const response = await middleware(request, event);
+    const _response = await middleware(request, event);
 
     // Verify that Clerk middleware was called for API routes
     expect(mockClerkMiddleware).toHaveBeenCalled();
@@ -88,7 +88,7 @@ describe('Middleware Security - API Route Protection', () => {
 
     const event = { waitUntil: vi.fn() };
 
-    const response = await middleware(request, event);
+    const _response = await middleware(request, event);
 
     // Public routes should bypass authentication but still go through i18n middleware
     expect(mockCreateMiddleware).toHaveBeenCalled();
@@ -101,7 +101,7 @@ describe('Middleware Security - API Route Protection', () => {
 
     const event = { waitUntil: vi.fn() };
 
-    const response = await middleware(request, event);
+    const _response = await middleware(request, event);
 
     // Public routes should bypass authentication
     expect(mockCreateMiddleware).toHaveBeenCalled();
@@ -117,7 +117,7 @@ describe('Middleware Security - API Route Protection', () => {
     // Mock route matcher to identify this as an API route
     mockCreateRouteMatcher.mockReturnValue(() => true);
 
-    const response = await middleware(request, event);
+    const _response = await middleware(request, event);
 
     // Should be protected by Clerk
     expect(mockClerkMiddleware).toHaveBeenCalled();
@@ -135,7 +135,7 @@ describe('Middleware Security - Dashboard Protection', () => {
     // Mock route matcher to identify this as a protected route
     mockCreateRouteMatcher.mockReturnValue(() => true);
 
-    const response = await middleware(request, event);
+    const _response = await middleware(request, event);
 
     // Dashboard routes should be protected
     expect(mockClerkMiddleware).toHaveBeenCalled();
@@ -151,7 +151,7 @@ describe('Middleware Security - Dashboard Protection', () => {
     // Mock route matcher to identify this as a protected route
     mockCreateRouteMatcher.mockReturnValue(() => true);
 
-    const response = await middleware(request, event);
+    const _response = await middleware(request, event);
 
     // Localized dashboard routes should be protected
     expect(mockClerkMiddleware).toHaveBeenCalled();
@@ -167,7 +167,7 @@ describe('Middleware Security - Dashboard Protection', () => {
     // Mock route matcher to identify this as a protected route
     mockCreateRouteMatcher.mockReturnValue(() => true);
 
-    const response = await middleware(request, event);
+    const _response = await middleware(request, event);
 
     // Onboarding routes should be protected
     expect(mockClerkMiddleware).toHaveBeenCalled();
@@ -204,7 +204,7 @@ describe('Middleware Security - Organization Flow', () => {
     // Mock route matcher to identify this as a protected route
     mockCreateRouteMatcher.mockReturnValue(() => true);
 
-    const response = await middleware(request, event);
+    const _response = await middleware(request, event);
 
     // Should trigger organization selection flow
     expect(mockClerkMiddleware).toHaveBeenCalled();
@@ -219,7 +219,7 @@ describe('Middleware Security - Route Exclusions', () => {
 
     const event = { waitUntil: vi.fn() };
 
-    const response = await middleware(request, event);
+    const _response = await middleware(request, event);
 
     // Static files should be handled by the middleware config exclusion
     // The middleware function should still run but handle static files appropriately
@@ -233,7 +233,7 @@ describe('Middleware Security - Route Exclusions', () => {
 
     const event = { waitUntil: vi.fn() };
 
-    const response = await middleware(request, event);
+    const _response = await middleware(request, event);
 
     // _next assets should be handled by the middleware config exclusion
     expect(response).toBeDefined();
@@ -246,7 +246,7 @@ describe('Middleware Security - Route Exclusions', () => {
 
     const event = { waitUntil: vi.fn() };
 
-    const response = await middleware(request, event);
+    const _response = await middleware(request, event);
 
     // Monitoring routes should be excluded
     expect(response).toBeDefined();

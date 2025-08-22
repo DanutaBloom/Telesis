@@ -6,7 +6,7 @@
 
 import { devices, expect, test } from '@playwright/test';
 
-const MOBILE_DEVICES = {
+const _MOBILE_DEVICES = {
   'iPhone 12': devices['iPhone 12'],
   'iPhone 13 Pro': devices['iPhone 13 Pro'],
   'Pixel 5': devices['Pixel 5'],

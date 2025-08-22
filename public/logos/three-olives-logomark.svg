@@ -1,0 +1,37 @@
+<svg width="48" height="18" viewBox="0 0 48 18" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Telesis Three Olives Logo</title>
+  <desc>Three olives representing the learning process: Ask, Think, Apply</desc>
+  
+  <g id="three-olives-logomark">
+    <!-- Olive 1: Ask - Outlined olive representing potential and inquiry -->
+    <ellipse
+      cx="8"
+      cy="9"
+      rx="6"
+      ry="8"
+      fill="transparent"
+      stroke="hsl(173, 23%, 71%)"
+      stroke-width="1.5"
+    />
+    
+    <!-- Olive 2: Think - Solid olive representing contemplation and processing -->
+    <ellipse
+      cx="24"
+      cy="9"
+      rx="6"
+      ry="8"
+      fill="hsl(173, 23%, 71%)"
+      stroke="none"
+    />
+    
+    <!-- Olive 3: Apply - Solid olive in growth color representing successful application -->
+    <ellipse
+      cx="40"
+      cy="9"
+      rx="6"
+      ry="8"
+      fill="hsl(102, 58%, 38%)"
+      stroke="none"
+    />
+  </g>
+</svg>
